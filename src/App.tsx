@@ -5,7 +5,7 @@ function App() {
   return (
     <>
       <h1 className="text-3xl font-bold">
-        TRackNGo
+        TRackNGo Web_App
       </h1>
     </>
   )
