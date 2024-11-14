@@ -1,12 +1,18 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
+import Login from './pages/auth/Login'
+import Testing from './pages/testing/Testing'
 
 function App() {
 
   return (
     <>
-      <h1 className="text-3xl font-bold">
-        TRackNGo Web_App
-      </h1>
+      <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true, }}>
+        <Routes>
+          <Route path='/login' element={<Login />} />
+          <Route path='/' element={<Testing />} />
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
