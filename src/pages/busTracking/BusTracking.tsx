@@ -4,10 +4,13 @@ import SecondaryBtn from "../../components/btn/secondaryBtn/SecondaryBtn"
 import BusDetails from "../../components/busDetails/BusDetails"
 import Headline from "../../components/headline/Headline"
 import busDetailsType from "../../types/busDetails/busDetailsTypes"
+import { useNavigate } from "react-router-dom"
 
 const BusTracking = () => {
     const [buses, setBuses] = useState<busDetailsType[]>([])
     const [filterStatus, setFilterStatus] = useState<"all" | "await" | "onroad">("all")
+
+    const navigate = useNavigate()
 
     const mockBuses: busDetailsType[] = [
         {
@@ -132,7 +135,7 @@ const BusTracking = () => {
             <div className="mt-1">
                 {buses && filteredBuses.length > 0 ? (
                     filteredBuses.map((bus, index) => (
-                        <div onClick={() => console.log('clicked!')} key={index}>
+                        <div onClick={() => navigate(`/bustracking/details/${bus.busNumber}`)} key={index}>
                             <BusDetails
                                 busNumber={bus.busNumber}
                                 startLocation={bus.startLocation}
