@@ -105,7 +105,7 @@ const BusTracking = () => {
                 />
             </div>
 
-            <div className="flex items-center justify-between p-4">
+            <div className="flex items-center justify-between py-4">
                 <div>
                     <h2 className="text-2xl font-semibold">Buses</h2>
                     <p className="text-gray-500 text-xs">Active and On Road Buses</p>
