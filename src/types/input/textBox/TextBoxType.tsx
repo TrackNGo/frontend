@@ -3,7 +3,8 @@ interface TextBoxType{
     type:string,
     placeholder:string,
     name:string,
-    onChange?:any
+    onChange?:any,
+    value?:string
 }
 
 export default TextBoxType
