@@ -2,7 +2,7 @@ import busDetailsType from "../../types/busDetails/busDetailsTypes"
 
 const BusDetails = (bus: busDetailsType) => {
   return (
-    <div className="flex items-center p-4 border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100 transition duration-200 ease-in-out">
+    <div className="flex items-center p-4 border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100 transition duration-200 ease-in-out mb-2">
       <div className="mr-4">
         <img
           src="bus-icon.png"

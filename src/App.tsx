@@ -3,6 +3,7 @@ import './App.css'
 import Login from './pages/auth/Login'
 import Testing from './pages/testing/Testing'
 import ChangePassword from './pages/auth/ChangePassword'
+import BusTracking from './pages/tracking/BusTracking'
 
 function App() {
 
@@ -12,6 +13,7 @@ function App() {
         <Routes>
           <Route path='/login' element={<Login />} />
           <Route path='/changepassword' element={<ChangePassword />} />
+          <Route path='/bustracking' element={<BusTracking />} />
           <Route path='/' element={<Testing />} />
         </Routes>
       </BrowserRouter>
