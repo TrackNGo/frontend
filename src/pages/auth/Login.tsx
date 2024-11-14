@@ -78,11 +78,21 @@ const Login = () => {
             </div>
 
             <div className="mt-4">
-              <PrimaryBtn type={"button"} onClick={submit} title={"login"} classes={"bg-gradient-to-r from-black to-black hover:from-slate-800 hover:to-slate-700 border-solid border-1 border-slate-950 text-white"} />
+              <PrimaryBtn
+                type={"button"}
+                onClick={submit}
+                title={"login"}
+                classes={"bg-gradient-to-r from-black to-black hover:from-slate-800 hover:to-slate-700 border-solid border-1 border-slate-950 text-white"}
+              />
             </div>
 
             <div className="mt-3">
-              <PrimaryBtn type={"button"} onClick={() => { console.log(credentials) }} title={"forgot password"} classes={'bg-gradient-to-r from-white to-white hover:from-slate-100 hover:to-slate-200 border-solid border-1 border-slate-950 text-black'} />
+              <PrimaryBtn
+                type={"button"}
+                onClick={() => { console.log(credentials) }}
+                title={"forgot password"}
+                classes={'bg-gradient-to-r from-white to-white hover:from-slate-100 hover:to-slate-200 border-solid border-1 border-slate-950 text-black'}
+              />
             </div>
           </form>
         </div>
