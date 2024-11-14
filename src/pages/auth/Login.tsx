@@ -3,7 +3,7 @@ import PrimaryBtn from "../../components/btn/primaryBtn/PrimaryBtn"
 import TextBox from "../../components/textBox/TextBox"
 
 const Login = () => {
-  const [error, setError] = useState<string>("")
+  const [error, setError] = useState<{ credentialsUsername?: string; password?: string }>({})
   const [credentials, setCredentials] = useState<{ credentialsUsername: string; password: string }>({
     credentialsUsername: "",
     password: ""
@@ -15,22 +15,30 @@ const Login = () => {
       ...prev,
       [name]: value
     }))
-    setError("")
+    setError((prev) => ({ ...prev, [name]: "" }))
   }
   async function submit(event: any) {
     event.preventDefault()
-    if (credentials.credentialsUsername === "" && credentials.password === "") {
-      setError("Username and Password Required!")
-    } else if (credentials.credentialsUsername === "") {
-      setError("Username Required!")
-    } else if (credentials.password === "") {
-      setError("Password Required!")
+    const newError: { credentialsUsername?: string; password?: string } = {}
+
+    if (!credentials.credentialsUsername) {
+      newError.credentialsUsername = "Username Required!"
     }
-    const data = {
-      credentialsUsername: credentials.credentialsUsername,
-      password: credentials.password
+    if (!credentials.password) {
+      newError.password = "Password Required!"
     }
-    console.log(data)
+
+    if (Object.keys(newError).length > 0) {
+      setError(newError)
+    } else {
+      setError({})
+      const data = {
+        credentialsUsername: credentials.credentialsUsername,
+        password: credentials.password
+      }
+      console.log("Logging in with data:", data)
+      //backend connection
+    }
   }
 
   return (
@@ -42,13 +50,31 @@ const Login = () => {
               <h1 className="capitalize text-3xl font-semibold mb-2">login your account</h1>
             </div>
             <div>
-              <TextBox onChange={handleInputChange} value={credentials.credentialsUsername} title={"Username"} type={"text"} placeholder={"Username or Email or Mobile Number"} name={"credentialsUsername"} />
-              <div className={`text-sm capitalize ${credentials.credentialsUsername === "" && error ? "text-red-600" : "text-slate-400"}`}>required</div>
+              <TextBox
+                onChange={handleInputChange}
+                value={credentials.credentialsUsername}
+                title={"Username"}
+                type={"text"}
+                placeholder={"Username or Email or Mobile Number"}
+                name={"credentialsUsername"}
+              />
+              <div className={`text-sm capitalize ${error.credentialsUsername ? "text-red-600" : "text-slate-400"}`}>
+                {error.credentialsUsername || "required"}
+              </div>
             </div>
 
             <div className="mt-2">
-              <TextBox onChange={handleInputChange} value={credentials.password} title={"password"} type={"password"} placeholder={"Password"} name={"password"} />
-              <div className={`text-sm capitalize ${credentials.password === "" && error ? "text-red-600" : "text-slate-400"}`}>required</div>
+              <TextBox
+                onChange={handleInputChange}
+                value={credentials.password}
+                title={"password"}
+                type={"password"}
+                placeholder={"Password"}
+                name={"password"}
+              />
+              <div className={`text-sm capitalize ${error.password ? "text-red-600" : "text-slate-400"}`}>
+                {error.password || "required"}
+              </div>
             </div>
 
             <div className="mt-4">
