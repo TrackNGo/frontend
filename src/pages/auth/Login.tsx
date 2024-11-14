@@ -17,6 +17,21 @@ const Login = () => {
     }))
     setError("")
   }
+  async function submit(event: any) {
+    event.preventDefault()
+    if (credentials.username === "" && credentials.password === "") {
+      setError("Username and Password Required!")
+    } else if (credentials.username === "") {
+      setError("Username Required!")
+    } else if (credentials.password === "") {
+      setError("Password Required!")
+    }
+    const data = {
+      username: credentials.username,
+      password: credentials.password
+    }
+    console.log(data)
+  }
 
   return (
     <div>
@@ -28,24 +43,20 @@ const Login = () => {
             </div>
             <div>
               <TextBox onChange={handleInputChange} value={credentials.username} title={"username"} type={"text"} placeholder={"Username"} name={"username"} />
-              <div className="text-slate-500 text-sm capitalize">required</div>
+              <div className={`text-sm capitalize ${credentials.username === "" && error ? "text-red-600" : "text-slate-500"}`}>required</div>
             </div>
 
             <div className="mt-2">
               <TextBox onChange={handleInputChange} value={credentials.password} title={"password"} type={"password"} placeholder={"Password"} name={"password"} />
-              <div className="text-slate-500 text-sm capitalize">required</div>
+              <div className={`text-sm capitalize ${credentials.password === "" && error ? "text-red-600" : "text-slate-500"}`}>required</div>
             </div>
 
-            {/*username or password error set*/
-              error && <div>{error}</div>
-            }
-
             <div className="mt-4">
-              <PrimaryBtn type={"submit"} title={"login"} classes={"bg-gradient-to-r from-black to-black hover:from-slate-800 hover:to-slate-700 border-solid border-1 border-slate-950 text-white"} />
+              <PrimaryBtn type={"button"} onClick={submit} title={"login"} classes={"bg-gradient-to-r from-black to-black hover:from-slate-800 hover:to-slate-700 border-solid border-1 border-slate-950 text-white"} />
             </div>
 
             <div className="mt-3">
-              <PrimaryBtn type={"button"} onClick={()=>{console.log(credentials)}} title={"forgot password"} classes={'bg-gradient-to-r from-white to-white hover:from-slate-100 hover:to-slate-200 border-solid border-1 border-slate-950 text-black'} />
+              <PrimaryBtn type={"button"} onClick={() => { console.log(credentials) }} title={"forgot password"} classes={'bg-gradient-to-r from-white to-white hover:from-slate-100 hover:to-slate-200 border-solid border-1 border-slate-950 text-black'} />
             </div>
           </form>
         </div>
