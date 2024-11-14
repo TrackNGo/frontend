@@ -1,6 +1,8 @@
 interface SecondaryBtnType{
     title:string,
-    classes:string
+    classes:string,
+    type?:any,
+    onClick?:any
 }
 
 export default SecondaryBtnType
