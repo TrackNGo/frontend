@@ -1,9 +1,22 @@
-import { useState } from "react"
+import { ChangeEvent, useState } from "react"
 import PrimaryBtn from "../../components/btn/primaryBtn/PrimaryBtn"
 import TextBox from "../../components/textBox/TextBox"
 
 const Login = () => {
   const [error, setError] = useState<string>("")
+  const [credentials, setCredentials] = useState<{ username: string; password: string }>({
+    username: "",
+    password: ""
+  })
+
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target
+    setCredentials((prev) => ({
+      ...prev,
+      [name]: value
+    }))
+    setError("")
+  }
 
   return (
     <div>
@@ -14,12 +27,12 @@ const Login = () => {
               <h1 className="capitalize text-3xl font-semibold mb-2">login your account</h1>
             </div>
             <div>
-              <TextBox title={"username"} type={"text"} placeholder={"Username"} name={"username"} />
+              <TextBox onChange={handleInputChange} value={credentials.username} title={"username"} type={"text"} placeholder={"Username"} name={"username"} />
               <div className="text-slate-500 text-sm capitalize">required</div>
             </div>
 
             <div className="mt-2">
-              <TextBox title={"password"} type={"password"} placeholder={"Password"} name={"password"} />
+              <TextBox onChange={handleInputChange} value={credentials.password} title={"password"} type={"password"} placeholder={"Password"} name={"password"} />
               <div className="text-slate-500 text-sm capitalize">required</div>
             </div>
 
@@ -32,7 +45,7 @@ const Login = () => {
             </div>
 
             <div className="mt-3">
-              <PrimaryBtn type={"button"} title={"forgot password"} classes={'bg-gradient-to-r from-white to-white hover:from-slate-100 hover:to-slate-200 border-solid border-1 border-slate-950 text-black'} />
+              <PrimaryBtn type={"button"} onClick={()=>{console.log(credentials)}} title={"forgot password"} classes={'bg-gradient-to-r from-white to-white hover:from-slate-100 hover:to-slate-200 border-solid border-1 border-slate-950 text-black'} />
             </div>
           </form>
         </div>
