@@ -95,7 +95,6 @@ const BusTrackingDetails = () => {
             </div>
 
             <div className="mt-2">
-                {/* Show status */}
                 <div className="flex items-center text-right font-medium pl-4">
                     {busRouteDetails ? (
                         busRouteDetails.status ? (
