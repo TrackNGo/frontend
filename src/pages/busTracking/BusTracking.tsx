@@ -104,7 +104,7 @@ const BusTracking = () => {
                     title={"refresh"}
                     type={"button"}
                     onClick={() => window.location.reload()}
-                    classes={"bg-gradient-to-r from-black to-black hover:from-slate-800 hover:to-slate-700 border-solid border-1 border-slate-950 text-white"}
+                    classes={"bg-gradient-to-r from-white to-white hover:from-slate-100 hover:to-slate-200 border-solid border-1 border-slate-900 text-black"}
                 />
             </div>
 
