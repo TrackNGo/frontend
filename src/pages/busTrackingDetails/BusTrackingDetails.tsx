@@ -79,7 +79,8 @@ const BusTrackingDetails = () => {
     return (
         <div className="px-2">
             <Headline title={`Bus Tracking - ${busNumber}`} />
-            <div>
+
+            <div className="mt-3">
                 <PrimaryBtn
                     title={"refresh"}
                     type={"button"}

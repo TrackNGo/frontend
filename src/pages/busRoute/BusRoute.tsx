@@ -21,9 +21,9 @@ const btnSet = [
 const BusRoute = () => {
     return (
         <div className="px-2">
-            <Headline title={"track your bus on locations"} />
+            <Headline title={"track your bus on route number"} />
 
-            <div className="mb-2">
+            <div className="mt-1 mb-2">
                 <div className="mb-1">
                     <TextBox
                         title={"route number"}

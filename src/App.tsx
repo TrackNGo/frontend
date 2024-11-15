@@ -19,11 +19,14 @@ function App() {
           <Route path='/home' element={<Home />} />
           <Route path='/schedule' element={<Schedule />} />
           <Route path='/busroute' element={<BusRoute />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/changepassword' element={<ChangePassword />} />
+          <Route path='/fareestimate' element={<FareEstimate />} />
+          
           <Route path='/bustracking' element={<BusTracking />} />
           <Route path='/bustracking/details/:busNumber' element={<BusTrackingDetails />} />
-          <Route path='/fareestimate' element={<FareEstimate />} />
+
+          <Route path='/login' element={<Login />} />
+          <Route path='/changepassword' element={<ChangePassword />} />
+
           <Route path='/' element={<Testing />} />
         </Routes>
       </BrowserRouter>
