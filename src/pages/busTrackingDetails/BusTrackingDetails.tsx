@@ -79,7 +79,8 @@ const BusTrackingDetails = () => {
     return (
         <div className="px-2">
             <Headline title={`Bus Tracking - ${busNumber}`} />
-            <div>
+
+            <div className="mt-3">
                 <PrimaryBtn
                     title={"refresh"}
                     type={"button"}
@@ -154,12 +155,23 @@ const BusTrackingDetails = () => {
             </div>
 
             <div className="py-4">
-                <PrimaryBtn
-                    title={"cancel"}
-                    type={"button"}
-                    onClick={() => { }}
-                    classes={"bg-gradient-to-r from-black to-black hover:from-slate-800 hover:to-slate-700 border-solid border-1 border-slate-950 text-white"}
-                />
+                <div className="mb-3">
+                    <PrimaryBtn
+                        title={"cancel"}
+                        type={"button"}
+                        onClick={() => { }}
+                        classes={"bg-gradient-to-r from-white to-white hover:from-slate-100 hover:to-slate-200 border-solid border-1 border-slate-900 text-black"}
+                    />
+                </div>
+
+                <div className="mt-2">
+                    <PrimaryBtn
+                        title={"go home"}
+                        type={"button"}
+                        onClick={() => { }}
+                        classes={"bg-gradient-to-r from-black to-black hover:from-slate-800 hover:to-slate-700 border-solid border-1 border-slate-950 text-white"}
+                    />
+                </div>
             </div>
         </div>
     )

@@ -9,6 +9,7 @@ import FareEstimate from './pages/fareEstimate/FareEstimate'
 import Home from './pages/home/Home'
 import Schedule from './pages/schedule/Schedule'
 import BusRoute from './pages/busRoute/BusRoute'
+import FareEstimateDetails from './pages/fareEstimateDetails/FareEstimateDetails'
 
 function App() {
 
@@ -19,11 +20,15 @@ function App() {
           <Route path='/home' element={<Home />} />
           <Route path='/schedule' element={<Schedule />} />
           <Route path='/busroute' element={<BusRoute />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/changepassword' element={<ChangePassword />} />
+          <Route path='/fareestimate' element={<FareEstimate />} />
+          <Route path='/fareestimate/details' element={<FareEstimateDetails />} />
+
           <Route path='/bustracking' element={<BusTracking />} />
           <Route path='/bustracking/details/:busNumber' element={<BusTrackingDetails />} />
-          <Route path='/fareestimate' element={<FareEstimate />} />
+
+          <Route path='/login' element={<Login />} />
+          <Route path='/changepassword' element={<ChangePassword />} />
+
           <Route path='/' element={<Testing />} />
         </Routes>
       </BrowserRouter>

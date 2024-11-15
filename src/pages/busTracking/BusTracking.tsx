@@ -99,7 +99,8 @@ const BusTracking = () => {
     return (
         <div className="px-2">
             <Headline title={"bus tracking"} />
-            <div>
+
+            <div className="mt-3">
                 <PrimaryBtn
                     title={"refresh"}
                     type={"button"}
@@ -113,17 +114,20 @@ const BusTracking = () => {
                     <h2 className="text-2xl font-semibold">Buses</h2>
                     <p className="text-gray-500 text-xs">Active and On Road Buses</p>
                 </div>
+
                 <div className="flex space-x-2">
                     <SecondaryBtn
                         title={"all"}
                         onClick={() => setFilterStatus("all")}
                         classes={`border-black hover:bg-black hover:text-white hover:border-white ${filterStatus === "all" ? "bg-black text-white" : "bg-white text-black"}`}
                     />
+
                     <SecondaryBtn
                         title={"await"}
                         onClick={() => setFilterStatus("await")}
                         classes={`border-black hover:bg-black hover:text-white hover:border-white ${filterStatus === "await" ? "bg-black text-white" : "bg-white text-black"}`}
                     />
+
                     <SecondaryBtn
                         title={"on road"}
                         onClick={() => setFilterStatus("onroad")}
