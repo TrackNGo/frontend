@@ -3,24 +3,27 @@ import PrimaryBtn from "../../components/btn/primaryBtn/PrimaryBtn"
 import BtnSet from "../../components/btnSet/BtnSet"
 import Headline from "../../components/headline/Headline"
 import TextBox from "../../components/textBox/TextBox"
+import { useNavigate } from "react-router-dom"
 
-const btnSet = [
-    {
-        title: 'find on locations',
-        onClick: () => alert('find on locations btn clicked'),
-    },
-    {
-        title: 'view schedule',
-        onClick: () => alert('view schedule btn clicked'),
-    },
-    {
-        title: 'estimate fare',
-        onClick: () => alert('estimate fare btn clicked'),
-    }
-]
 
 const BusRoute = () => {
     const [busRouteNumber, setBusRouteNumber] = useState<string>("")
+    const navigate=useNavigate()
+
+    const btnSet = [
+        {
+            title: 'find on locations',
+            onClick: () => navigate('/home'),
+        },
+        {
+            title: 'view schedule',
+            onClick: () => navigate('/schedule'),
+        },
+        {
+            title: 'estimate fare',
+            onClick: () => navigate('/fareestimate'),
+        }
+    ]
 
     const handleBusRouteChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setBusRouteNumber(event.target.value)
