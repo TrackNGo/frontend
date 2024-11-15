@@ -9,6 +9,7 @@ import FareEstimate from './pages/fareEstimate/FareEstimate'
 import Home from './pages/home/Home'
 import Schedule from './pages/schedule/Schedule'
 import BusRoute from './pages/busRoute/BusRoute'
+import FareEstimateDetails from './pages/fareEstimateDetails/FareEstimateDetails'
 
 function App() {
 
@@ -20,7 +21,8 @@ function App() {
           <Route path='/schedule' element={<Schedule />} />
           <Route path='/busroute' element={<BusRoute />} />
           <Route path='/fareestimate' element={<FareEstimate />} />
-          
+          <Route path='/fareestimate/details' element={<FareEstimateDetails />} />
+
           <Route path='/bustracking' element={<BusTracking />} />
           <Route path='/bustracking/details/:busNumber' element={<BusTrackingDetails />} />
 
