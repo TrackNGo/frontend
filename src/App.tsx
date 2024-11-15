@@ -12,7 +12,6 @@ import BusRoute from './pages/busRoute/BusRoute'
 import FareEstimateDetails from './pages/fareEstimateDetails/FareEstimateDetails'
 
 function App() {
-
   return (
     <>
       <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true, }}>

@@ -3,21 +3,7 @@ import PrimaryBtn from "../../components/btn/primaryBtn/PrimaryBtn"
 import BtnSet from "../../components/btnSet/BtnSet"
 import Headline from "../../components/headline/Headline"
 import SelectBox from "../../components/selectBox/SelectBox"
-
-const btnSet = [
-    {
-        title: 'find on route number',
-        onClick: () => alert('find on route number btn clicked'),
-    },
-    {
-        title: 'view schedule',
-        onClick: () => alert('view schedule btn clicked'),
-    },
-    {
-        title: 'estimate fare',
-        onClick: () => alert('estimate fare btn clicked'),
-    }
-]
+import { useNavigate } from "react-router-dom"
 
 const options = [
     "colombo",
@@ -30,6 +16,23 @@ const Home = () => {
         startLocation: null,
         endLocation: null
     })
+
+    const navigate=useNavigate()
+
+    const btnSet = [
+        {
+            title: 'find on route number',
+            onClick: () => navigate('/busroute'),
+        },
+        {
+            title: 'view schedule',
+            onClick: () => navigate('/schedule'),
+        },
+        {
+            title: 'estimate fare',
+            onClick: () => navigate('/fareestimate'),
+        }
+    ]
 
     const handleLocationChange = (key: 'startLocation' | 'endLocation', value: string) => {
         setLocations(prev => ({ ...prev, [key]: value }))
