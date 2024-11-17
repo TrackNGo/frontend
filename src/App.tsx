@@ -5,6 +5,7 @@ import Testing from './pages/testing/Testing'
 import LnSHome from './pages/lostAndfound/LnSHome'
 import LostItemReport from './pages/lostAndfound/LostItemReport'
 import FoundItemReport from './pages/lostAndfound/FoundItemReport'
+import SearchItem from './pages/lostAndfound/SearchItem'
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
           <Route path='/LnSHome' element={<LnSHome />} />
           <Route path='/LostItemReport' element={<LostItemReport />} />
           <Route path='/FoundItemReport' element={<FoundItemReport />} />
+          <Route path='/SearchItem' element={<SearchItem />} />
         </Routes>
       </BrowserRouter>
     </>

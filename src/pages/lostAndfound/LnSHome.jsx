@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import './css/LnSHome.css'; // Import the external CSS file
+import './LnSHome.css'; // Import the external CSS file
 
 function LnSHome() {
     const navigate = useNavigate();
@@ -14,7 +14,7 @@ function LnSHome() {
         <div className="home-container">
             <h1 className="home-title">Lost and Found System</h1>
             <div className="home-button-container">
-                <button className="home-button" onClick={() => handleNavigation('/')}>
+                <button className="home-button" onClick={() => handleNavigation('/SearchItem')}>
                     Search Lost Item
                 </button>
                 <button className="home-button" onClick={() => handleNavigation('/LostItemReport')}>

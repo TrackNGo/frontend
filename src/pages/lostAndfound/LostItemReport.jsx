@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './css/LostItemReport.css'; // Import the CSS for styling
+import './LostItemReport.css'; // Import the CSS for styling
 
 function LostItemReport() {
     const navigate = useNavigate();
@@ -23,8 +23,33 @@ function LostItemReport() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Submit the form data here (you can send it to an API)
-        console.log(formData);
+        
+        // Send data to the backend (POST request)
+        fetch('http://localhost:5000/api/items/submit', {  // Assuming backend is running on localhost:5000
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify({
+                type: 'lost',  // This could be dynamic if you want to handle both 'lost' and 'found'
+                userName: formData.name,
+                dateTime: formData.dateTime,
+                busRoute: formData.busRoute,
+                busNumber: formData.busNumber,
+                description: formData.description,
+                contactDetails: formData.contactDetails,
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Item submitted:', data);
+            alert('Lost item report submitted successfully!');
+            navigate('/');  // Redirect to home page after submission
+        })
+        .catch(error => {
+            console.error('Error submitting item:', error);
+            alert('There was an error submitting the report.');
+        });
     };
 
     const goHome = () => {
@@ -56,7 +81,7 @@ function LostItemReport() {
                         name="dateTime"
                         value={formData.dateTime}
                         onChange={handleChange}
-                          placeholder="MM/DD/YYYY HH:MM AM/PM"
+                        placeholder="MM/DD/YYYY HH:MM AM/PM"
                         required
                     />
                 </div>
