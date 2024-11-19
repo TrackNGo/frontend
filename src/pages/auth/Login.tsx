@@ -84,7 +84,7 @@ const Login = () => {
               name="accType"
               value={credentials.accType}
               onChange={handleSelectChange}
-              options={["General", "Admin"]}
+              options={["General"]}
               placeholder="Select Account Type"
             />
             <div className={`text-sm capitalize ${error.accType ? "text-red-600" : "text-slate-400"}`}>
