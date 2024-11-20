@@ -10,6 +10,7 @@ const SelectBox = (option: OptionType & { onChange?: (value: string) => void }) 
                 name={option.name}
                 value={option.value}
                 onChange={(e) => option.onChange?.(e.target.value)}
+                disabled={option.disabled}
             >
                 <option className="text-black" value="" disabled>
                     {option.placeholder}

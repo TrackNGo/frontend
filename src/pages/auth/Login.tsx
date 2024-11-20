@@ -86,10 +86,11 @@ const Login = () => {
               onChange={handleSelectChange}
               options={["General"]}
               placeholder="Select Account Type"
-            />
+              disabled={true}
+            />{/*
             <div className={`text-sm capitalize ${error.accType ? "text-red-600" : "text-slate-400"}`}>
               {error.accType || "required"}
-            </div>
+            </div>*/}
           </div>
 
           <div className="mt-2">
