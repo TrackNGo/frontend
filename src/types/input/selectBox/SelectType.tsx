@@ -4,6 +4,7 @@ interface SelectType {
     name:string,
     options?:string[],
     value?:string
+    disabled?:boolean
 }
 
 export default SelectType
