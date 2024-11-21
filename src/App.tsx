@@ -10,6 +10,7 @@ import Home from './pages/home/Home'
 import Schedule from './pages/schedule/Schedule'
 import BusRoute from './pages/busRoute/BusRoute'
 import FareEstimateDetails from './pages/fareEstimateDetails/FareEstimateDetails'
+import Dashboard from './pages/dashboard/Dashboard'
 
 function App() {
   return (
@@ -27,6 +28,8 @@ function App() {
 
           <Route path='/login' element={<Login />} />
           <Route path='/changepassword' element={<ChangePassword />} />
+
+          <Route path='dashboard' element={<Dashboard/>}/>
 
           <Route path='/' element={<Testing />} />
         </Routes>
