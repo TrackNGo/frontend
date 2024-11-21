@@ -70,7 +70,7 @@ const Login = () => {
               value={credentials.credentialsUsername}
               title={"Username"}
               type={"text"}
-              placeholder={"Username or Email or Mobile Number"}
+              placeholder={"Enter Username"}
               name={"credentialsUsername"}
             />
             <div className={`text-sm capitalize ${error.credentialsUsername ? "text-red-600" : "text-slate-400"}`}>
@@ -99,7 +99,7 @@ const Login = () => {
               value={credentials.password}
               title={"Password"}
               type={"password"}
-              placeholder={"Password"}
+              placeholder={"Enter Password"}
               name={"password"}
             />
             <div className={`text-sm capitalize ${error.password ? "text-red-600" : "text-slate-400"}`}>
