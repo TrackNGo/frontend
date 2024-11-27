@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useMemo, useRef } from "react"
 import { Link, useLocation } from "react-router-dom"
 
 interface NavbarProps {
@@ -6,9 +6,20 @@ interface NavbarProps {
 }
 
 const Navbar = ({ navOpen }: NavbarProps) => {
-    const location = useLocation() // Get current location from react-router-dom
+    const location = useLocation() // Get current location
     const lastActiveLink = useRef<HTMLAnchorElement | null>(null)
     const activeBox = useRef<HTMLDivElement | null>(null)
+
+    const navItems = useMemo(
+        () => [
+            { label: 'home', link: '/home', className: 'nav-link' },
+            { label: 'schedule', link: '/schedule', className: 'nav-link' },
+            { label: 'busroute', link: '/busroute', className: 'nav-link' },
+            { label: 'fareestimate', link: '/fareestimate', className: 'nav-link' },
+            { label: 'bustracking', link: '/bustracking', className: 'nav-link md:hidden' }
+        ],
+        []
+    )
 
     const initActiveBox = () => {
         if (lastActiveLink.current && activeBox.current) {
@@ -35,14 +46,6 @@ const Navbar = ({ navOpen }: NavbarProps) => {
 
         initActiveBox()
     }, [location.pathname]) // Trigger on path change
-
-    const navItems = [
-        { label: 'home', link: '/home', className: 'nav-link' },
-        { label: 'schedule', link: '/schedule', className: 'nav-link' },
-        { label: 'busroute', link: '/busroute', className: 'nav-link' },
-        { label: 'fareestimate', link: '/fareestimate', className: 'nav-link' },
-        { label: 'bustracking', link: '/bustracking', className: 'nav-link md:hidden' }
-    ]
 
     return (
         <nav className={'navbar ' + (navOpen ? 'active' : '')}>
