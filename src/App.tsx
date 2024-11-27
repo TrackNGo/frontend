@@ -11,11 +11,13 @@ import Schedule from './pages/schedule/Schedule'
 import BusRoute from './pages/busRoute/BusRoute'
 import FareEstimateDetails from './pages/fareEstimateDetails/FareEstimateDetails'
 import Dashboard from './pages/dashboard/Dashboard'
+import Header from './components/header/Header'
 
 function App() {
   return (
     <>
       <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true, }}>
+        <Header/>
         <Routes>
           <Route path='/home' element={<Home />} />
           <Route path='/schedule' element={<Schedule />} />
