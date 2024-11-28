@@ -16,8 +16,8 @@ const BusRoute = () => {
             onClick: () => navigate('/home'),
         },
         {
-            title: 'view schedule',
-            onClick: () => navigate('/schedule'),
+            title: 'Bus Time Table',
+            onClick: () => navigate('/timetable'),
         },
         {
             title: 'estimate fare',
