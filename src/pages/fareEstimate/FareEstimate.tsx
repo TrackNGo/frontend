@@ -29,8 +29,8 @@ const FareEstimate = () => {
             onClick: () => navigate('/busroute'),
         },
         {
-            title: 'view schedule',
-            onClick: () => navigate('/schedule'),
+            title: 'Bus Time Table',
+            onClick: () => navigate('/timetable'),
         }
     ]
 

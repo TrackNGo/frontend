@@ -7,7 +7,7 @@ import BusTracking from './pages/busTracking/BusTracking'
 import BusTrackingDetails from './pages/busTrackingDetails/BusTrackingDetails'
 import FareEstimate from './pages/fareEstimate/FareEstimate'
 import Home from './pages/home/Home'
-import Schedule from './pages/schedule/Schedule'
+import TimeTable from './pages/timeTable/TimeTable'
 import BusRoute from './pages/busRoute/BusRoute'
 import FareEstimateDetails from './pages/fareEstimateDetails/FareEstimateDetails'
 import Dashboard from './pages/dashboard/Dashboard'
@@ -19,8 +19,8 @@ function App() {
       <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true, }}>
         <Header/>
         <Routes>
-          <Route path='/home' element={<Home />} />
-          <Route path='/schedule' element={<Schedule />} />
+          <Route path='/' element={<Home />} />
+          <Route path='/timetable' element={<TimeTable />} />
           <Route path='/busroute' element={<BusRoute />} />
           <Route path='/fareestimate' element={<FareEstimate />} />
           <Route path='/fareestimate/details' element={<FareEstimateDetails />} />
@@ -33,7 +33,7 @@ function App() {
 
           <Route path='dashboard' element={<Dashboard/>}/>
 
-          <Route path='/' element={<Testing />} />
+          <Route path='/testing' element={<Testing />} />
         </Routes>
       </BrowserRouter>
     </>
