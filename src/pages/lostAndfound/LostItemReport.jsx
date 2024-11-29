@@ -53,7 +53,7 @@ function LostItemReport() {
     };
 
     const goHome = () => {
-        navigate('/');
+        navigate('/lnshome');
     };
 
     return (

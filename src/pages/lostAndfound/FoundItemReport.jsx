@@ -13,6 +13,9 @@ function FoundItemReport() {
         contactDetails: '',
     });
 
+    const [isLoading, setIsLoading] = useState(false); // Loading state
+
+    // Handle form field changes
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -21,14 +24,65 @@ function FoundItemReport() {
         });
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Submit the form data here (you can send it to an API)
-        console.log(formData);
+    // Validate form data
+    const validateForm = () => {
+        if (!formData.name.trim()) {
+            alert('Name is required.');
+            return false;
+        }
+        if (!formData.dateTime) {
+            alert('Date and time are required.');
+            return false;
+        }
+        if (!formData.description.trim()) {
+            alert('Description is required.');
+            return false;
+        }
+        return true;
     };
 
+    // Handle form submission
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (!validateForm()) return;
+
+        setIsLoading(true); // Show loading state
+
+        // Send data to the backend (POST request)
+        fetch('http://localhost:5000/api/items/submit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                type: 'found', // Type is "found" for this form
+                userName: formData.name,
+                dateTime: formData.dateTime,
+                busRoute: formData.busRoute,
+                busNumber: formData.busNumber,
+                description: formData.description,
+                contactDetails: formData.contactDetails,
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log('Item submitted:', data);
+                alert('Found item report submitted successfully!');
+                navigate('/'); // Redirect to home page after submission
+            })
+            .catch((error) => {
+                console.error('Error submitting item:', error);
+                alert('There was an error submitting the report.');
+            })
+            .finally(() => {
+                setIsLoading(false); // Hide loading state
+            });
+    };
+
+    // Navigate to the home page
     const goHome = () => {
-        navigate('/');
+        navigate('/lnshome');
     };
 
     return (
@@ -107,8 +161,12 @@ function FoundItemReport() {
                     />
                 </div>
                 <div className="form-buttons">
-                    <button type="submit" className="submit-button">Submit</button>
-                    <button type="button" className="home-button" onClick={goHome}>Go to Home Page</button>
+                    <button type="submit" className="submit-button" disabled={isLoading}>
+                        {isLoading ? 'Submitting...' : 'Submit'}
+                    </button>
+                    <button type="button" className="home-button" onClick={goHome}>
+                        Go to Home Page
+                    </button>
                 </div>
             </form>
         </div>
