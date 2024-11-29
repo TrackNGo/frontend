@@ -121,7 +121,7 @@ const Login = () => {
               type={"button"}
               onClick={() => { console.log(credentials) }}
               title={"Forgot Password"}
-              classes={'bg-gradient-to-r from-white to-white hover:from-slate-100 hover:to-slate-200 border-solid border-1 border-slate-900 text-black'}
+              classes={'bg-gradient-to-r from-white to-white hover:from-slate-100 hover:to-slate-200 border-solid border-1 border-black text-black'}
             />
           </div>
         </form>

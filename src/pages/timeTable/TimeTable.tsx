@@ -11,7 +11,7 @@ const options = [
     "kalutara"
 ]
 
-const Schedule = () => {
+const TimeTable = () => {
     const [locations, setLocations] = useState<{ startLocation: string | null, endLocation: string | null }>({
         startLocation: null,
         endLocation: null
@@ -40,7 +40,7 @@ const Schedule = () => {
 
     return (
         <div className="px-2">
-            <Headline title={"track your bus on schedule"} />
+            <Headline title={"Bus Time Table"} />
 
             <div className="mb-2">
                 <div className="mb-1">
@@ -75,4 +75,4 @@ const Schedule = () => {
     )
 }
 
-export default Schedule
+export default TimeTable
