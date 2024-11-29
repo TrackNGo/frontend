@@ -1,9 +1,9 @@
-import { useNavigate, useParams } from "react-router-dom"
+import { useState, useEffect } from "react"
+import { useParams, useNavigate } from "react-router-dom"
+import axios from "axios"
 import PrimaryBtn from "../../components/btn/primaryBtn/PrimaryBtn"
 import Headline from "../../components/headline/Headline"
-import { useEffect, useState } from "react"
 import BusRouteTypes from "../../types/busRoute/BusRouteTypes"
-import axios from "axios"
 import RouteStopList from "../../components/routeStopList/RouteStopList"
 import LocationInfo from "../../components/locationInfo/LocationInfo"
 import BusStatus from "../../components/busStatus/BusStatus"
@@ -12,35 +12,26 @@ const BusTrackingDetails = () => {
     const { busNumber } = useParams<string>()
     const [loading, setLoading] = useState(true)
     const [busRouteDetails, setBusRouteDetails] = useState<BusRouteTypes | null>(null)
+    const [busDetails, setBusDetails] = useState<{ status: boolean } | null>(null)
     const [error, setError] = useState<string | null>(null)
 
     const navigate = useNavigate()
 
     const fetchDetails = async () => {
         try {
-            const routeResponse = await axios.get(`http://localhost:3000/api-busroutes/busRoute/${busNumber}`)
-            const busResponse = await axios.get(`http://localhost:3000/api-bus/bus/${busNumber}`)
+            setLoading(true)
+            const [routeResponse, busResponse] = await Promise.all([
+                axios.get(`http://localhost:3000/api-busroutes/busRoute/${busNumber}`),
+                axios.get(`http://localhost:3000/api-bus/bus/${busNumber}`)
+            ])
 
-            const busData = busResponse.data
-            const routeData = routeResponse.data
-            
-            //console.log(routeData)
-
-            setBusRouteDetails({
-                ...routeData,
-                status: busData.status
-            })
-            //console.log(busData?.status)
-            //console.log(busRouteDetails?.busNumber)
-            //console.log(busRouteDetails?.status)
-            setError(null)  // Reset error state if the data is fetched successfully
+            setBusRouteDetails(routeResponse.data)
+            setBusDetails(busResponse.data)
+            setError(null) // Reset error state
         } catch (error: any) {
-            if (error.response?.status === 404) {
-                setError("Bus details not found.")
-            } else {
-                setError("Error fetching bus details.")
-            }
+            setError("Error fetching bus details.")
             setBusRouteDetails(null)
+            setBusDetails(null)
         } finally {
             setLoading(false)
         }
@@ -68,16 +59,14 @@ const BusTrackingDetails = () => {
                 />
             </div>
 
-            <div>map</div>
-
             <div className="mt-2">
-                <BusStatus status={busRouteDetails?.status} />
+                <BusStatus status={busDetails?.status} />
             </div>
 
             <LocationInfo title="starting point" location={busRouteDetails?.startLocation || "N/A"} />
             <LocationInfo title="ending point" location={busRouteDetails?.endLocation || "N/A"} />
 
-            <RouteStopList stops={busRouteDetails?.routeStops || []}/>
+            <RouteStopList stops={busRouteDetails?.routeStops || []} />
 
             <div className="py-4">
                 <div className="sm:mb-1 mb-2">
