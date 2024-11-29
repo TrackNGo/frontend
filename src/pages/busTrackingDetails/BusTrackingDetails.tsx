@@ -1,10 +1,12 @@
 import { useNavigate, useParams } from "react-router-dom"
 import PrimaryBtn from "../../components/btn/primaryBtn/PrimaryBtn"
 import Headline from "../../components/headline/Headline"
-import LocationPointBox from "../../components/locationPointBox/LocationPointBox"
 import { useEffect, useState } from "react"
 import BusRouteTypes from "../../types/busRoute/BusRouteTypes"
 import axios from "axios"
+import RouteStopList from "../../components/routeStopList/RouteStopList"
+import LocationInfo from "../../components/locationInfo/LocationInfo"
+import BusStatus from "../../components/busStatus/BusStatus"
 
 const BusTrackingDetails = () => {
     const { busNumber } = useParams<string>()
@@ -69,56 +71,13 @@ const BusTrackingDetails = () => {
             <div>map</div>
 
             <div className="mt-2">
-                <div className="flex items-center text-right font-medium pl-4">
-                    {busRouteDetails?.status ? (
-                        <div className="relative flex items-center">
-                            <span className="absolute flex h-3 w-3">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-400"></span>
-                            </span>
-                            <span className="ml-5 text-green-600 capitalize">Active on road</span>
-                        </div>
-                    ) : (
-                        <div className="relative flex items-center">
-                            <span className="absolute flex h-3 w-3">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
-                            </span>
-                            <span className="ml-5 text-red-600 capitalize">Not active on road</span>
-                        </div>
-                    )}
-                </div>
+                <BusStatus status={busRouteDetails?.status} />
             </div>
 
-            <div className="mt-4">
-                <div>
-                    <div className="capitalize text-md font-medium">starting point</div>
-                    <LocationPointBox location={busRouteDetails?.startLocation || "N/A"} />
-                </div>
-                <div className="mt-1">
-                    <div className="capitalize text-md font-medium">ending point</div>
-                    <LocationPointBox location={busRouteDetails?.endLocation || "N/A"} />
-                </div>
-            </div>
+            <LocationInfo title="starting point" location={busRouteDetails?.startLocation || "N/A"} />
+            <LocationInfo title="ending point" location={busRouteDetails?.endLocation || "N/A"} />
 
-            <div className="mt-4">
-                <div className="capitalize text-lg font-medium">details</div>
-                <div className="mb-2 text-xs text-slate-500">Based on selected route on bus</div>
-                {busRouteDetails?.routeStops.length ? (
-                    busRouteDetails.routeStops.map((stop, index) => (
-                        <div
-                            key={index}
-                            className="w-full capitalize text-[12px] text-left pl-4 p-1 my-1 border border-gray-300 rounded-lg hover:bg-gray-50 transition duration-200 ease-in-out"
-                        >
-                            {stop}
-                        </div>
-                    ))
-                ) : (
-                    <div className="w-full text-center text-sm text-gray-500 mt-2">
-                        No route stops available.
-                    </div>
-                )}
-            </div>
+            <RouteStopList stops={busRouteDetails?.routeStops || []}/>
 
             <div className="py-4">
                 <div className="sm:mb-1 mb-2">

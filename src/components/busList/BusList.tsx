@@ -13,12 +13,13 @@ const BusList: React.FC<Props> = ({ buses }) => {
         <div className="mt-1">
             {buses.length > 0 ? (
                 buses.map((bus) => (
-                    <div key={bus.busNumber} onClick={() => navigate(`/bustracking/details/${bus.busNumber}`)}>
+                    <div key={bus.busNumber}
+                        onClick={() => navigate(`/bustracking/details/${bus.busNumber}`)}>
                         <BusDetails {...bus} />
                     </div>
                 ))
             ) : (
-                <p className="px-4">No buses available</p>
+                <p className="px-4 capitalize">No buses available</p>
             )}
         </div>
     )
