@@ -1,12 +1,14 @@
 import { ChangeEvent, useState } from "react"
 import PrimaryBtn from "../../components/btn/primaryBtn/PrimaryBtn"
 import TextBox from "../../components/textBox/TextBox"
+import SelectBox from "../../components/selectBox/SelectBox"
 
 const Login = () => {
-  const [error, setError] = useState<string>("")
-  const [credentials, setCredentials] = useState<{ username: string; password: string }>({
-    username: "",
-    password: ""
+  const [error, setError] = useState<{ credentialsUsername?: string; password?: string; accType?: string }>({})
+  const [credentials, setCredentials] = useState<{ credentialsUsername: string; password: string; accType: string }>({
+    credentialsUsername: "",
+    password: "",
+    accType: "General",
   })
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -15,40 +17,114 @@ const Login = () => {
       ...prev,
       [name]: value
     }))
-    setError("")
+    setError((prev) => ({ ...prev, [name]: "" }))
+  }
+
+  const handleSelectChange = (value: string) => {
+    setCredentials((prev) => ({
+      ...prev,
+      accType: value
+    }))
+    setError((prev) => ({ ...prev, accType: "" }))
+  }
+
+  async function submit(event: any) {
+    event.preventDefault()
+    const newError: { credentialsUsername?: string; password?: string; accType?: string } = {}
+
+    if (!credentials.credentialsUsername) {
+      newError.credentialsUsername = "Username Required!"
+    }
+    if (!credentials.password) {
+      newError.password = "Password Required!"
+    }
+    if (!credentials.accType) {
+      newError.accType = "Account Type Required!"
+    }
+
+    if (Object.keys(newError).length > 0) {
+      setError(newError)
+    } else {
+      setError({})
+      const data = {
+        credentialsUsername: credentials.credentialsUsername,
+        password: credentials.password,
+        accType: credentials.accType
+      }
+      console.log("Logging in with data:", data)
+      // backend connection
+    }
   }
 
   return (
-    <div>
-      <div className="container mx-auto mb-10 md:mt-5">
-        <div className="flex items-center justify-center mb-6">
-          <form className="md:border md:border-slate-200 rounded-xl max-w-[500px] min-w-[400px] center p-4 pb-8 pt-10 md:pt-6 md:shadow-lg">
-            <div className="text-left md:text-center">
-              <h1 className="capitalize text-3xl font-semibold mb-2">login your account</h1>
-            </div>
-            <div>
-              <TextBox onChange={handleInputChange} value={credentials.username} title={"username"} type={"text"} placeholder={"Username"} name={"username"} />
-              <div className="text-slate-500 text-sm capitalize">required</div>
-            </div>
+    <div className="container mx-auto mb-10 md:mt-5">
+      <div className="flex items-center justify-center mb-6">
+        <form className="md:border md:border-slate-200 rounded-xl max-w-[500px] min-w-[400px] center p-4 pb-8 pt-10 md:pt-6 md:shadow-lg">
+          <div className="text-left md:text-center mb-8">
+            <h1 className="capitalize text-3xl font-semibold mb-2">Login your account</h1>
+          </div>
 
-            <div className="mt-2">
-              <TextBox onChange={handleInputChange} value={credentials.password} title={"password"} type={"password"} placeholder={"Password"} name={"password"} />
-              <div className="text-slate-500 text-sm capitalize">required</div>
+          <div>
+            <TextBox
+              onChange={handleInputChange}
+              value={credentials.credentialsUsername}
+              title={"Username"}
+              type={"text"}
+              placeholder={"Enter Username"}
+              name={"credentialsUsername"}
+            />
+            <div className={`text-sm capitalize ${error.credentialsUsername ? "text-red-600" : "text-slate-400"}`}>
+              {error.credentialsUsername || "required"}
             </div>
+          </div>
 
-            {/*username or password error set*/
-              error && <div>{error}</div>
-            }
+          <div className="mt-2">
+            <SelectBox
+              title="Account Type"
+              name="accType"
+              value={credentials.accType}
+              onChange={handleSelectChange}
+              options={["General"]}
+              placeholder="Select Account Type"
+              disabled={true}
+            />{/*
+            <div className={`text-sm capitalize ${error.accType ? "text-red-600" : "text-slate-400"}`}>
+              {error.accType || "required"}
+            </div>*/}
+          </div>
 
-            <div className="mt-4">
-              <PrimaryBtn type={"submit"} title={"login"} classes={"bg-gradient-to-r from-black to-black hover:from-slate-800 hover:to-slate-700 border-solid border-1 border-slate-950 text-white"} />
+          <div className="mt-2">
+            <TextBox
+              onChange={handleInputChange}
+              value={credentials.password}
+              title={"Password"}
+              type={"password"}
+              placeholder={"Enter Password"}
+              name={"password"}
+            />
+            <div className={`text-sm capitalize ${error.password ? "text-red-600" : "text-slate-400"}`}>
+              {error.password || "required"}
             </div>
+          </div>
 
-            <div className="mt-3">
-              <PrimaryBtn type={"button"} onClick={()=>{console.log(credentials)}} title={"forgot password"} classes={'bg-gradient-to-r from-white to-white hover:from-slate-100 hover:to-slate-200 border-solid border-1 border-slate-950 text-black'} />
-            </div>
-          </form>
-        </div>
+          <div className="mt-4">
+            <PrimaryBtn
+              type={"button"}
+              onClick={submit}
+              title={"Login"}
+              classes={"bg-gradient-to-r from-black to-black hover:from-slate-800 hover:to-slate-700 border-solid border-1 border-slate-900 text-white"}
+            />
+          </div>
+
+          <div className="mt-3">
+            <PrimaryBtn
+              type={"button"}
+              onClick={() => { console.log(credentials) }}
+              title={"Forgot Password"}
+              classes={'bg-gradient-to-r from-white to-white hover:from-slate-100 hover:to-slate-200 border-solid border-1 border-black text-black'}
+            />
+          </div>
+        </form>
       </div>
     </div>
   )

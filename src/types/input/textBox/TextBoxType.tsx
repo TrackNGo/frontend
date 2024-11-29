@@ -5,6 +5,7 @@ interface TextBoxType{
     name:string,
     onChange?:any,
     value?:string
+    readOnly?:boolean
 }
 
 export default TextBoxType

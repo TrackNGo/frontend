@@ -1,14 +1,16 @@
-import OptionType from "../../types/input/selectBox/SelectType";
+import OptionType from "../../types/input/selectBox/SelectType"
 
-const SelectBox = (option: OptionType) => {
+const SelectBox = (option: OptionType & { onChange?: (value: string) => void }) => {
     return (
         <div className="w-full">
             <label className="capitalize text-md font-medium text-gray-700">{option.title}</label>
             <select
                 className="text-slate-400 w-full mt-1 px-2 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-black focus:border-black transition duration-150 ease-in-out"
                 required
-                defaultValue=""
                 name={option.name}
+                value={option.value}
+                onChange={(e) => option.onChange?.(e.target.value)}
+                disabled={option.disabled}
             >
                 <option className="text-black" value="" disabled>
                     {option.placeholder}
@@ -20,7 +22,7 @@ const SelectBox = (option: OptionType) => {
                 ))}
             </select>
         </div>
-    );
-};
+    )
+}
 
-export default SelectBox;
+export default SelectBox

@@ -1,13 +1,13 @@
 import busDetailsType from "../../types/busDetails/busDetailsTypes"
-
+import buslog from '../../assets/img/buslogo.png'
 const BusDetails = (bus: busDetailsType) => {
   return (
-    <div className="flex items-center p-4 border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100 transition duration-200 ease-in-out">
-      <div className="mr-4">
+    <div className="flex items-center p-4 border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100 transition duration-200 ease-in-out mb-2">
+      <div className="mr-2 rounded-full bg-gray-100 p-1">
         <img
-          src="bus-icon.png"
+          src={buslog}
           alt="Bus Icon"
-          className="w-10 h-10"
+          width={"60px"}
         />
       </div>
 
