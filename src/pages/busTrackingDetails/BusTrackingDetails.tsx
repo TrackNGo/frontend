@@ -5,6 +5,7 @@ import LocationPointBox from "../../components/locationPointBox/LocationPointBox
 import { useEffect, useState } from "react"
 import BusRouteTypes from "../../types/busRoute/BusRouteTypes"
 
+//busNumber, routeNumber, startLocation, endLocation, routeStops add status on front end
 const mockBusData: { [key: string]: BusRouteTypes } = {
     "ND-4588": {
         busNumber: "ND-4588",
