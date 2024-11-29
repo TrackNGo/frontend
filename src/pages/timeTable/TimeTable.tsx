@@ -65,7 +65,7 @@ const TimeTable = () => {
 
             <div className="py-2">
                 <PrimaryBtn
-                    title={"search bus"}
+                    title={"search bus time table"}
                     onClick={() => console.log("Start Location:", locations.startLocation, "End Location:", locations.endLocation)}
                     classes={"bg-gradient-to-r from-black to-black hover:from-slate-800 hover:to-slate-700 border-solid border-1 border-slate-900 text-white"}
                 />
