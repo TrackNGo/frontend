@@ -1,10 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './LostItemReport.css'; // Import the CSS for styling
+import './FoundItemReport.css'; // Import the CSS for styling
 
-function LostItemReport() {
+// Define the shape of form data
+interface FormData {
+    name: string;
+    dateTime: string;
+    busRoute: string;
+    busNumber: string;
+    description: string;
+    contactDetails: string;
+}
+
+const FoundItemReport: React.FC = () => {
     const navigate = useNavigate();
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<FormData>({
         name: '',
         dateTime: '',
         busRoute: '',
@@ -13,7 +23,10 @@ function LostItemReport() {
         contactDetails: '',
     });
 
-    const handleChange = (e) => {
+    const [isLoading, setIsLoading] = useState<boolean>(false); // Loading state
+
+    // Handle form field changes
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
@@ -21,17 +34,39 @@ function LostItemReport() {
         });
     };
 
-    const handleSubmit = (e) => {
+    // Validate form data
+    const validateForm = (): boolean => {
+        if (!formData.name.trim()) {
+            alert('Name is required.');
+            return false;
+        }
+        if (!formData.dateTime) {
+            alert('Date and time are required.');
+            return false;
+        }
+        if (!formData.description.trim()) {
+            alert('Description is required.');
+            return false;
+        }
+        return true;
+    };
+
+    // Handle form submission
+    const handleSubmit = (e: FormEvent): void => {
         e.preventDefault();
-        
+
+        if (!validateForm()) return;
+
+        setIsLoading(true); // Show loading state
+
         // Send data to the backend (POST request)
-        fetch('http://localhost:5000/api/items/submit', {  // Assuming backend is running on localhost:5000
+        fetch('http://localhost:5000/api/items/submit', {
             method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json' 
+            headers: {
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                type: 'lost',  // This could be dynamic if you want to handle both 'lost' and 'found'
+                type: 'found', // Type is "found" for this form
                 userName: formData.name,
                 dateTime: formData.dateTime,
                 busRoute: formData.busRoute,
@@ -40,27 +75,31 @@ function LostItemReport() {
                 contactDetails: formData.contactDetails,
             }),
         })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Item submitted:', data);
-            alert('Lost item report submitted successfully!');
-            navigate('/');  // Redirect to home page after submission
-        })
-        .catch(error => {
-            console.error('Error submitting item:', error);
-            alert('There was an error submitting the report.');
-        });
+            .then((response) => response.json())
+            .then((data) => {
+                console.log('Item submitted:', data);
+                alert('Found item report submitted successfully!');
+                navigate('/'); // Redirect to home page after submission
+            })
+            .catch((error) => {
+                console.error('Error submitting item:', error);
+                alert('There was an error submitting the report.');
+            })
+            .finally(() => {
+                setIsLoading(false); // Hide loading state
+            });
     };
 
-    const goHome = () => {
+    // Navigate to the home page
+    const goHome = (): void => {
         navigate('/lnshome');
     };
 
     return (
-        <div className="lost-item-container">
-            <h1 className="page-title">Lost Item</h1>
-            <h2 className="page-subtitle">Report Lost Item</h2>
-            <form onSubmit={handleSubmit} className="lost-item-form">
+        <div className="found-item-container">
+            <h1 className="page-title">Found Item</h1>
+            <h2 className="page-subtitle">Report Found Item</h2>
+            <form onSubmit={handleSubmit} className="found-item-form">
                 <div className="form-group">
                     <label htmlFor="name">Contact Information (Enter Your Name):</label>
                     <input
@@ -81,7 +120,6 @@ function LostItemReport() {
                         name="dateTime"
                         value={formData.dateTime}
                         onChange={handleChange}
-                        placeholder="MM/DD/YYYY HH:MM AM/PM"
                         required
                     />
                 </div>
@@ -93,7 +131,7 @@ function LostItemReport() {
                         name="busRoute"
                         value={formData.busRoute}
                         onChange={handleChange}
-                        placeholder="Enter bus route number"
+                        placeholder="Enter bus route"
                         required
                     />
                 </div>
@@ -105,7 +143,7 @@ function LostItemReport() {
                         name="busNumber"
                         value={formData.busNumber}
                         onChange={handleChange}
-                        placeholder="Enter bus number:xx-xxxx"
+                        placeholder="Enter bus number"
                         required
                     />
                 </div>
@@ -116,7 +154,7 @@ function LostItemReport() {
                         name="description"
                         value={formData.description}
                         onChange={handleChange}
-                        placeholder="Provide a description of the lost item"
+                        placeholder="Provide a description of the found item"
                         required
                     />
                 </div>
@@ -133,12 +171,16 @@ function LostItemReport() {
                     />
                 </div>
                 <div className="form-buttons">
-                    <button type="submit" className="submit-button">Submit</button>
-                    <button type="button" className="home-button" onClick={goHome}>Go to Home Page</button>
+                    <button type="submit" className="submit-button" disabled={isLoading}>
+                        {isLoading ? 'Submitting...' : 'Submit'}
+                    </button>
+                    <button type="button" className="home-button" onClick={goHome}>
+                        Go to Home Page
+                    </button>
                 </div>
             </form>
         </div>
     );
-}
+};
 
-export default LostItemReport;
+export default FoundItemReport;

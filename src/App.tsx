@@ -12,7 +12,9 @@ import BusRoute from './pages/busRoute/BusRoute'
 import FareEstimateDetails from './pages/fareEstimateDetails/FareEstimateDetails'
 import Dashboard from './pages/dashboard/Dashboard'
 import Header from './components/header/Header'
-
+import LnSHome from './pages/lostAndfound/LnSHome'
+import FoundItemReport from './pages/lostAndfound/FoundItemReport'
+import LostItemReport from './pages/lostAndfound/LostItemReport'
 //Lost and Found 
 // import LnSHome from './pages/lostAndfound/LnSHome'
 // import LostItemReport from './pages/lostAndfound/LostItemReport'
@@ -34,17 +36,17 @@ function App() {
           <Route path='/bustracking' element={<BusTracking />} />
           <Route path='/bustracking/details/:busNumber' element={<BusTrackingDetails />} />
 
-          <Route path='/login' element={<Login />} 
+          <Route path='/login' element={<Login />} />
           <Route path='/changepassword' element={<ChangePassword />} />
 
           <Route path='dashboard' element={<Dashboard/>}/>
 
           <Route path='/testing' element={<Testing />} />
-            
-<!--       <Route path='/LnSHome' element={<LnSHome />} />
-          <Route path='/LostItemReport' element={<LostItemReport />} />
-          <Route path='/FoundItemReport' element={<FoundItemReport />} />
-          <Route path='/SearchItem' element={<SearchItem />} /> -->
+          <Route path='/LnSHome' element={<LnSHome />} />
+          <Route path='/FoundItemReport' element={<FoundItemReport/>}/>
+          <Route path='/LostItemReport' element={<LostItemReport/>}/> 
+   
+         
         </Routes>
       </BrowserRouter>
     </>
