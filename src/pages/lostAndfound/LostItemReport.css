@@ -1,0 +1,86 @@
+/* LostItemReport.css */
+
+.lost-item-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    background-color: #f4f4f4;
+    min-height: 100vh;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.page-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: #555;
+}
+
+.lost-item-form {
+    width: 100%;
+    max-width: 600px;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.form-group textarea {
+    resize: vertical;
+    height: 100px;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.submit-button,
+.home-button {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    color: #fff;
+}
+
+.submit-button {
+    background-color: #28a745;
+}
+
+.home-button {
+    background-color: #007bff;
+}
+
+.submit-button:hover {
+    background-color: #218838;
+}
+
+.home-button:hover {
+    background-color: #0056b3;
+}
