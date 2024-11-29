@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 import NavBar from "../navbar/NavBar"
 import { useState } from "react"
+import trackngologo from '../../assets/img/trackngo_logo.png'
 
 const Header = () => {
     const [navOpen, setNavOpen] = useState<boolean>(false)
@@ -16,7 +17,7 @@ const Header = () => {
                         {/*IMG*/}
                         {/*</Link>*/}
                         <a href="/" className="logo">
-                            <img src="" width={40} height={40} alt="trackngo" className='rounded-lg' />
+                            <img src={trackngologo} width={200} height={180} alt="trackngo"/>
                         </a>
                     </h1>
 

@@ -5,6 +5,7 @@ import BusDetails from "../../components/busDetails/BusDetails"
 import Headline from "../../components/headline/Headline"
 import busDetailsType from "../../types/busDetails/busDetailsTypes"
 import { useNavigate } from "react-router-dom"
+import axios from "axios"
 
 const BusTracking = () => {
     const [buses, setBuses] = useState<busDetailsType[]>([])
@@ -12,74 +13,14 @@ const BusTracking = () => {
 
     const navigate = useNavigate()
 
-    const mockBuses: busDetailsType[] = [
-        {
-            busNumber: "ND-4588",
-            startLocation: "Colombo",
-            endLocation: "Kandy",
-            routeNumber: "1",
-            fareEstimate: "1250",
-            status: true,
-        },
-        {
-            busNumber: "ND-1234",
-            startLocation: "Galle",
-            endLocation: "Colombo",
-            routeNumber: "2",
-            fareEstimate: "800",
-            status: false,
-        },
-        {
-            busNumber: "ND-5678",
-            startLocation: "Kandy",
-            endLocation: "Colombo",
-            routeNumber: "3",
-            fareEstimate: "950",
-            status: true,
-        }, {
-            busNumber: "ND-4588",
-            startLocation: "Colombo",
-            endLocation: "Kandy",
-            routeNumber: "1",
-            fareEstimate: "1250",
-            status: true,
-        },
-        {
-            busNumber: "ND-1234",
-            startLocation: "Galle",
-            endLocation: "Colombo",
-            routeNumber: "2",
-            fareEstimate: "800",
-            status: false,
-        },
-        {
-            busNumber: "ND-1234",
-            startLocation: "Galle",
-            endLocation: "Colombo",
-            routeNumber: "2",
-            fareEstimate: "800",
-            status: false,
-        },
-        {
-            busNumber: "ND-1234",
-            startLocation: "Galle",
-            endLocation: "Colombo",
-            routeNumber: "2",
-            fareEstimate: "800",
-            status: false,
-        },
-        {
-            busNumber: "ND-5678",
-            startLocation: "Kandy",
-            endLocation: "Colombo",
-            routeNumber: "3",
-            fareEstimate: "950",
-            status: true,
-        },
-    ]
-
     const fetchBuses = async () => {
-        setBuses(mockBuses)
+        try {
+            const response = await axios.get("http://localhost:3000/api-bus/getAllbuses")
+            setBuses(response.data)
+            //console.log(response.data)
+        } catch (error: any) {
+            console.log({ error })
+        }
     }
 
     useEffect(() => {

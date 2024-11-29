@@ -12,13 +12,13 @@ const BusDetails = (bus: busDetailsType) => {
       </div>
 
       <div className="flex-1">
-        <div className="text-lg font-semibold">{bus.busNumber}</div>
-        <div className="text-gray-700">
+        <div className="text-lg font-semibold uppercase">{bus.busNumber}</div>
+        <div className="text-gray-700 capitalize">
           {bus.startLocation} - {bus.endLocation}
         </div>
         <div className="text-sm text-gray-500">
           Route No: {bus.routeNumber} <br />
-          Fare: Rs {bus.fareEstimate}
+          Max Fare: Rs {bus.fareEstimate}
         </div>
       </div>
 
