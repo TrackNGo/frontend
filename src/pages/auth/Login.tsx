@@ -2,6 +2,7 @@ import { ChangeEvent, useState } from "react"
 import PrimaryBtn from "../../components/btn/primaryBtn/PrimaryBtn"
 import TextBox from "../../components/textBox/TextBox"
 import SelectBox from "../../components/selectBox/SelectBox"
+import Headline from "../../components/headline/Headline"
 
 const Login = () => {
   const [error, setError] = useState<{ credentialsUsername?: string; password?: string; accType?: string }>({})
@@ -57,74 +58,81 @@ const Login = () => {
   }
 
   return (
-    <div className="container mx-auto mb-10 md:mt-5">
-      <div className="flex items-center justify-center mb-6">
-        <form className="md:border md:border-slate-200 rounded-xl max-w-[500px] min-w-[400px] center p-4 pb-8 pt-10 md:pt-6 md:shadow-lg">
-          <div className="text-left md:text-center mb-8">
-            <h1 className="capitalize text-3xl font-semibold mb-2">Login your account</h1>
-          </div>
+    <div className="px-2 sm:px-6 lg:px-8">
+      <div className="container mx-auto my-10">
+        <div className="flex items-center justify-center mb-8">
+          <form className="w-full max-w-lg rounded-xl bg-white sm:p-6 sm:border sm:shadow-lg sm:border-slate-200">
+            <Headline title={"Login to Your Account"} />
 
-          <div>
-            <TextBox
-              onChange={handleInputChange}
-              value={credentials.credentialsUsername}
-              title={"Username"}
-              type={"text"}
-              placeholder={"Enter Username"}
-              name={"credentialsUsername"}
-            />
-            <div className={`text-sm capitalize ${error.credentialsUsername ? "text-red-600" : "text-slate-400"}`}>
-              {error.credentialsUsername || "required"}
+            <div className="mt-4">
+              <TextBox
+                onChange={handleInputChange}
+                value={credentials.credentialsUsername}
+                title={"Username"}
+                type={"text"}
+                placeholder={"Enter Username"}
+                name={"credentialsUsername"}
+              />
+              <div
+                className={`text-sm capitalize mt-1 ${error.credentialsUsername ? "text-red-600" : "text-slate-400"
+                  }`}
+              >
+                {error.credentialsUsername || "required"}
+              </div>
             </div>
-          </div>
 
-          <div className="mt-2">
-            <SelectBox
-              title="Account Type"
-              name="accType"
-              value={credentials.accType}
-              onChange={handleSelectChange}
-              options={["General"]}
-              placeholder="Select Account Type"
-              disabled={true}
-            />{/*
-            <div className={`text-sm capitalize ${error.accType ? "text-red-600" : "text-slate-400"}`}>
-              {error.accType || "required"}
-            </div>*/}
-          </div>
-
-          <div className="mt-2">
-            <TextBox
-              onChange={handleInputChange}
-              value={credentials.password}
-              title={"Password"}
-              type={"password"}
-              placeholder={"Enter Password"}
-              name={"password"}
-            />
-            <div className={`text-sm capitalize ${error.password ? "text-red-600" : "text-slate-400"}`}>
-              {error.password || "required"}
+            <div className="mt-4">
+              <SelectBox
+                title="Account Type"
+                name="accType"
+                value={credentials.accType}
+                onChange={handleSelectChange}
+                options={["General"]}
+                placeholder="Select Account Type"
+                disabled={true}
+              />
             </div>
-          </div>
 
-          <div className="mt-4">
-            <PrimaryBtn
-              type={"button"}
-              onClick={submit}
-              title={"Login"}
-              classes={"bg-gradient-to-r from-black to-black hover:from-slate-800 hover:to-slate-700 border-solid border-1 border-slate-900 text-white"}
-            />
-          </div>
+            <div className="mt-4">
+              <TextBox
+                onChange={handleInputChange}
+                value={credentials.password}
+                title={"Password"}
+                type={"password"}
+                placeholder={"Enter Password"}
+                name={"password"}
+              />
+              <div
+                className={`text-sm capitalize mt-1 ${error.password ? "text-red-600" : "text-slate-400"
+                  }`}
+              >
+                {error.password || "required"}
+              </div>
+            </div>
 
-          <div className="mt-3">
-            <PrimaryBtn
-              type={"button"}
-              onClick={() => { console.log(credentials) }}
-              title={"Forgot Password"}
-              classes={'bg-gradient-to-r from-white to-white hover:from-slate-100 hover:to-slate-200 border-solid border-1 border-black text-black'}
-            />
-          </div>
-        </form>
+            <div className="mt-6">
+              <PrimaryBtn
+                type={"button"}
+                onClick={submit}
+                title={"Login"}
+                classes={
+                  "bg-gradient-to-r from-black to-black hover:from-slate-800 hover:to-slate-700 border border-solid border-slate-900 text-white w-full"
+                }
+              />
+            </div>
+
+            <div className="mt-4">
+              <PrimaryBtn
+                type={"button"}
+                onClick={() => console.log(credentials)}
+                title={"Forgot Password"}
+                classes={
+                  "bg-gradient-to-r from-white to-white hover:from-slate-100 hover:to-slate-200 border border-solid border-black text-black w-full"
+                }
+              />
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   )
