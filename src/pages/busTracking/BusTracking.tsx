@@ -15,7 +15,7 @@ const BusTracking = () => {
 
     const fetchBuses = async () => {
         try {
-            const response = await axios.get("http://localhost:3000/api-bus/getAllbuses")
+            const response = await axios.get("http://localhost:3000/api-bus/buses")
             setBuses(response.data)
             //console.log(response.data)
         } catch (error: any) {
