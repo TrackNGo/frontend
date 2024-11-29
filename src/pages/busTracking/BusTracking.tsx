@@ -3,12 +3,12 @@ import PrimaryBtn from "../../components/btn/primaryBtn/PrimaryBtn"
 import SecondaryBtn from "../../components/btn/secondaryBtn/SecondaryBtn"
 import BusDetails from "../../components/busDetails/BusDetails"
 import Headline from "../../components/headline/Headline"
-import busDetailsType from "../../types/busDetails/busDetailsTypes"
+import BusDetailsType from "../../types/busDetails/BusDetailsTypes"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 
 const BusTracking = () => {
-    const [buses, setBuses] = useState<busDetailsType[]>([])
+    const [buses, setBuses] = useState<BusDetailsType[]>([])
     const [filterStatus, setFilterStatus] = useState<"all" | "await" | "onroad">("all")
 
     const navigate = useNavigate()
