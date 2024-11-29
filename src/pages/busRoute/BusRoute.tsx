@@ -5,10 +5,9 @@ import Headline from "../../components/headline/Headline"
 import TextBox from "../../components/textBox/TextBox"
 import { useNavigate } from "react-router-dom"
 
-
 const BusRoute = () => {
     const [busRouteNumber, setBusRouteNumber] = useState<string>("")
-    const navigate=useNavigate()
+    const navigate = useNavigate()
 
     const btnSet = [
         {
@@ -27,6 +26,14 @@ const BusRoute = () => {
 
     const handleBusRouteChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setBusRouteNumber(event.target.value)
+    }
+
+    const handleOnClick = () => {
+        if (!busRouteNumber) {
+            alert("Please enter a bus route number!")
+            return
+        }
+        navigate(`/bustracking/routes/${busRouteNumber}`) // Navigate with the route parameter
     }
 
     return (
@@ -49,7 +56,7 @@ const BusRoute = () => {
             <div className="py-2">
                 <PrimaryBtn
                     title={"search bus"}
-                    onClick={() => console.log("Bus Route Number:", busRouteNumber)}
+                    onClick={handleOnClick}
                     classes={"bg-gradient-to-r from-black to-black hover:from-slate-800 hover:to-slate-700 border-solid border-1 border-slate-900 text-white"}
                 />
                 <BtnSet btnSet={btnSet} />

@@ -12,6 +12,7 @@ import BusRoute from './pages/busRoute/BusRoute'
 import FareEstimateDetails from './pages/fareEstimateDetails/FareEstimateDetails'
 import Dashboard from './pages/dashboard/Dashboard'
 import Header from './components/header/Header'
+import BusTrackingUsingRoute from './pages/busTracking/BusTrackingUsingRoute'
 
 //Lost and Found 
 // import LnSHome from './pages/lostAndfound/LnSHome'
@@ -32,6 +33,9 @@ function App() {
           <Route path='/fareestimate/details' element={<FareEstimateDetails />} />
 
           <Route path='/bustracking' element={<BusTracking />} />
+
+          <Route path="/bustracking/routes/:routeNumber" element={<BusTrackingUsingRoute />} />
+
           <Route path='/bustracking/details/:busNumber' element={<BusTrackingDetails />} />
 
           <Route path='/login' element={<Login />} 
