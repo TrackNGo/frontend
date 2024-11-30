@@ -38,7 +38,7 @@ const LostItemReport: React.FC = () => {
     const handleSubmit = (e: FormEvent): void => {
         e.preventDefault();
 
-        // Send data to the backend (POST request)
+        // Send data to the backend (POST request)           //backend problem could happen
         fetch('http://localhost:5000/api/items/submit', {
             method: 'POST',
             headers: {
