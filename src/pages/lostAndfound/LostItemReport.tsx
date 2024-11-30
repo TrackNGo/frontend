@@ -58,7 +58,7 @@ const LostItemReport: React.FC = () => {
             .then((data) => {
                 console.log('Item submitted:', data);
                 alert('Lost item report submitted successfully!');
-                navigate('/'); // Redirect to home page after submission
+                navigate('/lnshome'); // Redirect to home page after submission
             })
             .catch((error) => {
                 console.error('Error submitting item:', error);

@@ -31,6 +31,7 @@ const FoundItemReport: React.FC = () => {
         setFormData({
             ...formData,
             [name]: value,
+
         });
     };
 
@@ -53,6 +54,8 @@ const FoundItemReport: React.FC = () => {
 
     // Handle form submission
     const handleSubmit = (e: FormEvent): void => {
+
+        
         e.preventDefault();
 
         if (!validateForm()) return;
@@ -68,7 +71,7 @@ const FoundItemReport: React.FC = () => {
             body: JSON.stringify({
                 type: 'found', // Type is "found" for this form
                 userName: formData.name,
-                dateTime: formData.dateTime,
+                dateTime: formData.dateTime, // Convert to a Date object,
                 busRoute: formData.busRoute,
                 busNumber: formData.busNumber,
                 description: formData.description,
@@ -79,7 +82,7 @@ const FoundItemReport: React.FC = () => {
             .then((data) => {
                 console.log('Item submitted:', data);
                 alert('Found item report submitted successfully!');
-                navigate('/'); // Redirect to home page after submission
+                navigate('/lnshome'); // Redirect to home page after submission
             })
             .catch((error) => {
                 console.error('Error submitting item:', error);

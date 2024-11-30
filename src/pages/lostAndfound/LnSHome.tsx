@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LnSHome.css'; // Import the external CSS file
-
 const LnSHome: React.FC = () => {
     const navigate = useNavigate();
 
