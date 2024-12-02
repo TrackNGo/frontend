@@ -14,12 +14,6 @@ import Dashboard from './pages/dashboard/Dashboard'
 import Header from './components/header/Header'
 import BusTrackingUsingRoute from './pages/busTracking/BusTrackingUsingRoute'
 
-//Lost and Found 
-// import LnSHome from './pages/lostAndfound/LnSHome'
-// import LostItemReport from './pages/lostAndfound/LostItemReport'
-// import FoundItemReport from './pages/lostAndfound/FoundItemReport'
-// import SearchItem from './pages/lostAndfound/SearchItem'
-
 function App() {
   return (
     <>
@@ -38,17 +32,12 @@ function App() {
 
           <Route path='/bustracking/details/:busNumber' element={<BusTrackingDetails />} />
 
-          <Route path='/login' element={<Login />} 
+          <Route path='/login' element={<Login />} />
           <Route path='/changepassword' element={<ChangePassword />} />
 
           <Route path='dashboard' element={<Dashboard />} />
 
           <Route path='/testing' element={<Testing />} />
-            
-<!--       <Route path='/LnSHome' element={<LnSHome />} />
-          <Route path='/LostItemReport' element={<LostItemReport />} />
-          <Route path='/FoundItemReport' element={<FoundItemReport />} />
-          <Route path='/SearchItem' element={<SearchItem />} /> -->
         </Routes>
       </BrowserRouter>
     </>
