@@ -18,7 +18,7 @@ function App() {
   return (
     <>
       <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true, }}>
-        <Header/>
+        <Header />
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/timetable' element={<TimeTable />} />
@@ -35,7 +35,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/changepassword' element={<ChangePassword />} />
 
-          <Route path='dashboard' element={<Dashboard/>}/>
+          <Route path='dashboard' element={<Dashboard />} />
 
           <Route path='/testing' element={<Testing />} />
         </Routes>
