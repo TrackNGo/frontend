@@ -10,7 +10,7 @@ import SubLocationIcon from "../mapIcon/SubLocationIcon";
 import BusLiveLocation from "../busLocation/BusLiveLocation";
 
 
-const Map: React.FC<{ locations: LocationType[], drawRoute: RouteData[], trackBusNumber: string}> = ({ locations, drawRoute, trackBusNumber}) => {
+const Map: React.FC<{ locations: LocationType[], drawRoute: RouteData[], trackBusNumber: any}> = ({ locations, drawRoute, trackBusNumber}) => {
 
   return (
     <>
