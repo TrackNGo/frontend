@@ -12,7 +12,7 @@ import LocationType from "../../types/location/LocationType"
 import RouteData from "../../types/location/RouteData"
 
 const axiosInstance = axios.create({
-    baseURL: "http://localhost:8080",
+    baseURL: "http://localhost:3000",
     timeout: 1000,
     headers: { "X-Custom-Header": "foobar" },
 });
@@ -60,11 +60,10 @@ const BusTrackingDetails = () => {
             setLocationLoading(true);
 
             // Fetch specific bus route
-            const response = await axiosInstance.post<{
-                specificBusRoute: BusRouteTypes
-            }>("/api-user/get-specific-bus-route",
+            const response = await axiosInstance.post<{specificBusRoute: BusRouteTypes}>(
+                "/api-user/get-specific-bus-route",
                 {
-                    busNumber: "BUS_02",
+                    busNumber: busNumber,
                 }
             );
 
@@ -128,7 +127,7 @@ const BusTrackingDetails = () => {
         }
     }, [busNumber])
 
-    if (loading&&locationLoading) return <p>Loading...</p>
+    if (loading && locationLoading) return <p>Loading...</p>
     if (error) return <p>{error}</p>
 
     return (
