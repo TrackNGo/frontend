@@ -3,6 +3,7 @@ import { Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import BusIcon from '../mapIcon/BusIcon';
 import BusLocationType from '../../types/location/BusLocationType';
+import axios from 'axios';
 
 interface BusLiveLocationProps {
     busNumber: string; // Bus ID passed as a prop
@@ -15,21 +16,20 @@ const BusLiveLocation: React.FC<BusLiveLocationProps> = ({ busNumber }) => {
     useEffect(() => {
         const fetchBusLocations = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/api-user/get-bus-locations/${busNumber}`, {
-                    method: 'GET',
+                const response = await axios.get<BusLocationType>(`http://localhost:8080/api-user/getBus-locations/${busNumber}`, {
                     headers: {
                         'Content-Type': 'application/json',
                         // 'ngrok-skip-browser-warning': 'true', // Uncomment if needed
                     },
-                });
-
-                const data: BusLocationType = await response.json();
-                console.log(data);
-                setBuses(data);
+                })
+        
+                const data = response.data
+                console.log(data)
+                setBuses(data)
             } catch (error) {
-                console.error('Error fetching bus locations:', error);
+                console.error('Error fetching bus locations:', error)
             }
-        };
+        }
 
         const intervalId = setInterval(fetchBusLocations, 10000); // Update every 10 seconds
         return () => clearInterval(intervalId); // Cleanup on unmount
