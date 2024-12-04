@@ -16,7 +16,7 @@ const BusLiveLocation: React.FC<BusLiveLocationProps> = ({ busNumber }) => {
     useEffect(() => {
         const fetchBusLocations = async () => {
             try {
-                const response = await axios.get<BusLocationType>(`http://localhost:8080/api-user/getBus-locations/${busNumber}`, {
+                const response = await axios.get(`http://localhost:8080/api-user/getBus-locations/${busNumber}`, {
                     headers: {
                         'Content-Type': 'application/json',
                         // 'ngrok-skip-browser-warning': 'true', // Uncomment if needed
