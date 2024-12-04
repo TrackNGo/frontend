@@ -66,7 +66,7 @@ const Map: React.FC<{ locations: LocationType[], drawRoute: RouteData[] }> = ({ 
         ))
         }
 
-        {/* <BusLiveLocation busNumber={"BUS_02"}/> */}
+        <BusLiveLocation busNumber={"BUS_02"}/>
         
       </MapContainer>
     </>
