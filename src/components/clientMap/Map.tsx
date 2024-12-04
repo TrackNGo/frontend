@@ -9,7 +9,8 @@ import LocationIcon from "../mapIcon/LocationIcon";
 import SubLocationIcon from "../mapIcon/SubLocationIcon";
 import BusLiveLocation from "../busLocation/BusLiveLocation";
 
-const Map: React.FC<{ locations: LocationType[], drawRoute: RouteData[] }> = ({ locations, drawRoute}) => {
+
+const Map: React.FC<{ locations: LocationType[], drawRoute: RouteData[], trackBusNumber: string}> = ({ locations, drawRoute, trackBusNumber}) => {
 
   return (
     <>
@@ -66,7 +67,7 @@ const Map: React.FC<{ locations: LocationType[], drawRoute: RouteData[] }> = ({ 
         ))
         }
 
-        <BusLiveLocation busNumber={"BUS_02"}/>
+        <BusLiveLocation busNumber={trackBusNumber}/>
         
       </MapContainer>
     </>
