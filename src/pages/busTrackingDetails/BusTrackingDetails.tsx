@@ -90,4 +90,36 @@ const BusTrackingDetails = () => {
     )
 }
 
+const geocodeCity = async (city: string): Promise<any> => {
+    interface Location {
+        lat: number;
+        lng: number;
+    }
+    const apiKey = "AIzaSyAiQ_WJER_3HDCs0B6tH01WPTCzB1COSLA";
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(city)}&key=${apiKey}`;
+
+    const response = await fetch(url);
+
+    if (!response.ok) {
+        throw new Error(`Error fetching geocode data: ${response.statusText}`);
+    }
+
+    const data: {
+        results: Array<{
+            geometry: {
+                location: Location;
+            };
+        }>;
+    } = await response.json();
+
+    console.log(data);
+
+    if (data.results && data.results.length > 0) {
+        console.log(data.results[0].geometry.location)
+        return data.results[0].geometry.location;
+    } else {
+        throw new Error(`Coordinates not found for city: ${city}`);
+    }
+}
+
 export default BusTrackingDetails
