@@ -61,9 +61,9 @@ const BusTrackingDetails = () => {
 
             // Fetch specific bus route
             const response = await axiosInstance.post<{specificBusRoute: BusRouteTypes}>(
-                "/api-user/get-specific-bus-route",
+                "/api-user/get-specific-bus-route",//route
                 {
-                    busNumber: busNumber,
+                    busNumber: "nd-4444",
                 }
             );
 
