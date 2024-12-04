@@ -1,9 +1,9 @@
 
-interface BusLocation {
+interface BusLocationType {
     busNumber: string;
     latitude: number;
     longitude: number;
     lastUpdated: string;
 }
 
-export default BusLocation
+export default BusLocationType

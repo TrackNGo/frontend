@@ -7,7 +7,7 @@ import RouteData from "../../types/location/RouteData"
 import polyline from "@mapbox/polyline"; // Import polyline from @mapbox/polyline
 import LocationIcon from "../mapIcon/LocationIcon";
 import SubLocationIcon from "../mapIcon/SubLocationIcon";
-import BusLiveLocation from "../busLocation/BusLocation";
+import BusLiveLocation from "../busLocation/BusLiveLocation";
 
 const Map: React.FC<{ locations: LocationType[], drawRoute: RouteData[] }> = ({ locations, drawRoute}) => {
 
