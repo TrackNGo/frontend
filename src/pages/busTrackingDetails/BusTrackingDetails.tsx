@@ -64,7 +64,7 @@ const BusTrackingDetails = () => {
                 specificBusRoute: BusRouteTypes
             }>("/api-user/getSpecific-busRoute",
                 {
-                    busNumber: "nd-4444",
+                    busNumber: busNumber,
                 }
             );
 
@@ -101,7 +101,7 @@ const BusTrackingDetails = () => {
                     sourceLocation: string;
                     destinationLocation: string;
                     route: string;
-                }>("/api-user/get-location-code-search-by-name", {
+                }>("/api-user/getLocationCode-searchByName", {
                     startLocation,
                     endLocation,
                 });
@@ -145,7 +145,7 @@ const BusTrackingDetails = () => {
             </div>
 
             <div>
-                <Map locations={locations} drawRoute={drawRoute} />
+                <Map locations={locations} drawRoute={drawRoute} trackBusNumber={busNumber}/>
             </div>
 
             <div className="mt-2">
