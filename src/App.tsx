@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
+
 import Login from './pages/auth/Login'
 import Testing from './pages/testing/Testing'
 import ChangePassword from './pages/auth/ChangePassword'
@@ -21,12 +22,12 @@ import SearchItem from './pages/lostAndfound/SearchItem'
 // import LostItemReport from './pages/lostAndfound/LostItemReport'
 // import FoundItemReport from './pages/lostAndfound/FoundItemReport'
 // import SearchItem from './pages/lostAndfound/SearchItem'
-
+import BusTrackingUsingRoute from './pages/busTracking/BusTrackingUsingRoute'
 function App() {
   return (
     <>
       <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true, }}>
-        <Header/>
+        <Header />
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/timetable' element={<TimeTable />} />
@@ -35,19 +36,22 @@ function App() {
           <Route path='/fareestimate/details' element={<FareEstimateDetails />} />
 
           <Route path='/bustracking' element={<BusTracking />} />
+
+          <Route path="/bustracking/routes/:routeNumber" element={<BusTrackingUsingRoute />} />
+
           <Route path='/bustracking/details/:busNumber' element={<BusTrackingDetails />} />
 
           <Route path='/login' element={<Login />} />
           <Route path='/changepassword' element={<ChangePassword />} />
 
-          <Route path='dashboard' element={<Dashboard/>}/>
+          <Route path='dashboard' element={<Dashboard />} />
 
           <Route path='/testing' element={<Testing />} />
           <Route path='/LnSHome' element={<LnSHome />} />
           <Route path='/FoundItemReport' element={<FoundItemReport/>}/>
           <Route path='/LostItemReport' element={<LostItemReport/>}/> 
           <Route path='/SearchItem' element={< SearchItem/>}/> 
-         
+
         </Routes>
       </BrowserRouter>
     </>

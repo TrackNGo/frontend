@@ -1,4 +1,4 @@
-interface busDetailsType{
+interface BusDetailsType{
     busNumber:string,
     startLocation:string,
     endLocation:string,
@@ -8,4 +8,4 @@ interface busDetailsType{
     type?:string
 }
 
-export default busDetailsType
+export default BusDetailsType
