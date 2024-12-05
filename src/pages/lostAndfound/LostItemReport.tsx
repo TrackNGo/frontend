@@ -1,10 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './FoundItemReport.css'; // Import the CSS for styling
+import './LostItemReport.css'; // Import the CSS for styling
 
-function FoundItemReport() {
+// Define the shape of form data
+interface FormData {
+    name: string;
+    dateTime: string;
+    busRoute: string;
+    busNumber: string;
+    description: string;
+    contactDetails: string;
+}
+
+const LostItemReport: React.FC = () => {
     const navigate = useNavigate();
-    const [formData, setFormData] = useState({
+
+    // State for form data
+    const [formData, setFormData] = useState<FormData>({
         name: '',
         dateTime: '',
         busRoute: '',
@@ -13,50 +25,27 @@ function FoundItemReport() {
         contactDetails: '',
     });
 
-    const [isLoading, setIsLoading] = useState(false); // Loading state
-
     // Handle form field changes
-    const handleChange = (e) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
         const { name, value } = e.target;
-        setFormData({
-            ...formData,
+        setFormData((prevFormData) => ({
+            ...prevFormData,
             [name]: value,
-        });
-    };
-
-    // Validate form data
-    const validateForm = () => {
-        if (!formData.name.trim()) {
-            alert('Name is required.');
-            return false;
-        }
-        if (!formData.dateTime) {
-            alert('Date and time are required.');
-            return false;
-        }
-        if (!formData.description.trim()) {
-            alert('Description is required.');
-            return false;
-        }
-        return true;
+        }));
     };
 
     // Handle form submission
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: FormEvent): void => {
         e.preventDefault();
 
-        if (!validateForm()) return;
-
-        setIsLoading(true); // Show loading state
-
-        // Send data to the backend (POST request)
+        // Send data to the backend (POST request)           //backend problem could happen
         fetch('http://localhost:5000/api/items/submit', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                type: 'found', // Type is "found" for this form
+                type: 'lost',
                 userName: formData.name,
                 dateTime: formData.dateTime,
                 busRoute: formData.busRoute,
@@ -68,28 +57,25 @@ function FoundItemReport() {
             .then((response) => response.json())
             .then((data) => {
                 console.log('Item submitted:', data);
-                alert('Found item report submitted successfully!');
-                navigate('/'); // Redirect to home page after submission
+                alert('Lost item report submitted successfully!');
+                navigate('/lnshome'); // Redirect to home page after submission
             })
             .catch((error) => {
                 console.error('Error submitting item:', error);
                 alert('There was an error submitting the report.');
-            })
-            .finally(() => {
-                setIsLoading(false); // Hide loading state
             });
     };
 
-    // Navigate to the home page
-    const goHome = () => {
+    // Navigate to home
+    const goHome = (): void => {
         navigate('/lnshome');
     };
 
     return (
-        <div className="found-item-container">
-            <h1 className="page-title">Found Item</h1>
-            <h2 className="page-subtitle">Report Found Item</h2>
-            <form onSubmit={handleSubmit} className="found-item-form">
+        <div className="lost-item-container">
+            <h1 className="page-title">Lost Item</h1>
+            <h2 className="page-subtitle">Report Lost Item</h2>
+            <form onSubmit={handleSubmit} className="lost-item-form">
                 <div className="form-group">
                     <label htmlFor="name">Contact Information (Enter Your Name):</label>
                     <input
@@ -121,7 +107,7 @@ function FoundItemReport() {
                         name="busRoute"
                         value={formData.busRoute}
                         onChange={handleChange}
-                        placeholder="Enter bus route"
+                        placeholder="Enter bus route number"
                         required
                     />
                 </div>
@@ -133,7 +119,7 @@ function FoundItemReport() {
                         name="busNumber"
                         value={formData.busNumber}
                         onChange={handleChange}
-                        placeholder="Enter bus number"
+                        placeholder="Enter bus number:xx-xxxx"
                         required
                     />
                 </div>
@@ -144,7 +130,7 @@ function FoundItemReport() {
                         name="description"
                         value={formData.description}
                         onChange={handleChange}
-                        placeholder="Provide a description of the found item"
+                        placeholder="Provide a description of the lost item"
                         required
                     />
                 </div>
@@ -161,9 +147,7 @@ function FoundItemReport() {
                     />
                 </div>
                 <div className="form-buttons">
-                    <button type="submit" className="submit-button" disabled={isLoading}>
-                        {isLoading ? 'Submitting...' : 'Submit'}
-                    </button>
+                    <button type="submit" className="submit-button">Submit</button>
                     <button type="button" className="home-button" onClick={goHome}>
                         Go to Home Page
                     </button>
@@ -171,6 +155,6 @@ function FoundItemReport() {
             </form>
         </div>
     );
-}
+};
 
-export default FoundItemReport;
+export default LostItemReport;

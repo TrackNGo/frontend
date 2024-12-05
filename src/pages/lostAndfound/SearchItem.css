@@ -68,3 +68,23 @@
 .item-card p {
     margin: 5px 0;
 }
+.filter-buttons {
+    margin: 10px 0;
+}
+
+.filter-button {
+    padding: 10px;
+    margin-right: 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.filter-button.active {
+    background-color: #020911;
+    color: white;
+}
+
+.filter-button:hover {
+    background-color: #dcdcdc;
+}

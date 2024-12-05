@@ -13,8 +13,16 @@ import BusRoute from './pages/busRoute/BusRoute'
 import FareEstimateDetails from './pages/fareEstimateDetails/FareEstimateDetails'
 import Dashboard from './pages/dashboard/Dashboard'
 import Header from './components/header/Header'
+import LnSHome from './pages/lostAndfound/LnSHome'
+import FoundItemReport from './pages/lostAndfound/FoundItemReport'
+import LostItemReport from './pages/lostAndfound/LostItemReport'
+import SearchItem from './pages/lostAndfound/SearchItem'
+//Lost and Found 
+// import LnSHome from './pages/lostAndfound/LnSHome'
+// import LostItemReport from './pages/lostAndfound/LostItemReport'
+// import FoundItemReport from './pages/lostAndfound/FoundItemReport'
+// import SearchItem from './pages/lostAndfound/SearchItem'
 import BusTrackingUsingRoute from './pages/busTracking/BusTrackingUsingRoute'
-
 function App() {
   return (
     <>
@@ -39,6 +47,11 @@ function App() {
           <Route path='dashboard' element={<Dashboard />} />
 
           <Route path='/testing' element={<Testing />} />
+          <Route path='/LnSHome' element={<LnSHome />} />
+          <Route path='/FoundItemReport' element={<FoundItemReport/>}/>
+          <Route path='/LostItemReport' element={<LostItemReport/>}/> 
+          <Route path='/SearchItem' element={< SearchItem/>}/> 
+
         </Routes>
       </BrowserRouter>
     </>
