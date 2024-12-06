@@ -12,7 +12,7 @@ import LocationType from "../../types/location/LocationType"
 import RouteData from "../../types/location/RouteData"
 
 const axiosInstance = axios.create({
-    baseURL: "http://localhost:8080",
+    baseURL: "http://localhost:8080",//172.16.193.135
     timeout: 1000,
     headers: { "X-Custom-Header": "foobar" },
 });
@@ -38,8 +38,8 @@ const BusTrackingDetails = () => {
         try {
             setLoading(true)
             const [routeResponse, busResponse] = await Promise.all([
-                axios.get(`http://localhost:3000/api-busroutes/busRoute/${busNumber}`),
-                axios.get(`http://localhost:3000/api-bus/bus/${busNumber}`)
+                axios.get(`http://172.16.193.135:3000/api-busroutes/busRoute/${busNumber}`),
+                axios.get(`http://172.16.193.135:3000/api-bus/bus/${busNumber}`)
             ])
 
             setBusRouteDetails(routeResponse.data)
