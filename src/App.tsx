@@ -23,6 +23,7 @@ import SearchItem from './pages/lostAndfound/SearchItem'
 // import FoundItemReport from './pages/lostAndfound/FoundItemReport'
 // import SearchItem from './pages/lostAndfound/SearchItem'
 import BusTrackingUsingRoute from './pages/busTracking/BusTrackingUsingRoute'
+
 function App() {
   return (
     <>
@@ -36,9 +37,7 @@ function App() {
           <Route path='/fareestimate/details' element={<FareEstimateDetails />} />
 
           <Route path='/bustracking' element={<BusTracking />} />
-
           <Route path="/bustracking/routes/:routeNumber" element={<BusTrackingUsingRoute />} />
-
           <Route path='/bustracking/details/:busNumber' element={<BusTrackingDetails />} />
 
           <Route path='/login' element={<Login />} />
@@ -47,6 +46,7 @@ function App() {
           <Route path='dashboard' element={<Dashboard />} />
 
           <Route path='/testing' element={<Testing />} />
+          
           <Route path='/LnSHome' element={<LnSHome />} />
           <Route path='/FoundItemReport' element={<FoundItemReport/>}/>
           <Route path='/LostItemReport' element={<LostItemReport/>}/> 
