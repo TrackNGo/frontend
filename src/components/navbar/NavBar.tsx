@@ -17,7 +17,6 @@ const Navbar = ({ navOpen }: NavbarProps) => {
             { label: 'On Bus Route', link: '/busroute', className: 'nav-link' },
             { label: 'Fare Estimate', link: '/fareestimate', className: 'nav-link' },
             { label: 'Bus Tracking', link: '/bustracking', className: 'nav-link' },
-            { label: 'Login', link: '/login', className: 'nav-link' },
             { label: 'Lost And Found', link: '/lnshome', className: 'nav-link' }
         ],
         []
