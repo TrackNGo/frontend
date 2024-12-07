@@ -10,10 +10,11 @@ type Position = [number, number] | null;
 
 // Main component - custom made switch for locate user current location
 const UserLocateButtonCustom: React.FC = () => {
-
+  
   const [position, setPosition] = useState<Position>(null);
   const [makeUserVisible, setUserVisible] = useState<boolean>(false);
-
+  const [isUserLocationZoomDone, setIsUserLocationZoomDone] = useState<boolean>(false);
+  
   // Default position for Sri Lanka
   const defaultPosition: Position = [7.8731, 80.7718];
 
@@ -30,7 +31,18 @@ const UserLocateButtonCustom: React.FC = () => {
         (error) => {
           console.error('Error fetching location:', error);
         }
-      );
+      )
+
+      const timer = setTimeout(() => {
+
+          setIsUserLocationZoomDone(true); // Show the circle after 2 seconds  
+      }, 4000)
+      
+      return () => {
+        clearTimeout(timer)
+        setIsUserLocationZoomDone(false);
+      }
+
     }
   }, [makeUserVisible]);
 
@@ -74,7 +86,7 @@ const UserLocateButtonCustom: React.FC = () => {
 
     // Clean up control on component unmount
     return () => {
-      map.removeControl(switchControl);
+      map.removeControl(switchControl)
     };
   }, [map]);
 
@@ -84,24 +96,29 @@ const UserLocateButtonCustom: React.FC = () => {
       <>
         <MapZoomCenter position={position} isActive={makeUserVisible} />
         <Marker position={position} icon={UserIcon}/>
-        <Circle
-          center={position}
-          radius={1000} // 1000 meters
-          pathOptions={{ color: 'blue', fillColor: 'blue', fillOpacity: 0.1 }}
-        />
+
+        {
+          isUserLocationZoomDone && (
+            <Circle
+              center={position}
+              radius={1000} // 1000 meters
+              pathOptions={{ color: 'blue', fillColor: 'blue', fillOpacity: 0.1 }}
+            />
+          )
+        }
       </>
     );
   } else {
     return (
       <>
-        <MapZoomCenter position={defaultPosition} isActive={makeUserVisible} />
+        <MapZoomCenter position={defaultPosition} isActive={makeUserVisible}/>
       </>
     );
   }
 };
 
 // Map zoom component
-const MapZoomCenter: React.FC<{ position: Position; isActive: boolean }> = ({ position, isActive }) => {
+const MapZoomCenter: React.FC<{ position: Position; isActive: boolean}> = ({ position, isActive }) => {
   
   const map = useMap();
 
