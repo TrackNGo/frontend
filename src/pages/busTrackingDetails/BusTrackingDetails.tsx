@@ -37,9 +37,10 @@ const BusTrackingDetails = () => {
     const fetchDetails = async () => {
         try {
             setLoading(true)
+            //172.16.193.135
             const [routeResponse, busResponse] = await Promise.all([
-                axios.get(`http://172.16.193.135:3000/api-busroutes/busRoute/${busNumber}`),
-                axios.get(`http://172.16.193.135:3000/api-bus/bus/${busNumber}`)
+                axios.get(`http://localhost:3000/api-busroutes/busRoute/${busNumber}`),
+                axios.get(`http://localhost:3000/api-bus/bus/${busNumber}`)
             ])
 
             setBusRouteDetails(routeResponse.data)
