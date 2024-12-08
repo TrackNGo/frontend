@@ -9,9 +9,23 @@ interface BusLiveLocationProps {
     busNumber: string; // Bus ID passed as a prop
 }
 
+interface LocationCoords {
+    lat: number
+    lng: number
+};
+
+const axiosInstance = axios.create({
+    baseURL: "http://localhost:8080",//172.16.193.135
+    timeout: 1000,
+    headers: { "X-Custom-Header": "foobar" },
+});
+
 const BusLiveLocation: React.FC<BusLiveLocationProps> = ({ busNumber }) => {
 
     const [busDetails, setBuses] = useState<BusLocationType | null>(null);
+    const [first, setFirst] = useState<LocationCoords>({lat:0,lng:0})
+    const [second, setSecond] = useState<LocationCoords>({lat:0,lng:0})
+    const [speed, setSpeed] = useState<number>()
 
     useEffect(() => {
         const fetchBusLocations = async () => {
@@ -35,6 +49,45 @@ const BusLiveLocation: React.FC<BusLiveLocationProps> = ({ busNumber }) => {
         return () => clearInterval(intervalId); // Cleanup on unmount
     }, [busNumber]);
 
+    useEffect(() => {
+
+        async function calculateBusSpeed(busDetails:any) {
+
+            if (busDetails && first.lat == 0) {
+                const setData = { nLat: busDetails.latitude, nLng: busDetails.longitude };
+                setFirst( {lat:setData.nLat, lng: setData.nLng} );
+            }
+            else if(busDetails && second.lat == 0){
+                const setData = { nLat: busDetails.latitude, nLng: busDetails.longitude };
+                setSecond( {lat:setData.nLat, lng: setData.nLng} );
+            }
+    
+            if(first.lat != 0 && second.lat != 0 && busDetails) {
+
+                const checkData = await axiosInstance.post<{
+                    distance:number,
+                    duration:number
+                }>(`/api-location/get-location-distance`, {
+                    first,
+                    second
+                });
+                
+                const { distance, duration } = checkData.data;
+
+                const distanceInKilometers:number = (distance / 1000);// Calculate the distance in km
+
+                const timeInHours:number = duration / 3600;// Calculate the time in h
+
+                const busSpeed:number = distanceInKilometers / timeInHours;// Calculate the speed in kmph - i think
+
+                setSpeed(busSpeed)
+            }
+        }
+
+        calculateBusSpeed(busDetails)
+
+      }, [busDetails]);
+
     return busDetails ? (
         <>
             {/* Marker with bus details */}
@@ -45,7 +98,10 @@ const BusLiveLocation: React.FC<BusLiveLocationProps> = ({ busNumber }) => {
             >
                 <Popup>
                     Bus ID: {busDetails.busNumber} <br />
-                    Last Updated: {new Date(busDetails.lastUpdated).toLocaleString()}
+                    Last Updated: {new Date(busDetails.lastUpdated).toLocaleString()}<br/>
+                    {
+                        speed ? (<>Speed : {speed} Kmph</>) : (<>Speed : ... Kmph</>)
+                    }
                 </Popup>
             </Marker>
             {/* <MapZoomCenter position={[busDetails.latitude, busDetails.longitude]}/> */}
