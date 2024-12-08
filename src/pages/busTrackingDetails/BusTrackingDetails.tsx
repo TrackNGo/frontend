@@ -130,6 +130,7 @@ const BusTrackingDetails = () => {
     }, [busNumber])
 
     if (loading) return <p>Loading...</p>
+    if (locationLoading) return <p>Location Loading...</p>
     if (error) return <p>{error}</p>
 
     return (
