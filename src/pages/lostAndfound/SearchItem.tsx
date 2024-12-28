@@ -142,6 +142,7 @@ const SearchItem: React.FC = () => {
                         items.map(item => (
                             <div key={item._id} className="item-card">
                                 <h3>{item.busRoute} - {item.busNumber}</h3>
+                                <p><strong>Item id:</strong> {item._id}</p>
                                 <p><strong>Description:</strong> {item.description}</p>
                                 <p><strong>Contact:</strong> {item.contactDetails}</p>
                             </div>
