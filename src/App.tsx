@@ -23,6 +23,7 @@ import SearchItem from './pages/lostAndfound/SearchItem'
 // import FoundItemReport from './pages/lostAndfound/FoundItemReport'
 // import SearchItem from './pages/lostAndfound/SearchItem'
 import BusTrackingUsingRoute from './pages/busTracking/BusTrackingUsingRoute'
+import { Alert } from './pages/alert/Alert'
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
           <Route path='/changepassword' element={<ChangePassword />} />
 
           <Route path='dashboard' element={<Dashboard />} />
+          <Route path='alert' element={<Alert />} />
 
           <Route path='/testing' element={<Testing />} />
           
