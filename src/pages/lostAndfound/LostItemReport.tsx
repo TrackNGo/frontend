@@ -39,7 +39,7 @@ const LostItemReport: React.FC = () => {
         e.preventDefault();
 
         // Send data to the backend (POST request)           //backend problem could happen
-        fetch('http://localhost:5000/api/items/submit', {
+        fetch('http://localhost:8080/api/items/submit', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
