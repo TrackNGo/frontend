@@ -52,18 +52,15 @@ const BusLiveLocation: React.FC<BusLiveLocationProps> = ({ busNumber }) => {
     useEffect(() => {
 
         async function calculateBusSpeed(busDetails:any) {
-
-            if (busDetails && first.lat == 0) {
-                const setData = { nLat: busDetails.latitude, nLng: busDetails.longitude };
-                setFirst( {lat:setData.nLat, lng: setData.nLng} );
-            }
-            else if(busDetails && second.lat == 0){
-                const setData = { nLat: busDetails.latitude, nLng: busDetails.longitude };
-                setSecond( {lat:setData.nLat, lng: setData.nLng} );
-            }
+            
+            const setData = { nLat: busDetails.latitude, nLng: busDetails.longitude };
+            
+            setFirst(second);
+            setSecond( {lat:setData.nLat, lng: setData.nLng} )
     
-            if(first.lat != 0 && second.lat != 0 && busDetails) {
+            if(first.lat != 0 && first.lng != 0 && second.lat != 0 && second.lng != 0) {
 
+                console.log('check')
                 const checkData = await axiosInstance.post<{
                     distance:number,
                     duration:number
@@ -81,6 +78,9 @@ const BusLiveLocation: React.FC<BusLiveLocationProps> = ({ busNumber }) => {
                 const busSpeed:number = distanceInKilometers / timeInHours;// Calculate the speed in kmph - i think
 
                 setSpeed(busSpeed)
+                setFirst( {lat:0, lng: 0} );
+                setSecond( {lat:0, lng: 0} );
+
             }
         }
 

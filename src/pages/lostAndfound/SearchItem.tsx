@@ -38,7 +38,7 @@ const SearchItem: React.FC = () => {
     // Fetch items based on itemType, search query, and selected filter
     const fetchItems = (): void => {
         setLoading(true);
-        fetch(`http://localhost:5000/api/items/${itemType}?route=${searchQuery}`)
+        fetch(`http://localhost:8080/api/items/${itemType}?route=${searchQuery}`)
             .then(response => response.json())
             .then(data => {
                 // Apply the filter after fetching items

@@ -63,7 +63,7 @@ const FoundItemReport: React.FC = () => {
         setIsLoading(true); // Show loading state
 
         // Send data to the backend (POST request)
-        fetch('http://localhost:5000/api/items/submit', {      
+        fetch('http://localhost:8080/api/items/submit', {      
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',                 //backend problem could happen
