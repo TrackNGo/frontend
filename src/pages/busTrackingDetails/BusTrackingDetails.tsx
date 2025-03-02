@@ -85,7 +85,7 @@ const BusTrackingDetails = () => {
             for (const city of cities) {
                 const location = await geocodeCity(city);
                 coordinates.push({ name: city, coordinates: [location.lat, location.lng] });
-                console.log(coordinates)
+                // console.log(coordinates)
             }
 
             setLocations(coordinates);
@@ -110,7 +110,7 @@ const BusTrackingDetails = () => {
                 const { sourceLocation, destinationLocation, route } = segmentResponse.data;
                 segments.push({ sourceLocation, destinationLocation, route });
                 // segments.push({ sourceLocation, destinationLocation, route });
-                console.log(segments)
+                // console.log(segments)
             }
             // setRouteSegment(segments);
             setDrawRoute(segments)
@@ -203,10 +203,10 @@ const geocodeCity = async (city: string): Promise<any> => {
         }>;
     } = await response.json();
 
-    console.log(data);
+    // console.log(data);
 
     if (data.results && data.results.length > 0) {
-        console.log(data.results[0].geometry.location)
+        // console.log(data.results[0].geometry.location)
         return data.results[0].geometry.location;
     } else {
         throw new Error(`Coordinates not found for city: ${city}`);
