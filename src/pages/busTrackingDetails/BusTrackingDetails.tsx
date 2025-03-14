@@ -29,6 +29,8 @@ const BusTrackingDetails = () => {
     const [locationLoading, setLocationLoading] = useState<boolean>(false);
     // const [routeSegment, setRouteSegment] = useState<RouteSegment[]>([]); // Array of RouteSegment arrays
     const [drawRoute, setDrawRoute] = useState<RouteData[]>([])
+    const [initialStatus, setStatus] = useState<boolean>(false)
+
     // const [error, setError] = useState<string>("");
     // const sourcePosition: [number, number] = [7.8731, 80.7718];
 
@@ -122,10 +124,28 @@ const BusTrackingDetails = () => {
         }
     }
 
+    const fetchBusStatus = async () => {
+        try {
+            const response = await axios.get(`http://localhost:3000/api-bus/bus/${busNumber}`, {//172.16.193.135
+                headers: {
+                    'Content-Type': 'application/json',
+                    // 'ngrok-skip-browser-warning': 'true', // Uncomment if needed
+                },
+            })
+
+            const data = response.data
+            setStatus(data.status)
+        } catch (error) {
+            console.error('Error fetching bus locations:', error)
+        }
+    }
+
     useEffect(() => {
         if (busNumber) {
             fetchDetails()
             fetchRouteData(busNumber)
+            const intervalId = setInterval(fetchBusStatus, 5000); // Update every 10 seconds
+            return () => clearInterval(intervalId); // Cleanup on unmount
         }
     }, [busNumber])
 
@@ -147,11 +167,11 @@ const BusTrackingDetails = () => {
             </div>
 
             <div>
-                <Map locations={locations} drawRoute={drawRoute} trackBusNumber={busNumber}/>
+                <Map locations={locations} drawRoute={drawRoute} trackBusNumber={busNumber} status={initialStatus} />
             </div>
 
             <div className="mt-2">
-                <BusStatus status={busDetails?.status} />
+                <BusStatus status={initialStatus} />
             </div>
 
             <LocationInfo title="starting point" location={busRouteDetails?.startLocation || "N/A"} />

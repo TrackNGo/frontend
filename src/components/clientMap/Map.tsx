@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Polyline } from "react-leaflet";
 import UserLocationSwitch from "../userLocationSwitch/UserLocationSwitch";
 import "leaflet/dist/leaflet.css";
@@ -10,7 +10,8 @@ import SubLocationIcon from "../mapIcon/SubLocationIcon";
 import BusLiveLocation from "../busLocation/BusLiveLocation";
 
 
-const Map: React.FC<{ locations: LocationType[], drawRoute: RouteData[], trackBusNumber: any}> = ({ locations, drawRoute, trackBusNumber}) => {
+
+const Map: React.FC<{ locations: LocationType[], drawRoute: RouteData[], trackBusNumber: any, status: any }> = ({ locations, drawRoute, trackBusNumber, status }) => {
 
   return (
     <>
@@ -21,7 +22,7 @@ const Map: React.FC<{ locations: LocationType[], drawRoute: RouteData[], trackBu
         style={{ width: "100%", height: "500px" }} // Full width with sufficient height
       >
         <TileLayer url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png" />
-        
+
         <UserLocationSwitch />
 
         {
@@ -55,20 +56,26 @@ const Map: React.FC<{ locations: LocationType[], drawRoute: RouteData[], trackBu
         {
           (drawRoute.length > 0 && (
             <Polyline
-                positions={drawRoute.flatMap((seg) => {
-                    const decode = polyline.decode(seg.route).map(([lat, lng]) => ({lat,lng}))
-                    
-                    return (decode);
-                })}
-                color="blue"
-                weight={4}
-                opacity={0.5}
+              positions={drawRoute.flatMap((seg) => {
+                const decode = polyline.decode(seg.route).map(([lat, lng]) => ({ lat, lng }))
+
+                return (decode);
+              })}
+              color="blue"
+              weight={4}
+              opacity={0.5}
             />
-        ))
+          ))
         }
 
-        <BusLiveLocation busNumber={trackBusNumber}/>
-        
+        {
+          status ? (
+            <BusLiveLocation busNumber={trackBusNumber} />
+          ) : (
+            <></>
+          )
+        }
+
       </MapContainer>
     </>
   );
