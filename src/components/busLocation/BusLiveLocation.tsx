@@ -25,7 +25,7 @@ const BusLiveLocation: React.FC<BusLiveLocationProps> = ({ busNumber }) => {
     const [busDetails, setBuses] = useState<BusLocationType | null>(null);
     const [first, setFirst] = useState<LocationCoords>({lat:0,lng:0})
     const [second, setSecond] = useState<LocationCoords>({lat:0,lng:0})
-    const [speed, setSpeed] = useState<number>()
+    const [speed, setSpeed] = useState<number>(0)
 
     useEffect(() => {
         const fetchBusLocations = async () => {
@@ -38,7 +38,7 @@ const BusLiveLocation: React.FC<BusLiveLocationProps> = ({ busNumber }) => {
                 })
         
                 const data = response.data
-                console.log(data)
+                // console.log(data)
                 setBuses(data)
             } catch (error) {
                 console.error('Error fetching bus locations:', error)
@@ -60,7 +60,7 @@ const BusLiveLocation: React.FC<BusLiveLocationProps> = ({ busNumber }) => {
     
             if(first.lat != 0 && first.lng != 0 && second.lat != 0 && second.lng != 0) {
 
-                console.log('check')
+                // console.log('check')
                 const checkData = await axiosInstance.post<{
                     distance:number,
                     duration:number
@@ -76,7 +76,7 @@ const BusLiveLocation: React.FC<BusLiveLocationProps> = ({ busNumber }) => {
                 const timeInHours:number = duration / 3600;// Calculate the time in h
 
                 const busSpeed:number = distanceInKilometers / timeInHours;// Calculate the speed in kmph - i think
-
+                console.log(busSpeed)
                 setSpeed(busSpeed)
                 setFirst( {lat:0, lng: 0} );
                 setSecond( {lat:0, lng: 0} );
@@ -84,7 +84,9 @@ const BusLiveLocation: React.FC<BusLiveLocationProps> = ({ busNumber }) => {
             }
         }
 
-        calculateBusSpeed(busDetails)
+        if (busDetails) {
+            calculateBusSpeed(busDetails)
+        }
 
       }, [busDetails]);
 

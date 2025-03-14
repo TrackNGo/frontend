@@ -39,6 +39,7 @@ const LostItemReport: React.FC = () => {
         e.preventDefault();
 
         // Send data to the backend (POST request)           //backend problem could happen
+        // 'http://localhost:3000/api-lostnFound/lostitem'
         fetch('http://localhost:8080/api/items/submit', {
             method: 'POST',
             headers: {
