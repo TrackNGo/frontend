@@ -11,11 +11,11 @@ import Map from "../../components/clientMap/Map"
 import LocationType from "../../types/location/LocationType"
 import RouteData from "../../types/location/RouteData"
 
-const axiosInstance = axios.create({
-    baseURL: "http://localhost:8080",//172.16.193.135
-    timeout: 1000,
-    headers: { "X-Custom-Header": "foobar" },
-});
+// const axiosInstance = axios.create({
+//     baseURL: "http://localhost:8080",//172.16.193.135
+//     timeout: 1000,
+//     headers: { "X-Custom-Header": "foobar" },
+// });
 
 const BusTrackingDetails = () => {
     const { busNumber } = useParams<string>()
@@ -29,6 +29,8 @@ const BusTrackingDetails = () => {
     const [locationLoading, setLocationLoading] = useState<boolean>(false);
     // const [routeSegment, setRouteSegment] = useState<RouteSegment[]>([]); // Array of RouteSegment arrays
     const [drawRoute, setDrawRoute] = useState<RouteData[]>([])
+    const [initialStatus, setStatus] = useState<boolean>(false)
+
     // const [error, setError] = useState<string>("");
     // const sourcePosition: [number, number] = [7.8731, 80.7718];
 
@@ -61,9 +63,9 @@ const BusTrackingDetails = () => {
             setLocationLoading(true);
 
             // Fetch specific bus route
-            const response = await axiosInstance.post<{
+            const response = await axios.post<{
                 specificBusRoute: BusRouteTypes
-            }>("/api-user/getSpecific-busRoute",
+            }>("http://localhost:8080/api-user/getSpecific-busRoute",
                 {
                     busNumber: busNumber,
                 }
@@ -98,11 +100,11 @@ const BusTrackingDetails = () => {
                 const startLocation = cities[i];
                 const endLocation = cities[i + 1];
 
-                const segmentResponse = await axiosInstance.post<{
+                const segmentResponse = await axios.post<{
                     sourceLocation: string;
                     destinationLocation: string;
                     route: string;
-                }>("/api-user/getLocationCode-searchByName", {
+                }>("http://localhost:8080/api-user/getLocationCode-searchByName", {
                     startLocation,
                     endLocation,
                 });
@@ -122,10 +124,28 @@ const BusTrackingDetails = () => {
         }
     }
 
+    const fetchBusStatus = async () => {
+        try {
+            const response = await axios.get(`http://localhost:3000/api-bus/bus/${busNumber}`, {//172.16.193.135
+                headers: {
+                    'Content-Type': 'application/json',
+                    // 'ngrok-skip-browser-warning': 'true', // Uncomment if needed
+                },
+            })
+
+            const data = response.data
+            setStatus(data.status)
+        } catch (error) {
+            console.error('Error fetching bus locations:', error)
+        }
+    }
+
     useEffect(() => {
         if (busNumber) {
             fetchDetails()
             fetchRouteData(busNumber)
+            const intervalId = setInterval(fetchBusStatus, 5000); // Update every 10 seconds
+            return () => clearInterval(intervalId); // Cleanup on unmount
         }
     }, [busNumber])
 
@@ -147,11 +167,11 @@ const BusTrackingDetails = () => {
             </div>
 
             <div>
-                <Map locations={locations} drawRoute={drawRoute} trackBusNumber={busNumber}/>
+                <Map locations={locations} drawRoute={drawRoute} trackBusNumber={busNumber} status={initialStatus} />
             </div>
 
             <div className="mt-2">
-                <BusStatus status={busDetails?.status} />
+                <BusStatus status={initialStatus} />
             </div>
 
             <LocationInfo title="starting point" location={busRouteDetails?.startLocation || "N/A"} />
