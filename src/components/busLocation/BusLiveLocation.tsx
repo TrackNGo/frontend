@@ -14,11 +14,11 @@ interface LocationCoords {
     lng: number
 };
 
-const axiosInstance = axios.create({
-    baseURL: "http://localhost:8080",//172.16.193.135
-    timeout: 1000,
-    headers: { "X-Custom-Header": "foobar" },
-});
+// const axiosInstance = axios.create({
+//     baseURL: "http://localhost:8080",//172.16.193.135
+//     timeout: 1000,
+//     headers: { "X-Custom-Header": "foobar" },
+// });
 
 const BusLiveLocation: React.FC<BusLiveLocationProps> = ({ busNumber }) => {
 
@@ -61,10 +61,10 @@ const BusLiveLocation: React.FC<BusLiveLocationProps> = ({ busNumber }) => {
             if(first.lat != 0 && first.lng != 0 && second.lat != 0 && second.lng != 0) {
 
                 // console.log('check')
-                const checkData = await axiosInstance.post<{
+                const checkData = await axios.post<{
                     distance:number,
                     duration:number
-                }>(`/api-location/get-location-distance`, {
+                }>(`http://localhost:8080/api-location/get-location-distance`, {
                     first,
                     second
                 });

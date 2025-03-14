@@ -11,11 +11,11 @@ import Map from "../../components/clientMap/Map"
 import LocationType from "../../types/location/LocationType"
 import RouteData from "../../types/location/RouteData"
 
-const axiosInstance = axios.create({
-    baseURL: "http://localhost:8080",//172.16.193.135
-    timeout: 1000,
-    headers: { "X-Custom-Header": "foobar" },
-});
+// const axiosInstance = axios.create({
+//     baseURL: "http://localhost:8080",//172.16.193.135
+//     timeout: 1000,
+//     headers: { "X-Custom-Header": "foobar" },
+// });
 
 const BusTrackingDetails = () => {
     const { busNumber } = useParams<string>()
@@ -63,9 +63,9 @@ const BusTrackingDetails = () => {
             setLocationLoading(true);
 
             // Fetch specific bus route
-            const response = await axiosInstance.post<{
+            const response = await axios.post<{
                 specificBusRoute: BusRouteTypes
-            }>("/api-user/getSpecific-busRoute",
+            }>("http://localhost:8080/api-user/getSpecific-busRoute",
                 {
                     busNumber: busNumber,
                 }
@@ -100,11 +100,11 @@ const BusTrackingDetails = () => {
                 const startLocation = cities[i];
                 const endLocation = cities[i + 1];
 
-                const segmentResponse = await axiosInstance.post<{
+                const segmentResponse = await axios.post<{
                     sourceLocation: string;
                     destinationLocation: string;
                     route: string;
-                }>("/api-user/getLocationCode-searchByName", {
+                }>("http://localhost:8080/api-user/getLocationCode-searchByName", {
                     startLocation,
                     endLocation,
                 });
