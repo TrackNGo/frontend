@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Marker, Popup, useMap } from 'react-leaflet';
+import { Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import BusIcon from '../mapIcon/BusIcon';
 import BusLocationType from '../../types/location/BusLocationType';
@@ -113,20 +113,20 @@ const BusLiveLocation: React.FC<BusLiveLocationProps> = ({ busNumber }) => {
     );
 };
 
-interface MapZoomCenterProps {
-    position: [number, number]; // Latitude and longitude
-}
+// interface MapZoomCenterProps {
+//     position: [number, number]; // Latitude and longitude
+// }
 
-const MapZoomCenter: React.FC<MapZoomCenterProps> = ({ position }) => {
-    const map = useMap();
+// const MapZoomCenter: React.FC<MapZoomCenterProps> = ({ position }) => {
+//     const map = useMap();
 
-    useEffect(() => {
-        if (position) {
-            map.setView(position, 13); // Set the view to the position with zoom level 14
-        }
-    }, [position, map]);
+//     useEffect(() => {
+//         if (position) {
+//             map.setView(position, 13); // Set the view to the position with zoom level 14
+//         }
+//     }, [position, map]);
 
-    return null;
-};
+//     return null;
+// };
 
 export default BusLiveLocation;

@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Polyline } from "react-leaflet";
 import UserLocationSwitch from "../userLocationSwitch/UserLocationSwitch";
 import "leaflet/dist/leaflet.css";
