@@ -74,8 +74,8 @@ const FareEstimate = () => {
                                hover:bg-blue-600 hover:shadow-lg transition-all duration-300 ease-in-out active:scale-95"
                     >
                         <Link
-                            to="/timetable/views">
-                            View All Bus Timetables
+                            to="/fareestimate/views">
+                            View All Fare Estimates
                         </Link>
                     </button>
                 </div>
