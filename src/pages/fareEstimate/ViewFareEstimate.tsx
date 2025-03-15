@@ -12,6 +12,7 @@ const ViewFareEstimate = () => {
     const [endLocationQuery, setEndLocationQuery] = useState<string>("")
     const [currentPage, setCurrentPage] = useState<number>(1)
     const rowsPerPage = 4 // Number of rows per page
+    const [showFilters, setShowFilters] = useState<boolean>(false) // State to toggle filter visibility
 
     const fetchFare = async () => {
         try {
@@ -105,56 +106,80 @@ const ViewFareEstimate = () => {
             <Headline title="View Fare Estimate" />
 
             <div className="overflow-x-auto bg-white p-6 rounded-lg shadow-lg">
-                <div className="flex items-center space-x-4 mb-4">
-                    <label className="text-gray-600">Clear Filter:</label>
-                    <button
-                        onClick={handleResetFilters}
-                        className="px-3 py-1 bg-red-600 hover:bg-red-700 text-white font-normal rounded-lg shadow-md transition-all duration-200 focus:outline-none focus:ring-1 focus:ring-red-200"
-                    >
-                        Reset
-                    </button>
-
-                    <label className="text-gray-600">Search by Route Number:</label>
-                    <input
-                        type="text"
-                        placeholder="Search by Route Number"
-                        value={""}
-                        onChange={(e) => handleRouteNumberChange(e.target.value)}
-                        className="p-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-gray-300 focus:outline-none"
-                    />
-
+                <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 mb-1">
+                    {/* Filter Button to Toggle Visibility */}
+                    <div className="flex justify-between mb-1 px-2">
+                        <button
+                            onClick={() => setShowFilters(!showFilters)}
+                            className="px-4 py-2 bg-blue-500 text-white rounded-lg md:hidden"
+                        >
+                            {showFilters ? "Hide Filters" : "Show Filters"}
+                        </button>
+                        <div className="flex items-end">
+                            <button
+                                onClick={handleResetFilters}
+                                className="w-full px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-all"
+                            >
+                                Reset Filters
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
-                <div className="flex items-center space-x-4 mb-4">
-                    <label className="text-gray-600">Search by Start Location:</label>
-                    <input
-                        type="text"
-                        placeholder="Search by Start Location"
-                        value={""}
-                        onChange={(e) => handleStartLocationChange(e.target.value)}
-                        className="p-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-gray-300 focus:outline-none"
-                    />
+                {/* Filter Options Section (Mobile responsive) */}
+                <div className={`${showFilters ? 'block' : 'hidden'} md:block flex flex-wrap items-center space-x-4 mb-4`}>
+                    <div className="bg-white p-4 py-2 rounded-lg shadow-lg">
+                        {/* Filter Row 1 */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4">
+                            <div>
+                                <label className="text-gray-600">Filter by Type:</label>
+                                <select
+                                    value={selectedType}
+                                    onChange={(e) => handleFilterChange(e.target.value)}
+                                    className="px-4 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-gray-300 focus:outline-none transition-all mb-2 sm:mb-0 w-full"
+                                >
+                                    <option value="default">All</option>
+                                    <option value="normal">Normal</option>
+                                    <option value="semi-luxury">Semi-Luxury</option>
+                                    <option value="luxury">Luxury</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label className="text-gray-600">Search by Route Number:</label>
+                                <input
+                                    type="text"
+                                    placeholder="Search by Route Number"
+                                    value={routeNumberQuery}
+                                    onChange={(e) => handleRouteNumberChange(e.target.value)}
+                                    className="p-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-gray-300 focus:outline-none mb-2 sm:mb-0 w-full"
+                                />
+                            </div>
+                        </div>
 
-                    <label className="text-gray-600">Search by End Location:</label>
-                    <input
-                        type="text"
-                        placeholder="Search by End Location"
-                        value={""}
-                        onChange={(e) => handleEndLocationChange(e.target.value)}
-                        className="p-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-gray-300 focus:outline-none"
-                    />
-
-                    <label className="text-gray-600">Filter by Type:</label>
-                    <select
-                        value={""}
-                        onChange={(e) => handleFilterChange(e.target.value)}
-                        className="px-4 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-gray-300 focus:outline-none transition-all"
-                    >
-                        <option value="default">All</option>
-                        <option value="normal">Normal</option>
-                        <option value="semi-luxury">Semi-Luxury</option>
-                        <option value="luxury">Luxury</option>
-                    </select>
+                        {/* Filter Row 2 */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4">
+                            <div>
+                                <label className="text-gray-600">Search by Start Location:</label>
+                                <input
+                                    type="text"
+                                    placeholder="Search by Start Location"
+                                    value={startLocationQuery}
+                                    onChange={(e) => handleStartLocationChange(e.target.value)}
+                                    className="p-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-gray-300 focus:outline-none mb-2 sm:mb-0 w-full"
+                                />
+                            </div>
+                            <div>
+                                <label className="text-gray-600">Search by End Location:</label>
+                                <input
+                                    type="text"
+                                    placeholder="Search by End Location"
+                                    value={endLocationQuery}
+                                    onChange={(e) => handleEndLocationChange(e.target.value)}
+                                    className="p-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-gray-300 focus:outline-none mb-2 sm:mb-0 w-full"
+                                />
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div className="overflow-x-auto items-center bg-white shadow-lg rounded-lg">
@@ -173,7 +198,7 @@ const ViewFareEstimate = () => {
                             {currentFare.length > 0 ? (
                                 currentFare.map((est, key) => (
                                     <tr key={key} className="border-t hover:bg-gray-100 transition-all">
-                                        <td className="py-3 px-4">{key+1}</td>
+                                        <td className="py-3 px-4">{key + 1}</td>
                                         <td className="py-3 px-4 capitalize">{est.routeNumber}</td>
                                         <td className="py-3 px-4 capitalize">{est.busType}</td>
                                         <td className="py-3 px-4 capitalize">{est.startStop}</td>
@@ -184,7 +209,7 @@ const ViewFareEstimate = () => {
                             ) : (
                                 <tr>
                                     <td colSpan={7} className="py-3 px-4 text-center">
-                                        No accounts found.
+                                        No fares found.
                                     </td>
                                 </tr>
                             )}
