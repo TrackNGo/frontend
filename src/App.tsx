@@ -17,6 +17,7 @@ import LnSHome from './pages/lostAndfound/LnSHome'
 import FoundItemReport from './pages/lostAndfound/FoundItemReport'
 import LostItemReport from './pages/lostAndfound/LostItemReport'
 import SearchItem from './pages/lostAndfound/SearchItem'
+import NewsFeed from './pages/news/NewsFeed'
 //Lost and Found 
 // import LnSHome from './pages/lostAndfound/LnSHome'
 // import LostItemReport from './pages/lostAndfound/LostItemReport'
@@ -53,6 +54,8 @@ function App() {
           <Route path='/LostItemReport' element={<LostItemReport/>}/> 
           <Route path='/SearchItem' element={< SearchItem/>}/> 
 
+
+          <Route path='/news' element={<NewsFeed />} />
         </Routes>
       </BrowserRouter>
     </>
