@@ -24,6 +24,8 @@ import NewsFeed from './pages/news/NewsFeed'
 // import FoundItemReport from './pages/lostAndfound/FoundItemReport'
 // import SearchItem from './pages/lostAndfound/SearchItem'
 import BusTrackingUsingRoute from './pages/busTracking/BusTrackingUsingRoute'
+import ViewTimeTable from './pages/timeTable/ViewTimeTable'
+import ViewFareEstimate from './pages/fareEstimate/ViewFareEstimate'
 
 function App() {
   return (
@@ -54,6 +56,9 @@ function App() {
           <Route path='/LostItemReport' element={<LostItemReport/>}/> 
           <Route path='/SearchItem' element={< SearchItem/>}/> 
 
+          <Route path='/timetable/views' element={<ViewTimeTable />} />
+          
+          <Route path='/fareestimate/views' element={<ViewFareEstimate />} />
 
           <Route path='/news' element={<NewsFeed />} />
         </Routes>
