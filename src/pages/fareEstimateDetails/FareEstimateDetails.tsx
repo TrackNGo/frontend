@@ -49,22 +49,22 @@ const FareEstimateDetails = () => {
                 <div className="mb-2">
                     <div className="my-2">
                         <FareDetails
-                            type={"normal"}
-                            price={"500"}
+                            busType={"normal"}
+                            estimatedFare={"500"}
                         />
                     </div>
 
                     <div className="my-2">
                         <FareDetails
-                            type={"semi-luxury"}
-                            price={"750"}
+                            busType={"semi-luxury"}
+                            estimatedFare={"750"}
                         />
                     </div>
 
                     <div className="my-2">
                         <FareDetails
-                            type={"luxury"}
-                            price={"1000"}
+                            busType={"luxury"}
+                            estimatedFare={"1000"}
                         />
                     </div>
                 </div>
