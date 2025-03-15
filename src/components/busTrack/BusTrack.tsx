@@ -1,6 +1,6 @@
 import { useState } from "react"
 import useFetch from "../../hooks/useFetch/useFetch"
-import BusDetailsType from "../../types/busDetails/BusDetailsTypes"
+import BusDetailsType from "../../types/busDetails/busDetailsTypes"
 import FilterButtons from "../btn/filterBtnList/FilterButtons"
 import PrimaryBtn from "../btn/primaryBtn/PrimaryBtn"
 import BusList from "../busList/BusList"

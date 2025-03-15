@@ -21,7 +21,7 @@ const BusTrackingDetails = () => {
     const { busNumber } = useParams<string>()
     const [loading, setLoading] = useState(true)
     const [busRouteDetails, setBusRouteDetails] = useState<BusRouteTypes | null>(null)
-    const [busDetails, setBusDetails] = useState<{ status: boolean } | null>(null)
+    // const [busDetails, setBusDetails] = useState<{ status: boolean } | null>(null)
     const [error, setError] = useState<string | null>(null)
 
 
@@ -40,18 +40,18 @@ const BusTrackingDetails = () => {
         try {
             setLoading(true)
             //172.16.193.135
-            const [routeResponse, busResponse] = await Promise.all([
-                axios.get(`http://localhost:3000/api-busroutes/busRoute/${busNumber}`),
+            const [routeResponse] = await Promise.all([
+                // axios.get(`http://localhost:3000/api-busroutes/busRoute/${busNumber}`),
                 axios.get(`http://localhost:3000/api-bus/bus/${busNumber}`)
             ])
 
             setBusRouteDetails(routeResponse.data)
-            setBusDetails(busResponse.data)
+            // setBusDetails(busResponse.data)
             setError(null) // Reset error state
         } catch (error: any) {
             setError("Error fetching bus details.")
             setBusRouteDetails(null)
-            setBusDetails(null)
+            // setBusDetails(null)
         } finally {
             setLoading(false)
         }

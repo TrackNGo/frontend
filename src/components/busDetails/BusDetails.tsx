@@ -1,4 +1,4 @@
-import busDetailsType from "../../types/busDetails/BusDetailsTypes"
+import busDetailsType from '../../types/busDetails/busDetailsTypes'
 import buslog from '../../assets/img/buslogo.png'
 const BusDetails = (bus: busDetailsType) => {
   return (

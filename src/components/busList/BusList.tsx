@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom"
-import BusDetailsType from "../../types/busDetails/BusDetailsTypes"
+import BusDetailsType from "../../types/busDetails/busDetailsTypes"
 import BusDetails from "../busDetails/BusDetails"
 
 type Props = {
