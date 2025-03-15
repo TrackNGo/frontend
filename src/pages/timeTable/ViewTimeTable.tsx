@@ -1,10 +1,7 @@
 import axios from "axios"
 import { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
 import Headline from "../../components/headline/Headline"
 import TimeTableType from "../../types/timeTable/TimeTableType"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faEdit } from "@fortawesome/free-solid-svg-icons"
 
 const ViewTimeTable = () => {
     const [timeTables, setTimeTables] = useState<TimeTableType[]>([])
@@ -17,8 +14,6 @@ const ViewTimeTable = () => {
     const [priceSort, setPriceSort] = useState<string>("none")
     const [currentPage, setCurrentPage] = useState<number>(1) // Current page state
     const rowsPerPage = 4 // Number of rows to display per page
-
-    const navigate = useNavigate()
 
     useEffect(() => {
         const fetchTimeTables = async () => {
@@ -153,7 +148,6 @@ const ViewTimeTable = () => {
                                 <th className="py-3 px-4 text-left">Max Price</th>
                                 <th className="py-3 px-4 text-left">Start Time</th>
                                 <th className="py-3 px-4 text-left">End Time</th>
-                                <th className="py-3 px-4 text-left">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -166,16 +160,6 @@ const ViewTimeTable = () => {
                                     <td className="py-3 px-4">{timeTable.price}</td>
                                     <td className="py-3 px-4">{timeTable.startTime}</td>
                                     <td className="py-3 px-4">{timeTable.endTime}</td>
-                                    <td className="py-3 px-4">
-                                        <button
-                                            onClick={() => {
-                                                navigate(`/timetable/view/${timeTable._id}`)
-                                            }}
-                                            className="px-4 py-2 bg-yellow-600 hover:bg-yellow-500 text-white rounded-md border-2 border-transparent hover:border-yellow-600 hover:ring-2 hover:ring-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-300 transition-all duration-300"
-                                        >
-                                            <FontAwesomeIcon icon={faEdit} className="w-5 h-5" />
-                                        </button>
-                                    </td>
                                 </tr>
                             ))}
                         </tbody>
