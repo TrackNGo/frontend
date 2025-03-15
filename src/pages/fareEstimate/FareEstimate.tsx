@@ -3,7 +3,7 @@ import PrimaryBtn from "../../components/btn/primaryBtn/PrimaryBtn"
 import BtnSet from "../../components/btnSet/BtnSet"
 import Headline from "../../components/headline/Headline"
 import SelectBox from "../../components/selectBox/SelectBox"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 const options = [
     "colombo",
@@ -72,11 +72,9 @@ const FareEstimate = () => {
                 <div className="my-2 w-full flex justify-center">
                     <button className="w-full px-5 py-3 text-white bg-blue-500 rounded-lg text-md font-medium shadow-md 
                                hover:bg-blue-600 hover:shadow-lg transition-all duration-300 ease-in-out active:scale-95"
+                        onClick={() => navigate('/fareestimate/views')}
                     >
-                        <Link
-                            to="/fareestimate/views">
-                            View All Fare Estimates
-                        </Link>
+                        View All Fare Estimates
                     </button>
                 </div>
                 <BtnSet btnSet={btnSet} />
