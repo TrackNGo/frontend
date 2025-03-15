@@ -13,6 +13,7 @@ const ViewTimeTable = () => {
     const [searchRouteNumber, setSearchRouteNumber] = useState<string>("")
     const [priceSort, setPriceSort] = useState<string>("none")
     const [currentPage, setCurrentPage] = useState<number>(1) // Current page state
+    const [showFilters, setShowFilters] = useState<boolean>(false) // State to toggle filter visibility
     const rowsPerPage = 4 // Number of rows to display per page
 
     useEffect(() => {
@@ -78,62 +79,90 @@ const ViewTimeTable = () => {
         <div>
             <Headline title={"View Time Table"} />
             <div className="overflow-x-auto bg-white p-6 rounded-lg shadow-lg">
-                <div className="flex flex-wrap items-center space-x-4 mb-4 pl-0">
-                    <div className="flex items-center space-x-4 mt-4 px-4">
-                        <label className="text-gray-600">Clear Filter:</label>
+                {/* Filter Button to Toggle Visibility */}
+                <div className="flex justify-between mb-4 px-2">
+                    <button
+                        onClick={() => setShowFilters(!showFilters)}
+                        className="px-4 py-2 bg-blue-500 text-white rounded-lg md:hidden"
+                    >
+                        {showFilters ? "Hide Filters" : "Show Filters"}
+                    </button>
+                    <div className="flex items-end">
                         <button
                             onClick={handleResetFilters}
-                            className="px-3 py-1 bg-red-600 hover:bg-red-700 text-white font-normal rounded-lg shadow-md transition-all duration-200 focus:outline-none focus:ring-1 focus:ring-red-200"
+                            className="w-full px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-all"
                         >
-                            Reset
+                            Reset Filters
                         </button>
-                        <label className="text-gray-600">Filter by Type:</label>
-                        <select
-                            value={busType}
-                            onChange={(e) => setBusType(e.target.value)}
-                            className="p-2 border rounded-lg"
-                        >
-                            <option value="">All</option>
-                            <option value="luxury">Luxury</option>
-                            <option value="normal">Normal</option>
-                            <option value="semi-luxury">Semi-Luxury</option>
-                        </select>
-                        <label className="text-gray-600">Sort by Price:</label>
-                        <select
-                            value={priceSort}
-                            onChange={(e) => setPriceSort(e.target.value)}
-                            className="p-2 border rounded-lg"
-                        >
-                            <option value="none">Default</option>
-                            <option value="asc">Ascending</option>
-                            <option value="desc">Descending</option>
-                        </select>
                     </div>
-                    <div className="space-x-1 mt-3">
-                        <label className="text-gray-600">Search by Start Location:</label>
-                        <input
-                            type="text"
-                            value={searchStart}
-                            onChange={(e) => setSearchStart(e.target.value)}
-                            placeholder="Enter Start Location"
-                            className="p-2 border rounded-lg"
-                        />
-                        <label className="text-gray-600">Search by End Location:</label>
-                        <input
-                            type="text"
-                            value={searchEnd}
-                            onChange={(e) => setSearchEnd(e.target.value)}
-                            placeholder="Enter End Location"
-                            className="p-2 border rounded-lg"
-                        />
-                        <label className="text-gray-600">Search by Route Number:</label>
-                        <input
-                            type="text"
-                            value={searchRouteNumber}
-                            onChange={(e) => setSearchRouteNumber(e.target.value)}
-                            placeholder="Enter Route Number"
-                            className="p-2 border rounded-lg"
-                        />
+                </div>
+
+                {/* Filter Options Section (Mobile responsive) */}
+                <div className={`${showFilters ? 'block' : 'hidden'} md:block flex flex-wrap items-center space-x-4 mb-4`}>
+                    <div className="bg-white p-4 rounded-lg shadow-lg">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4">
+                            {/* Filter Row 1 */}
+                            <div>
+                                <label className="text-gray-600 block">Route Number:</label>
+                                <input
+                                    type="text"
+                                    value={searchRouteNumber}
+                                    onChange={(e) => setSearchRouteNumber(e.target.value)}
+                                    placeholder="Enter Route Number"
+                                    className="w-full p-2 border rounded-lg"
+                                />
+                            </div>
+                            
+                            <div>
+                                <label className="text-gray-600 block">Start Location:</label>
+                                <input
+                                    type="text"
+                                    value={searchStart}
+                                    onChange={(e) => setSearchStart(e.target.value)}
+                                    placeholder="Enter Start Location"
+                                    className="w-full p-2 border rounded-lg"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="text-gray-600 block">End Location:</label>
+                                <input
+                                    type="text"
+                                    value={searchEnd}
+                                    onChange={(e) => setSearchEnd(e.target.value)}
+                                    placeholder="Enter End Location"
+                                    className="w-full p-2 border rounded-lg"
+                                />
+                            </div>   
+
+                            {/* Filter Row 2 */}
+                            <div>
+                                <label className="text-gray-600 block">Filter by Type:</label>
+                                <select
+                                    value={busType}
+                                    onChange={(e) => setBusType(e.target.value)}
+                                    className="w-full p-2 border rounded-lg"
+                                >
+                                    <option value="">All</option>
+                                    <option value="luxury">Luxury</option>
+                                    <option value="normal">Normal</option>
+                                    <option value="semi-luxury">Semi-Luxury</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label className="text-gray-600 block">Sort by Price:</label>
+                                <select
+                                    value={priceSort}
+                                    onChange={(e) => setPriceSort(e.target.value)}
+                                    className="w-full p-2 border rounded-lg"
+                                >
+                                    <option value="none">Default</option>
+                                    <option value="asc">Ascending</option>
+                                    <option value="desc">Descending</option>
+                                </select>
+                            </div>    
+                        </div>
                     </div>
                 </div>
 
