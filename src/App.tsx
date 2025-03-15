@@ -31,6 +31,7 @@ function App() {
         <Header />
         <Routes>
           <Route path='/' element={<Home />} />
+          <Route path='/home' element={<Home />} />
           <Route path='/timetable' element={<TimeTable />} />
           <Route path='/busroute' element={<BusRoute />} />
           <Route path='/fareestimate' element={<FareEstimate />} />
