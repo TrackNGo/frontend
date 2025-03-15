@@ -69,6 +69,7 @@ const TimeTable = () => {
                     onClick={() => console.log("Start Location:", locations.startLocation, "End Location:", locations.endLocation)}
                     classes={"bg-gradient-to-r from-black to-black hover:from-slate-800 hover:to-slate-700 border-solid border-1 border-slate-900 text-white"}
                 />
+                
                 <div className="my-2 w-full flex justify-center">
                     <button className="w-full px-5 py-3 text-white bg-blue-500 rounded-lg text-md font-medium shadow-md 
                hover:bg-blue-600 hover:shadow-lg transition-all duration-300 ease-in-out active:scale-95"
