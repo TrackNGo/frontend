@@ -78,7 +78,6 @@ const TimeTable = () => {
                             View All Bus Timetables
                         </Link>
                     </button>
-
                 </div>
 
                 <BtnSet btnSet={btnSet} />
