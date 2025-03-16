@@ -30,6 +30,7 @@ const BusTrackingDetails = () => {
     // const [routeSegment, setRouteSegment] = useState<RouteSegment[]>([]); // Array of RouteSegment arrays
     const [drawRoute, setDrawRoute] = useState<RouteData[]>([])
     const [initialStatus, setStatus] = useState<boolean>(false)
+    const [busRouteStop, setBusRouteStop] = useState<string[]>([])
 
     // const [error, setError] = useState<string>("");
     // const sourcePosition: [number, number] = [7.8731, 80.7718];
@@ -74,6 +75,7 @@ const BusTrackingDetails = () => {
             const { specificBusRoute } = response.data;
 
             setBusRouteDetails(specificBusRoute);
+            setBusRouteStop(specificBusRoute.routeStops)
 
             // Prepare cities for geocoding
             const cities: string[] = [
@@ -176,8 +178,8 @@ const BusTrackingDetails = () => {
 
             <LocationInfo title="starting point" location={busRouteDetails?.startLocation || "N/A"} />
             <LocationInfo title="ending point" location={busRouteDetails?.endLocation || "N/A"} />
-
-            <RouteStopList stops={busRouteDetails?.routeStops || []} />
+            
+            <RouteStopList stops={busRouteStop} />
 
             <div className="py-4">
                 <div className="sm:mb-1 mb-2">
