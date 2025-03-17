@@ -8,7 +8,6 @@ const axiosInstance = axios.create({
   headers: { "X-Custom-Header": "foobar" },
 });
 
-
 const ReportForm = () => {
   const [busId, setBusId] = useState<string>("");
   const [issueType, setIssueType] = useState<string>("");
@@ -69,6 +68,10 @@ const ReportForm = () => {
             <option value="">Select an issue type</option>
             <option value="Driver Behavior">Driver Behavior</option>
             <option value="Speed Issue">Speed Issue</option>
+            <option value="Conductor Behavior">Conductor Behavior</option>
+            <option value="Bus Condition">Bus Condition</option>
+            <option value="Route Issue">Route Issue</option>
+            <option value="Bus Fee Issue">Bus Fee Issue</option>
             <option value="Other">Other</option>
           </select>
         </div>
