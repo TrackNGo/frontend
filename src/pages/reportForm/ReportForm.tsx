@@ -82,3 +82,13 @@ const ReportForm = () => {
             required
           />
         </div>
+
+        <div className="mt-2">
+          <label className="block">Contact Details (optional):</label>
+          <input
+            type="text"
+            value={contactDetails}
+            onChange={(e) => setContactDetails(e.target.value)}
+            className="p-2 w-full border-2 border-gray-300 rounded"
+          />
+        </div>
