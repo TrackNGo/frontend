@@ -101,3 +101,13 @@ const ReportForm = () => {
           />
         </div>
       </form>
+      {message && (
+        <div className="mt-2">
+          <p>{message}</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default ReportForm;
