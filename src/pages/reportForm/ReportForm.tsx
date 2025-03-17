@@ -9,7 +9,7 @@ const axiosInstance = axios.create({
 });
 
 const ReportForm = () => {
-  const [busId, setBusId] = useState<string>("");
+  const [busNumber, setbusNumber] = useState<string>("");
   const [issueType, setIssueType] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [contactDetails, setContactDetails] = useState<string>("");
@@ -18,14 +18,14 @@ const ReportForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!busId || !issueType || !description) {
+    if (!busNumber || !issueType || !description) {
       setMessage("Please fill out all required fields.");
       return;
     }
 
     try {
       const response = await axiosInstance.post("/api/report", {
-        busId,
+        busNumber,
         issueType,
         description,
         contactDetails,
@@ -50,8 +50,8 @@ const ReportForm = () => {
           <label className="block">Bus ID:</label>
           <input
             type="text"
-            value={busId}
-            onChange={(e) => setBusId(e.target.value)}
+            value={busNumber}
+            onChange={(e) => setbusNumber(e.target.value)}
             className="p-2 w-full border-2 border-gray-300 rounded"
             required
           />
