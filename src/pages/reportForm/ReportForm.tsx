@@ -57,3 +57,18 @@ const ReportForm = () => {
             required
           />
         </div>
+
+        <div className="mt-2">
+          <label className="block">Issue Type:</label>
+          <select
+            value={issueType}
+            onChange={(e) => setIssueType(e.target.value)}
+            className="p-2 w-full border-2 border-gray-300 rounded"
+            required
+          >
+            <option value="">Select an issue type</option>
+            <option value="Driver Behavior">Driver Behavior</option>
+            <option value="Speed Issue">Speed Issue</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
