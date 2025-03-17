@@ -42,3 +42,18 @@ const ReportForm = () => {
       setMessage("Server error. Please try again later.");
     }
   };
+
+  return (
+    <div className="px-2">
+      <h2 className="text-xl font-semibold">Submit a Report</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="mt-2">
+          <label className="block">Bus ID:</label>
+          <input
+            type="text"
+            value={busId}
+            onChange={(e) => setBusId(e.target.value)}
+            className="p-2 w-full border-2 border-gray-300 rounded"
+            required
+          />
+        </div>
