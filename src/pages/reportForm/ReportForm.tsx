@@ -92,3 +92,12 @@ const ReportForm = () => {
             className="p-2 w-full border-2 border-gray-300 rounded"
           />
         </div>
+
+        <div className="mt-2">
+          <PrimaryBtn
+            type="submit"
+            title="Submit Report"
+            classes="bg-gradient-to-r from-blue-500 to-blue-500 hover:from-blue-700 hover:to-blue-800 border-solid border-1 border-slate-900 text-white"
+          />
+        </div>
+      </form>
