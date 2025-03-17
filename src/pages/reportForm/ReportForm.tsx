@@ -72,3 +72,13 @@ const ReportForm = () => {
             <option value="Other">Other</option>
           </select>
         </div>
+
+        <div className="mt-2">
+          <label className="block">Description:</label>
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="p-2 w-full border-2 border-gray-300 rounded"
+            required
+          />
+        </div>
