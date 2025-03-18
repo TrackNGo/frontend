@@ -18,6 +18,7 @@ import FoundItemReport from './pages/lostAndfound/FoundItemReport'
 import LostItemReport from './pages/lostAndfound/LostItemReport'
 import SearchItem from './pages/lostAndfound/SearchItem'
 import NewsFeed from './pages/news/NewsFeed'
+import ReportForm from './pages/reportForm/ReportForm'
 //Lost and Found 
 // import LnSHome from './pages/lostAndfound/LnSHome'
 // import LostItemReport from './pages/lostAndfound/LostItemReport'
@@ -61,6 +62,8 @@ function App() {
           <Route path='/fareestimate/views' element={<ViewFareEstimate />} />
 
           <Route path='/news' element={<NewsFeed />} />
+
+          <Route path='/reportform' element={<ReportForm />} />
         </Routes>
       </BrowserRouter>
     </>
