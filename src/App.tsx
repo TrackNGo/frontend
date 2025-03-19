@@ -27,6 +27,7 @@ import ReportForm from './pages/reportForm/ReportForm'
 import BusTrackingUsingRoute from './pages/busTracking/BusTrackingUsingRoute'
 import ViewTimeTable from './pages/timeTable/ViewTimeTable'
 import ViewFareEstimate from './pages/fareEstimate/ViewFareEstimate'
+import BusTrackingBySearch from './pages/busTracking/BusTrackingBySearch'
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
 
           <Route path='/bustracking' element={<BusTracking />} />
           <Route path="/bustracking/routes/:routeNumber" element={<BusTrackingUsingRoute />} />
+          <Route path="/bustracking/routes/search/:start/:end" element={<BusTrackingBySearch />} />
           <Route path='/bustracking/details/:busNumber' element={<BusTrackingDetails />} />
 
           <Route path='/login' element={<Login />} />
