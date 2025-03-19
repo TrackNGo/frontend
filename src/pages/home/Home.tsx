@@ -8,7 +8,9 @@ import { useNavigate } from "react-router-dom"
 const options = [
     "colombo",
     "jaffna",
-    "kalutara"
+    "kalutara",
+    "Polonnoruwa",
+    "Kurunagala"
 ]
 
 const Home = () => {
@@ -66,7 +68,7 @@ const Home = () => {
             <div className="py-2">
                 <PrimaryBtn
                     title={"search bus"}
-                    onClick={() => console.log("Start Location:", locations.startLocation, "End Location:", locations.endLocation)}
+                    onClick={() => navigate(`/bustracking/routes/search/${locations.startLocation}/${locations.endLocation}`)}
                     classes={"bg-gradient-to-r from-black to-black hover:from-slate-800 hover:to-slate-700 border-solid border-1 border-slate-900 text-white"}
                 />
                 <BtnSet btnSet={btnSet} />
