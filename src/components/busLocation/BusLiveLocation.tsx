@@ -27,24 +27,25 @@ const BusLiveLocation: React.FC<BusLiveLocationProps> = ({ busNumber }) => {
     const [second, setSecond] = useState<LocationCoords>({lat:0,lng:0})
     const [speed, setSpeed] = useState<number>(0)
 
-    useEffect(() => {
-        const fetchBusLocations = async () => {
-            try {
-                const response = await axios.get(`http://localhost:8080/api-user/getBus-locations/${busNumber}`, {//172.16.193.135
-                    headers: {
-                        'Content-Type': 'application/json',
-                        // 'ngrok-skip-browser-warning': 'true', // Uncomment if needed
-                    },
-                })
-        
-                const data = response.data
-                // console.log(data)
-                setBuses(data)
-            } catch (error) {
-                console.error('Error fetching bus locations:', error)
-            }
+    const fetchBusLocations = async () => {
+        try {
+            const response = await axios.get(`http://localhost:8080/api-user/getBus-locations/${busNumber}`, {//172.16.193.135
+                headers: {
+                    'Content-Type': 'application/json',
+                    // 'ngrok-skip-browser-warning': 'true', // Uncomment if needed
+                },
+            })
+    
+            const data = response.data
+            // console.log(data)
+            setBuses(data)
+        } catch (error) {
+            console.error('Error fetching bus locations:', error)
         }
+    }
 
+    useEffect(() => {
+        fetchBusLocations();
         const intervalId = setInterval(fetchBusLocations, 10000); // Update every 10 seconds
         return () => clearInterval(intervalId); // Cleanup on unmount
     }, [busNumber]);
