@@ -6,18 +6,21 @@ const useFetch = <T>(url: string) => {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(url)
-                setData(response.data)
-            } catch (err: any) {
-                setError(err.message)
-            } finally {
-                setLoading(false)
-            }
+    const fetchData = async () => {
+        try {
+            const response = await axios.get(url)
+            setData(response.data)
+        } catch (err: any) {
+            setError(err.message)
+        } finally {
+            setLoading(false)
         }
-        fetchData()
+    }
+
+    useEffect(() => {
+        fetchData();
+        const intervalId = setInterval(fetchData, 5000);
+        return () => clearInterval(intervalId);
     }, [url])
 
     return { data, loading, error }
