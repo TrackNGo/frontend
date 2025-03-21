@@ -8,7 +8,9 @@ import { useNavigate } from "react-router-dom"
 const options = [
     "colombo",
     "jaffna",
-    "kalutara"
+    "kalutara",
+    "Polonnoruwa",
+    "Kurunagala"
 ]
 
 const TimeTable = () => {
@@ -66,14 +68,14 @@ const TimeTable = () => {
             <div className="py-2">
                 <PrimaryBtn
                     title={"search bus time table"}
-                    onClick={() => console.log("Start Location:", locations.startLocation, "End Location:", locations.endLocation)}
+                    onClick={() => navigate(`/timetable/views/${locations.startLocation}/${locations.endLocation}`)}
                     classes={"bg-gradient-to-r from-black to-black hover:from-slate-800 hover:to-slate-700 border-solid border-1 border-slate-900 text-white"}
                 />
 
                 <div className="my-2 w-full flex justify-center">
                     <button className="w-full px-5 py-3 text-white bg-blue-500 rounded-lg text-md font-medium shadow-md 
                hover:bg-blue-600 hover:shadow-lg transition-all duration-300 ease-in-out active:scale-95"
-                        onClick={() => navigate('/timetable/views')}
+                        onClick={() => navigate('/timetable/views/null/null')}
                     >
                         View All Bus Timetables
                     </button>

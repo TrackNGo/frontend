@@ -2,8 +2,10 @@ import axios from "axios"
 import { useState, useEffect } from "react"
 import Headline from "../../components/headline/Headline"
 import TimeTableType from "../../types/timeTable/TimeTableType"
+import { useParams } from "react-router-dom"
 
 const ViewTimeTable = () => {
+    const { start, end } = useParams<{ start: string, end: string }>()
     const [timeTables, setTimeTables] = useState<TimeTableType[]>([])
     const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState<string | null>(null)
@@ -19,9 +21,17 @@ const ViewTimeTable = () => {
     useEffect(() => {
         const fetchTimeTables = async () => {
             try {
-                const response = await axios.get("http://localhost:3000/api-bustimetable/view")
-                setTimeTables(response.data)
-                setLoading(false)
+
+                if (start === 'null' && end == 'null') {
+                    const response = await axios.get("http://localhost:3000/api-bustimetable/view")
+                    setTimeTables(response.data)
+                    setLoading(false)
+                }
+                else {
+                    const response = await axios.get(`http://localhost:3000/api-bustimetable/locations?startLocation=${start}&endLocation=${end}`)
+                    setTimeTables(response.data)
+                    setLoading(false)
+                }
             } catch (error: any) {
                 setError("Error fetching time tables.")
                 setLoading(false)
@@ -31,27 +41,36 @@ const ViewTimeTable = () => {
         fetchTimeTables()
     }, [])
 
-    const filteredTimeTables = timeTables.filter((timeTable) => {
-        const matchesBusType = busType ? timeTable.busType?.toLowerCase() === busType.toLowerCase() : true
-        const matchesStartLocation = timeTable.startLocation.toLowerCase().includes(searchStart.toLowerCase())
-        const matchesEndLocation = timeTable.endLocation.toLowerCase().includes(searchEnd.toLowerCase())
-        const matchesRouteNumber = timeTable.busRouteNumber.toLowerCase().includes(searchRouteNumber.toLowerCase())
-        return matchesBusType && matchesStartLocation && matchesEndLocation && matchesRouteNumber
-    })
+    let filteredTimeTables;
+    let sortedTimeTables;
+    let totalPages = 0;
+    let startIndex;
+    let currentTimeTables;
 
-    const sortedTimeTables = filteredTimeTables.sort((a, b) => {
-        if (priceSort === "asc") {
-            return a.price - b.price
-        } else if (priceSort === "desc") {
-            return b.price - a.price
-        }
-        return 0
-    })
+    if (timeTables.length > 0) {
+        filteredTimeTables = timeTables.filter((timeTable) => {
+            const matchesBusType = busType ? timeTable.busType?.toLowerCase() === busType.toLowerCase() : true
+            const matchesStartLocation = timeTable.startLocation.toLowerCase().includes(searchStart.toLowerCase())
+            const matchesEndLocation = timeTable.endLocation.toLowerCase().includes(searchEnd.toLowerCase())
+            const matchesRouteNumber = timeTable.busRouteNumber.toLowerCase().includes(searchRouteNumber.toLowerCase())
+            return matchesBusType && matchesStartLocation && matchesEndLocation && matchesRouteNumber
+        })
 
-    // Pagination calculations
-    const totalPages = Math.ceil(sortedTimeTables.length / rowsPerPage)
-    const startIndex = (currentPage - 1) * rowsPerPage
-    const currentTimeTables = sortedTimeTables.slice(startIndex, startIndex + rowsPerPage)
+        sortedTimeTables = filteredTimeTables.sort((a, b) => {
+            if (priceSort === "asc") {
+                return a.price - b.price
+            } else if (priceSort === "desc") {
+                return b.price - a.price
+            }
+            return 0
+        })
+
+        // Pagination calculations
+        totalPages = Math.ceil(sortedTimeTables.length / rowsPerPage)
+        startIndex = (currentPage - 1) * rowsPerPage
+        currentTimeTables = sortedTimeTables.slice(startIndex, startIndex + rowsPerPage)
+    }
+
 
     const handlePageChange = (page: number) => {
         if (page > 0 && page <= totalPages) {
@@ -112,7 +131,7 @@ const ViewTimeTable = () => {
                                     className="w-full p-2 border rounded-lg"
                                 />
                             </div>
-                            
+
                             <div>
                                 <label className="text-gray-600 block">Start Location:</label>
                                 <input
@@ -133,7 +152,7 @@ const ViewTimeTable = () => {
                                     placeholder="Enter End Location"
                                     className="w-full p-2 border rounded-lg"
                                 />
-                            </div>   
+                            </div>
 
                             {/* Filter Row 2 */}
                             <div>
@@ -161,7 +180,7 @@ const ViewTimeTable = () => {
                                     <option value="asc">Ascending</option>
                                     <option value="desc">Descending</option>
                                 </select>
-                            </div>    
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -180,7 +199,7 @@ const ViewTimeTable = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {currentTimeTables.map((timeTable, index) => (
+                            {currentTimeTables ? (currentTimeTables.map((timeTable, index) => (
                                 <tr key={index} className="border-t hover:bg-gray-50 capitalize">
                                     <td className="py-3 px-4">{timeTable.startLocation}</td>
                                     <td className="py-3 px-4">{timeTable.endLocation}</td>
@@ -190,14 +209,32 @@ const ViewTimeTable = () => {
                                     <td className="py-3 px-4">{timeTable.startTime}</td>
                                     <td className="py-3 px-4">{timeTable.endTime}</td>
                                 </tr>
-                            ))}
+                            ))) : (
+                                <>
+                                    <tr className="border-t hover:bg-gray-50 capitalize">
+                                        <td colSpan={7} className="py-3 px-4">
+                                            <center>
+                                                No timetable is found for this route...
+                                            </center>
+                                        </td>
+                                    </tr>
+                                </>
+                            )}
                         </tbody>
                     </table>
                 </div>
 
                 {/* Displaying the number of results */}
                 <div className="mt-4 text-sm text-gray-600 capitalize">
-                    Showing {startIndex + 1} to {Math.min(startIndex + rowsPerPage, filteredTimeTables.length)} of {filteredTimeTables.length} <b className='capitalize'>time tables</b>
+                    {
+                        currentTimeTables && startIndex && filteredTimeTables ? (
+                            <>
+                                Showing {startIndex + 1} to {Math.min(startIndex + rowsPerPage, filteredTimeTables.length)} of {filteredTimeTables.length} <b className='capitalize'>time tables</b>
+                            </>
+                        ) : (
+                            <></>
+                        )
+                    }
                 </div>
 
                 {/* Pagination Controls */}
