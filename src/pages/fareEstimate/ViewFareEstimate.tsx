@@ -2,8 +2,10 @@ import axios from "axios"
 import { useState, useEffect } from "react"
 import Headline from "../../components/headline/Headline"
 import FareDetailsType from "../../types/fareDetails/FareDetailsType"
+import { useParams } from "react-router-dom"
 
 const ViewFareEstimate = () => {
+    const { start, end } = useParams<{ start: string, end: string }>()
     const [fare, setFare] = useState<FareDetailsType[]>([])
     const [filteredFare, setFilteredFare] = useState<FareDetailsType[]>([])
     const [selectedType, setSelectedType] = useState<string>("default")
@@ -16,7 +18,15 @@ const ViewFareEstimate = () => {
 
     const fetchFare = async () => {
         try {
-            const response = await axios.get("http://localhost:3000/api-fare/view")
+
+            let response;
+
+            if(start === "null" && end === "null") {
+                response = await axios.get("http://localhost:3000/api-fare/view")
+            }
+            else {
+                response = await axios.get(`http://localhost:3000/api-fare/locations?startLocation=${start}&endLocation=${end}`)
+            }
             if (response.data && Array.isArray(response.data.fareEstimates)) {
                 setFare(response.data.fareEstimates)
                 setFilteredFare(response.data.fareEstimates)
