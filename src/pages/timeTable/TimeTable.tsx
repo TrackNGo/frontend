@@ -40,6 +40,12 @@ const TimeTable = () => {
         setLocations(prev => ({ ...prev, [key]: value }))
     }
 
+    function submissionHandel() {
+        if(locations.startLocation && locations.endLocation) {
+            navigate(`/timetable/views/${locations.startLocation}/${locations.endLocation}`)
+        }
+    }
+
     return (
         <div className="px-2">
             <Headline title={"Bus Time Table"} />
@@ -68,7 +74,7 @@ const TimeTable = () => {
             <div className="py-2">
                 <PrimaryBtn
                     title={"search bus time table"}
-                    onClick={() => navigate(`/timetable/views/${locations.startLocation}/${locations.endLocation}`)}
+                    onClick={() => submissionHandel()}
                     classes={"bg-gradient-to-r from-black to-black hover:from-slate-800 hover:to-slate-700 border-solid border-1 border-slate-900 text-white"}
                 />
 
