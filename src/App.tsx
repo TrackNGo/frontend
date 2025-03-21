@@ -59,7 +59,7 @@ function App() {
           <Route path='/LostItemReport' element={<LostItemReport/>}/> 
           <Route path='/SearchItem' element={< SearchItem/>}/> 
 
-          <Route path='/timetable/views' element={<ViewTimeTable />} />
+          <Route path='/timetable/views/:start/:end' element={<ViewTimeTable />} />
           
           <Route path='/fareestimate/views' element={<ViewFareEstimate />} />
 
