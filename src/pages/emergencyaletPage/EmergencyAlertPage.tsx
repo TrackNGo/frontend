@@ -5,9 +5,17 @@ const EmergencyAlertPage = () => {
   const navigate = useNavigate();
   const axiosInstance = axios.create({
     baseURL: "http://localhost:8080",
-    timeout: 1000,
+    timeout: 10000,
     headers: { "X-Custom-Header": "foobar" },
   });
+
+  const mockBusDetails = {
+    busNumber: "CAV-1177",
+    route: "101 - Downtown Express",
+    stops: ["Central Station", "Market Square", "City Hall", "Riverfront Park"],
+    conductor: "John Doe",
+    status: "active", // Would be updated based on real data
+  };
 
   const emergencyTypes = [
     { id: 1, name: "Mechanical Failure", icon: "🚗💥" },
@@ -20,16 +28,32 @@ const EmergencyAlertPage = () => {
 
   const handleEmergencySubmit = async (emergencyType: string) => {
     try {
-      await axiosInstance.post("/api/emergency", {
+      // Get current location before sending
+      const position = await new Promise<GeolocationPosition>((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+      });
+  
+      const { coords } = position;
+      
+      const response = await axiosInstance.post("/api-emergency", {
         type: emergencyType,
-        busNumber: "CAV-1177", // Replace with dynamic bus number
+        busNumber: mockBusDetails.busNumber,
+        latitude: coords.latitude,
+        longitude: coords.longitude,
         timestamp: new Date().toISOString(),
       });
-      alert("Emergency reported successfully!");
-      navigate("/dashboard");
+  
+      if (response.data.success) {
+        alert("Emergency reported successfully!");
+        navigate("/dashboard");
+      }
     } catch (error) {
       console.error("Error reporting emergency:", error);
-      alert("Failed to report emergency. Please try again.");
+      if (axios.isAxiosError(error)) {
+        alert(`Failed to report emergency: ${error.response?.data?.error || error.message}`);
+      } else {
+        alert(`Failed to report emergency: ${error instanceof Error ? error.message : "Unknown error"}`);
+      }
     }
   };
 
