@@ -3,7 +3,7 @@ import { useState } from "react";
 import PrimaryBtn from "../../components/btn/primaryBtn/PrimaryBtn";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:8080", // Replace with your backend API URL
+  baseURL: "http://localhost:8080/api-report", // Replace with your backend API URL
   timeout: 1000,
   headers: { "X-Custom-Header": "foobar" },
 });
@@ -24,7 +24,7 @@ const ReportForm = () => {
     }
 
     try {
-      const response = await axiosInstance.post("/api/report", {
+      const response = await axiosInstance.post("/report", {
         busNumber,
         issueType,
         description,
