@@ -43,29 +43,37 @@ const ReportForm = () => {
   };
 
   return (
-    <div className="px-2">
-      <h2 className="text-xl font-semibold">Submit a Report</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mt-2">
-          <label className="block">Bus ID:</label>
+    <div className="max-w-2xl mx-auto p-6">
+      <div className="mb-8 text-center">
+        <h2 className="text-2xl font-semibold text-gray-800">Submit Report</h2>
+        <p className="text-gray-500 mt-2">Help us Public Transport</p>
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Bus ID
+          </label>
           <input
             type="text"
             value={busNumber}
             onChange={(e) => setbusNumber(e.target.value)}
-            className="p-2 w-full border-2 border-gray-300 rounded"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-200 focus:border-blue-500 outline-none transition-all"
             required
           />
         </div>
 
-        <div className="mt-2">
-          <label className="block">Issue Type:</label>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Issue Type
+          </label>
           <select
             value={issueType}
             onChange={(e) => setIssueType(e.target.value)}
-            className="p-2 w-full border-2 border-gray-300 rounded"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-200 focus:border-blue-500 outline-none appearance-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiAjdjQ3NDc1NyIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwb2x5bGluZSBwb2ludHM9IjYgOSAxMiAxNSAxOCA5Ij48L3BvbHlsaW5lPjwvc3ZnPg==')] bg-no-repeat bg-[right:1rem_center] bg-[length:1.5em]"
             required
           >
-            <option value="">Select an issue type</option>
+            <option value="">Select issue type</option>
             <option value="Driver Behavior">Driver Behavior</option>
             <option value="Speed Issue">Speed Issue</option>
             <option value="Conductor Behavior">Conductor Behavior</option>
@@ -76,39 +84,49 @@ const ReportForm = () => {
           </select>
         </div>
 
-        <div className="mt-2">
-          <label className="block">Description:</label>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Description
+          </label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="p-2 w-full border-2 border-gray-300 rounded"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-200 focus:border-blue-500 outline-none transition-all min-h-[120px]"
             required
           />
         </div>
 
-        <div className="mt-2">
-          <label className="block">Contact Details (optional):</label>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Contact Details <span className="text-gray-400">(optional)</span>
+          </label>
           <input
             type="text"
             value={contactDetails}
             onChange={(e) => setContactDetails(e.target.value)}
-            className="p-2 w-full border-2 border-gray-300 rounded"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-200 focus:border-blue-500 outline-none transition-all"
+            placeholder="Email or phone number"
           />
         </div>
 
-        <div className="mt-2">
+        <div className="pt-4">
           <PrimaryBtn
             type="submit"
             title="Submit Report"
-            classes="bg-gradient-to-r from-blue-500 to-blue-500 hover:from-blue-700 hover:to-blue-800 border-solid border-1 border-slate-900 text-white"
+            classes="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors shadow-sm"
           />
         </div>
+
+        {message && (
+          <div className={`p-4 rounded-lg ${
+            message.includes("success") 
+              ? "bg-green-50 text-green-700"
+              : "bg-red-50 text-red-700"
+          }`}>
+            {message}
+          </div>
+        )}
       </form>
-      {message && (
-        <div className="mt-2">
-          <p>{message}</p>
-        </div>
-      )}
     </div>
   );
 };
