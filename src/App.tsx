@@ -61,7 +61,7 @@ function App() {
 
           <Route path='/timetable/views/:start/:end' element={<ViewTimeTable />} />
           
-          <Route path='/fareestimate/views' element={<ViewFareEstimate />} />
+          <Route path='/fareestimate/views/:start/:end' element={<ViewFareEstimate />} />
 
           <Route path='/news' element={<NewsFeed />} />
 

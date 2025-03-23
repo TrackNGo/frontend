@@ -6,9 +6,10 @@ import SelectBox from "../../components/selectBox/SelectBox"
 import { useNavigate } from "react-router-dom"
 
 const options = [
-    "colombo",
-    "jaffna",
-    "kalutara"
+    "Colombo",
+    "Jaffna",
+    "Kalutara",
+    "Vavuniya"
 ]
 
 const FareEstimate = () => {
@@ -36,6 +37,12 @@ const FareEstimate = () => {
 
     const handleLocationChange = (key: 'startLocation' | 'endLocation', value: string) => {
         setLocations(prev => ({ ...prev, [key]: value }))
+    }
+
+    function submissionHandel() {
+        if(locations.startLocation && locations.endLocation) {
+            navigate(`/fareestimate/views/${locations.startLocation}/${locations.endLocation}`)
+        }
     }
 
     return (
@@ -66,13 +73,13 @@ const FareEstimate = () => {
             <div className="py-2">
                 <PrimaryBtn
                     title={"search fare estimate"}
-                    onClick={() => console.log("Start Location:", locations.startLocation, "End Location:", locations.endLocation)}
+                    onClick={() => submissionHandel()}
                     classes={"bg-gradient-to-r from-black to-black hover:from-slate-800 hover:to-slate-700 border-solid border-1 border-slate-900 text-white"}
                 />
                 <div className="my-2 w-full flex justify-center">
                     <button className="w-full px-5 py-3 text-white bg-blue-500 rounded-lg text-md font-medium shadow-md 
                                hover:bg-blue-600 hover:shadow-lg transition-all duration-300 ease-in-out active:scale-95"
-                        onClick={() => navigate('/fareestimate/views')}
+                        onClick={() => navigate('/fareestimate/views/null/null')}
                     >
                         View All Fare Estimates
                     </button>
