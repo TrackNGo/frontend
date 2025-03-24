@@ -116,3 +116,73 @@ const ContactUsPage = () => {
                                 {submissionStatus.message}
                             </div>
                         )}
+
+                        
+
+                    {/* Bus Service Form */}
+                    {activeTab === 'busService' && (
+                        <form onSubmit={(e) => handleSubmit(e, busServiceForm, 'bus-service')} className="space-y-4">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Bus Number*</label>
+                                <input
+                                    type="text"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                    value={busServiceForm.busNumber}
+                                    onChange={(e) => setBusServiceForm({...busServiceForm, busNumber: e.target.value})}
+                                    required
+                                />
+                            </div>
+                            
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Owner Name*</label>
+                                <input
+                                    type="text"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                    value={busServiceForm.ownerName}
+                                    onChange={(e) => setBusServiceForm({...busServiceForm, ownerName: e.target.value})}
+                                    required
+                                />
+                            </div>
+                            
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Contact Number*</label>
+                                <input
+                                    type="tel"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                    value={busServiceForm.ownerContact}
+                                    onChange={(e) => setBusServiceForm({...busServiceForm, ownerContact: e.target.value})}
+                                    required
+                                />
+                            </div>
+                            
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Registration Number*</label>
+                                <input
+                                    type="text"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                    value={busServiceForm.registrationNumber}
+                                    onChange={(e) => setBusServiceForm({...busServiceForm, registrationNumber: e.target.value})}
+                                    required
+                                />
+                            </div>
+                            
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Proposed Route Details*</label>
+                                <textarea
+                                    rows={3}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                    value={busServiceForm.routeDetails}
+                                    onChange={(e) => setBusServiceForm({...busServiceForm, routeDetails: e.target.value})}
+                                    required
+                                />
+                            </div>
+                            
+                            <button
+                                type="submit"
+                                disabled={isSubmitting}
+                                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+                            >
+                                {isSubmitting ? 'Submitting...' : 'Submit Request'}
+                            </button>
+                        </form>
+                    )}
