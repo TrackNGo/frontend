@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+const API_BASE_URL = "http://localhost:8080";
 
 type FormType = "busService" | "technical";
 
@@ -25,8 +26,7 @@ interface TechnicalForm {
 
 const ContactUsPage = () => {
   const [activeTab, setActiveTab] = useState<FormType>("busService");
-  const [submissionStatus, setSubmissionStatus] =
-    useState<SubmissionStatus | null>(null);
+  const [submissionStatus, setSubmissionStatus] = useState<SubmissionStatus | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Form states
@@ -61,6 +61,11 @@ const ContactUsPage = () => {
     });
   };
 
+  const handleTabChange = (tab: FormType) => {
+    setSubmissionStatus(null); // Clear status message when switching tabs
+    setActiveTab(tab);
+  };
+
   const handleSubmit = async (
     e: React.FormEvent,
     formData: BusServiceForm | TechnicalForm,
@@ -71,7 +76,7 @@ const ContactUsPage = () => {
     setSubmissionStatus(null);
 
     try {
-      const response = await axios.post(`/api/contact/${endpoint}`, formData);
+      const response = await axios.post(`${API_BASE_URL}/api-contact/${endpoint}`, formData);
       setSubmissionStatus({
         success: true,
         message: response.data.message || "Submission successful!",
@@ -91,6 +96,13 @@ const ContactUsPage = () => {
     }
   };
 
+  // Helper component for required field label
+  const RequiredFieldLabel = ({ label }: { label: string }) => (
+    <label className="block text-sm font-medium text-gray-700 mb-1">
+      {label}<span className="text-red-500">*</span>
+    </label>
+  );
+
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden">
@@ -108,7 +120,7 @@ const ContactUsPage = () => {
                   ? "text-blue-600 border-b-2 border-blue-600"
                   : "text-gray-500 hover:text-gray-700"
               }`}
-              onClick={() => setActiveTab("busService")}
+              onClick={() => handleTabChange("busService")}
             >
               Add Bus Service
             </button>
@@ -118,13 +130,13 @@ const ContactUsPage = () => {
                   ? "text-blue-600 border-b-2 border-blue-600"
                   : "text-gray-500 hover:text-gray-700"
               }`}
-              onClick={() => setActiveTab("technical")}
+              onClick={() => handleTabChange("technical")}
             >
               Technical Support
             </button>
           </div>
 
-          {/* Status Message */}
+          {/* Status Message - Only show for current tab */}
           {submissionStatus && (
             <div
               className={`mb-6 p-3 rounded-md ${
@@ -144,9 +156,7 @@ const ContactUsPage = () => {
               className="space-y-4"
             >
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Bus Number*
-                </label>
+                <RequiredFieldLabel label="Bus Number" />
                 <input
                   type="text"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
@@ -162,9 +172,7 @@ const ContactUsPage = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Owner Name*
-                </label>
+                <RequiredFieldLabel label="Owner Name" />
                 <input
                   type="text"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
@@ -180,9 +188,7 @@ const ContactUsPage = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Contact Number*
-                </label>
+                <RequiredFieldLabel label="Contact Number" />
                 <input
                   type="tel"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
@@ -198,9 +204,7 @@ const ContactUsPage = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Registration Number*
-                </label>
+                <RequiredFieldLabel label="Registration Number" />
                 <input
                   type="text"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
@@ -216,9 +220,7 @@ const ContactUsPage = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Proposed Route Details*
-                </label>
+                <RequiredFieldLabel label="Proposed Route Details" />
                 <textarea
                   rows={3}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
@@ -250,9 +252,7 @@ const ContactUsPage = () => {
               className="space-y-4"
             >
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Your Name*
-                </label>
+                <RequiredFieldLabel label="Your Name" />
                 <input
                   type="text"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
@@ -265,9 +265,7 @@ const ContactUsPage = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Email*
-                </label>
+                <RequiredFieldLabel label="Email" />
                 <input
                   type="email"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
@@ -283,9 +281,7 @@ const ContactUsPage = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Issue Type*
-                </label>
+                <RequiredFieldLabel label="Issue Type" />
                 <select
                   className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                   value={technicalForm.issueType}
@@ -307,9 +303,7 @@ const ContactUsPage = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Description*
-                </label>
+                <RequiredFieldLabel label="Description" />
                 <textarea
                   rows={3}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
