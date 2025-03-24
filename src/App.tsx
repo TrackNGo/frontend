@@ -20,6 +20,7 @@ import SearchItem from './pages/lostAndfound/SearchItem'
 import NewsFeed from './pages/news/NewsFeed'
 import ReportForm from './pages/reportForm/ReportForm'
 import EmergencyAlertPage from './pages/emergencyaletPage/EmergencyAlertPage'
+import ContactUsPage from './pages/contactus/ContactUsPage'
 //Lost and Found 
 // import LnSHome from './pages/lostAndfound/LnSHome'
 // import LostItemReport from './pages/lostAndfound/LostItemReport'
@@ -68,6 +69,9 @@ function App() {
 
           <Route path='/reportform' element={<ReportForm />} />
           <Route path='/emergency' element={<EmergencyAlertPage />} />
+          <Route path='/contactus' element={<ContactUsPage />} />
+
+
         </Routes>
       </BrowserRouter>
     </>
