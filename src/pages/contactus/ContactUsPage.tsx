@@ -59,3 +59,28 @@ const ContactUsPage = () => {
             description: ''
         });
     };
+
+    const handleSubmit = async (e: React.FormEvent, formData: BusServiceForm | TechnicalForm, endpoint: string) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+        setSubmissionStatus(null);
+
+        try {
+            const response = await axios.post(`/api/contact/${endpoint}`, formData);
+            setSubmissionStatus({
+                success: true,
+                message: response.data.message || 'Submission successful!'
+            });
+            resetForms();
+        } catch (error) {
+            const errorMessage = axios.isAxiosError(error) && error.response?.data?.message
+                ? error.response.data.message
+                : 'Submission failed. Please try again.';
+            setSubmissionStatus({
+                success: false,
+                message: errorMessage
+            });
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
