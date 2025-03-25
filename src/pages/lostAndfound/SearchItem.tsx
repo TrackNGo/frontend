@@ -1,5 +1,6 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
 import './SearchItem.css'; // Add your custom CSS file for styling
+import baseUrl from '../../common/baseBackendUrl';
 
 // Define the shape of the item data
 interface Item {
@@ -38,7 +39,7 @@ const SearchItem: React.FC = () => {
     // Fetch items based on itemType, search query, and selected filter
     const fetchItems = (): void => {
         setLoading(true);
-        fetch(`http://localhost:8080/api/items/${itemType}?route=${searchQuery}`)
+        fetch(`${baseUrl.customerBackend}api/items/${itemType}?route=${searchQuery}`)
             .then(response => response.json())
             .then(data => {
                 // Apply the filter after fetching items

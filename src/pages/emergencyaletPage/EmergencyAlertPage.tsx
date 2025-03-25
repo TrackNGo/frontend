@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import baseUrl from "../../common/baseBackendUrl";
 
 const EmergencyAlertPage = () => {
   const navigate = useNavigate();
   const axiosInstance = axios.create({
-    baseURL: "http://localhost:8080",
+    baseURL: baseUrl.customerBackend,
     timeout: 10000,
     headers: { "X-Custom-Header": "foobar" },
   });

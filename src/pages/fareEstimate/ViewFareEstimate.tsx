@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import Headline from "../../components/headline/Headline"
 import FareDetailsType from "../../types/fareDetails/FareDetailsType"
 import { useParams } from "react-router-dom"
+import baseUrl from "../../common/baseBackendUrl"
 
 const ViewFareEstimate = () => {
     const { start, end } = useParams<{ start: string, end: string }>()
@@ -22,10 +23,10 @@ const ViewFareEstimate = () => {
             let response;
 
             if(start === "null" && end === "null") {
-                response = await axios.get("http://localhost:3000/api-fare/view")
+                response = await axios.get(`${baseUrl.adminBackend}api-fare/view`)
             }
             else {
-                response = await axios.get(`http://localhost:3000/api-fare/locations?startLocation=${start}&endLocation=${end}`)
+                response = await axios.get(`${baseUrl.adminBackend}api-fare/locations?startLocation=${start}&endLocation=${end}`)
             }
             if (response.data && Array.isArray(response.data.fareEstimates)) {
                 setFare(response.data.fareEstimates)
