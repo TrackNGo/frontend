@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
-const API_BASE_URL = "http://localhost:8080";
+import baseUrl from "../../common/baseBackendUrl";
+const API_BASE_URL = baseUrl.customerBackend;
 
 type FormType = "busService" | "technical";
 

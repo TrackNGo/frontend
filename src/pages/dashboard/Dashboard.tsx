@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import baseUrl from "../../common/baseBackendUrl";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: baseUrl.customerBackend,
   timeout: 1000,
   headers: { "X-Custom-Header": "foobar" },
 });

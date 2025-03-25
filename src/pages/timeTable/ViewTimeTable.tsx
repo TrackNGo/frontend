@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import Headline from "../../components/headline/Headline"
 import TimeTableType from "../../types/timeTable/TimeTableType"
 import { useParams } from "react-router-dom"
+import baseUrl from "../../common/baseBackendUrl"
 
 const ViewTimeTable = () => {
     const { start, end } = useParams<{ start: string, end: string }>()
@@ -23,12 +24,12 @@ const ViewTimeTable = () => {
             try {
 
                 if (start === 'null' && end == 'null') {
-                    const response = await axios.get("http://localhost:3000/api-bustimetable/view")
+                    const response = await axios.get(`${baseUrl.adminBackend}api-bustimetable/view`)
                     setTimeTables(response.data)
                     setLoading(false)
                 }
                 else {
-                    const response = await axios.get(`http://localhost:3000/api-bustimetable/locations?startLocation=${start}&endLocation=${end}`)
+                    const response = await axios.get(`${baseUrl.adminBackend}api-bustimetable/locations?startLocation=${start}&endLocation=${end}`)
                     setTimeTables(response.data)
                     setLoading(false)
                 }

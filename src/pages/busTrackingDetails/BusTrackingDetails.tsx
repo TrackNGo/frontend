@@ -10,6 +10,7 @@ import BusStatus from "../../components/busStatus/BusStatus"
 import Map from "../../components/clientMap/Map"
 import LocationType from "../../types/location/LocationType"
 import RouteData from "../../types/location/RouteData"
+import baseUrl from "../../common/baseBackendUrl"
 
 // const axiosInstance = axios.create({
 //     baseURL: "http://localhost:8080",//172.16.193.135
@@ -43,7 +44,7 @@ const BusTrackingDetails = () => {
             //172.16.193.135
             const [routeResponse] = await Promise.all([
                 // axios.get(`http://localhost:3000/api-busroutes/busRoute/${busNumber}`),
-                axios.get(`http://localhost:3000/api-bus/bus/${busNumber}`)
+                axios.get(`${baseUrl.adminBackend}api-bus/bus/${busNumber}`)
             ])
 
             setBusRouteDetails(routeResponse.data)
@@ -66,7 +67,7 @@ const BusTrackingDetails = () => {
             // Fetch specific bus route
             const response = await axios.post<{
                 specificBusRoute: BusRouteTypes
-            }>("http://localhost:8080/api-user/getSpecific-busRoute",
+            }>(`${baseUrl.customerBackend}api-user/getSpecific-busRoute`,
                 {
                     busNumber: busNumber,
                 }
@@ -106,7 +107,7 @@ const BusTrackingDetails = () => {
                     sourceLocation: string;
                     destinationLocation: string;
                     route: string;
-                }>("http://localhost:8080/api-user/getLocationCode-searchByName", {
+                }>(`${baseUrl.customerBackend}api-user/getLocationCode-searchByName`, {
                     startLocation,
                     endLocation,
                 });
@@ -128,7 +129,7 @@ const BusTrackingDetails = () => {
 
     const fetchBusStatus = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/api-bus/bus/${busNumber}`, {//172.16.193.135
+            const response = await axios.get(`${baseUrl.adminBackend}api-bus/bus/${busNumber}`, {//172.16.193.135
                 headers: {
                     'Content-Type': 'application/json',
                     // 'ngrok-skip-browser-warning': 'true', // Uncomment if needed

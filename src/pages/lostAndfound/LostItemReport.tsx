@@ -1,6 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LostItemReport.css'; // Import the CSS for styling
+import baseUrl from '../../common/baseBackendUrl';
 
 // Define the shape of form data
 interface FormData {
@@ -40,7 +41,7 @@ const LostItemReport: React.FC = () => {
 
         // Send data to the backend (POST request)           //backend problem could happen
         // 'http://localhost:3000/api-lostnFound/lostitem'
-        fetch('http://localhost:8080/api/items/submit', {
+        fetch(`${baseUrl.customerBackend}api/items/submit`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

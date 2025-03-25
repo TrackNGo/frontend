@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useState } from "react";
 import PrimaryBtn from "../../components/btn/primaryBtn/PrimaryBtn";
+import baseUrl from "../../common/baseBackendUrl";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:8080/api-report", // Replace with your backend API URL
+  baseURL: `${baseUrl.customerBackend}api-report`, // Replace with your backend API URL
   timeout: 1000,
   headers: { "X-Custom-Header": "foobar" },
 });

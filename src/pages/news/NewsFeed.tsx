@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Headline from "../../components/headline/Headline";
+import baseUrl from "../../common/baseBackendUrl";
 
-const API_URL = "http://localhost:8080/api-news";
+const API_URL = `${baseUrl.customerBackend}api-news`;
 
 interface News {
     _id: string;

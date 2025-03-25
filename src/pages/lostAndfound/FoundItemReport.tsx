@@ -1,6 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './FoundItemReport.css'; // Import the CSS for styling
+import baseUrl from '../../common/baseBackendUrl';
 
 // Define the shape of form data
 interface FormData {
@@ -63,7 +64,7 @@ const FoundItemReport: React.FC = () => {
         setIsLoading(true); // Show loading state
 
         // Send data to the backend (POST request)
-        fetch('http://localhost:8080/api/items/submit', {      
+        fetch(`${baseUrl.customerBackend}api/items/submit`, {      
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',                 //backend problem could happen
