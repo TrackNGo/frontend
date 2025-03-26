@@ -3,14 +3,21 @@ import PrimaryBtn from "../../components/btn/primaryBtn/PrimaryBtn"
 import TextBox from "../../components/textBox/TextBox"
 import SelectBox from "../../components/selectBox/SelectBox"
 import Headline from "../../components/headline/Headline"
+import baseUrl from "../../common/baseBackendUrl"
+import axios from "axios"
+import { useNavigate } from "react-router-dom"
+import { useAuth } from "../../context/AuthContext"
 
 const Login = () => {
+  const { login } = useAuth()
   const [error, setError] = useState<{ credentialsUsername?: string; password?: string; accType?: string }>({})
   const [credentials, setCredentials] = useState<{ credentialsUsername: string; password: string; accType: string }>({
     credentialsUsername: "",
     password: "",
     accType: "General",
   })
+
+  const navigate = useNavigate()
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
@@ -48,11 +55,19 @@ const Login = () => {
     } else {
       setError({})
       const data = {
-        credentialsUsername: credentials.credentialsUsername,
+        loginIdentifier: credentials.credentialsUsername,
         password: credentials.password,
         accType: credentials.accType
       }
       console.log("Logging in with data:", data)
+
+      if (data) {
+        const response = await axios.post(`${baseUrl.adminBackend}api-user/login`, data);
+        if(response.data) {
+          login(response.data.token)
+          navigate(`/dashboard`)
+        }
+      }
       // backend connection
     }
   }
