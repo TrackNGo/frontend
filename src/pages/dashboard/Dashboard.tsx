@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import baseUrl from "../../common/baseBackendUrl";
 
 const axiosInstance = axios.create({
@@ -19,6 +19,9 @@ const mockBusDetails = {
 };
 
 const Dashboard = () => {
+  const { details } = useParams<{ details: string }>()
+  console.log(details)
+  
   const navigate = useNavigate();
   const [busStatus, setBusStatus] = useState<boolean>(false);
   const [currentStopIndex] = useState<number>(0);

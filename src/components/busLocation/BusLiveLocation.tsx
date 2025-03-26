@@ -4,6 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import BusIcon from '../mapIcon/BusIcon';
 import BusLocationType from '../../types/location/BusLocationType';
 import axios from 'axios';
+import baseUrl from '../../common/baseBackendUrl';
 
 interface BusLiveLocationProps {
     busNumber: string; // Bus ID passed as a prop
@@ -29,7 +30,7 @@ const BusLiveLocation: React.FC<BusLiveLocationProps> = ({ busNumber }) => {
 
     const fetchBusLocations = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/api-user/getBus-locations/${busNumber}`, {//172.16.193.135
+            const response = await axios.get(`${baseUrl.customerBackend}api-user/getBus-locations/${busNumber}`, {//172.16.193.135
                 headers: {
                     'Content-Type': 'application/json',
                     // 'ngrok-skip-browser-warning': 'true', // Uncomment if needed
@@ -65,7 +66,7 @@ const BusLiveLocation: React.FC<BusLiveLocationProps> = ({ busNumber }) => {
                 const checkData = await axios.post<{
                     distance:number,
                     duration:number
-                }>(`http://localhost:8080/api-location/get-location-distance`, {
+                }>(`${baseUrl.customerBackend}api-location/get-location-distance`, {
                     first,
                     second
                 });

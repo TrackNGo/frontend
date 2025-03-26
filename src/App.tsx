@@ -30,50 +30,54 @@ import BusTrackingUsingRoute from './pages/busTracking/BusTrackingUsingRoute'
 import ViewTimeTable from './pages/timeTable/ViewTimeTable'
 import ViewFareEstimate from './pages/fareEstimate/ViewFareEstimate'
 import BusTrackingBySearch from './pages/busTracking/BusTrackingBySearch'
+import ProtectedRoute from './components/protectedRoute/ProtectedRoute'
+import { AuthProvider } from './context/AuthContext'
 
 function App() {
   return (
     <>
-      <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true, }}>
-        <Header />
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/home' element={<Home />} />
-          <Route path='/timetable' element={<TimeTable />} />
-          <Route path='/busroute' element={<BusRoute />} />
-          <Route path='/fareestimate' element={<FareEstimate />} />
-          <Route path='/fareestimate/details' element={<FareEstimateDetails />} />
+      <AuthProvider>
+        <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true, }}>
+          <Header />
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/home' element={<Home />} />
+            <Route path='/timetable' element={<TimeTable />} />
+            <Route path='/busroute' element={<BusRoute />} />
+            <Route path='/fareestimate' element={<FareEstimate />} />
+            <Route path='/fareestimate/details' element={<FareEstimateDetails />} />
 
-          <Route path='/bustracking' element={<BusTracking />} />
-          <Route path="/bustracking/routes/:routeNumber" element={<BusTrackingUsingRoute />} />
-          <Route path="/bustracking/routes/search/:start/:end" element={<BusTrackingBySearch />} />
-          <Route path='/bustracking/details/:busNumber' element={<BusTrackingDetails />} />
+            <Route path='/bustracking' element={<BusTracking />} />
+            <Route path="/bustracking/routes/:routeNumber" element={<BusTrackingUsingRoute />} />
+            <Route path="/bustracking/routes/search/:start/:end" element={<BusTrackingBySearch />} />
+            <Route path='/bustracking/details/:busNumber' element={<BusTrackingDetails />} />
 
-          <Route path='/login' element={<Login />} />
-          <Route path='/changepassword' element={<ChangePassword />} />
+            <Route path='/testing' element={<Testing />} />
 
-          <Route path='dashboard' element={<Dashboard />} />
+            <Route path='/LnSHome' element={<LnSHome />} />
+            <Route path='/FoundItemReport' element={<FoundItemReport />} />
+            <Route path='/LostItemReport' element={<LostItemReport />} />
+            <Route path='/SearchItem' element={< SearchItem />} />
 
-          <Route path='/testing' element={<Testing />} />
-          
-          <Route path='/LnSHome' element={<LnSHome />} />
-          <Route path='/FoundItemReport' element={<FoundItemReport/>}/>
-          <Route path='/LostItemReport' element={<LostItemReport/>}/> 
-          <Route path='/SearchItem' element={< SearchItem/>}/> 
+            <Route path='/timetable/views/:start/:end' element={<ViewTimeTable />} />
 
-          <Route path='/timetable/views/:start/:end' element={<ViewTimeTable />} />
-          
-          <Route path='/fareestimate/views/:start/:end' element={<ViewFareEstimate />} />
+            <Route path='/fareestimate/views/:start/:end' element={<ViewFareEstimate />} />
 
-          <Route path='/news' element={<NewsFeed />} />
+            <Route path='/news' element={<NewsFeed />} />
 
-          <Route path='/reportform' element={<ReportForm />} />
-          <Route path='/emergency' element={<EmergencyAlertPage />} />
-          <Route path='/contactus' element={<ContactUsPage />} />
+            <Route path='/reportform' element={<ReportForm />} />
+            <Route path='/contactus' element={<ContactUsPage />} />
 
+            <Route path='/login' element={<Login />} />
+            <Route element={<ProtectedRoute />} >
+              <Route path='/dashboard' element={<Dashboard />} />
+              <Route path='/changepassword' element={<ChangePassword />} />
+              <Route path='/emergency' element={<EmergencyAlertPage />} />
+            </Route>
 
-        </Routes>
-      </BrowserRouter>
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
     </>
   )
 }
