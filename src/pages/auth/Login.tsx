@@ -65,7 +65,7 @@ const Login = () => {
         const response = await axios.post(`${baseUrl.adminBackend}api-user/login`, data);
         if(response.data) {
           login(response.data.token)
-          navigate(`/dashboard`)
+          navigate(`/dashboard/${response.data.user.busNumber}`)
         }
       }
       // backend connection
@@ -83,9 +83,9 @@ const Login = () => {
               <TextBox
                 onChange={handleInputChange}
                 value={credentials.credentialsUsername}
-                title={"Username"}
+                title={"Bus Number"}
                 type={"text"}
-                placeholder={"Enter Username"}
+                placeholder={"Enter Bus Number"}
                 name={"credentialsUsername"}
               />
               <div
