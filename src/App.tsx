@@ -70,7 +70,7 @@ function App() {
 
             <Route path='/login' element={<Login />} />
             <Route element={<ProtectedRoute />} >
-              <Route path='/dashboard' element={<Dashboard />} />
+              <Route path='/dashboard/:busNumber' element={<Dashboard />} />
               <Route path='/changepassword' element={<ChangePassword />} />
               <Route path='/emergency' element={<EmergencyAlertPage />} />
             </Route>

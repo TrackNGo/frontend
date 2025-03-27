@@ -5,7 +5,6 @@ import baseUrl from "../../common/baseBackendUrl";
 
 const axiosInstance = axios.create({
   baseURL: baseUrl.customerBackend,
-  timeout: 1000,
   headers: { "X-Custom-Header": "foobar" },
 });
 
@@ -19,26 +18,33 @@ const mockBusDetails = {
 };
 
 const Dashboard = () => {
-  const { details } = useParams<{ details: string }>()
-  console.log(details)
+  const { busNumber } = useParams<{ busNumber: string }>()
   
   const navigate = useNavigate();
   const [busStatus, setBusStatus] = useState<boolean>(false);
-  const [currentStopIndex] = useState<number>(0);
   const [lastUpdated, setLastUpdated] = useState<string>(
     new Date().toLocaleTimeString()
   );
   const watchIdRef = useRef<number | null>(null);
+  const [conductorName, setConductorName] = useState<string>()
+  const [routeLocation, setRouteLocation] = useState({
+    start:'',
+    end:''
+  })
 
   useEffect(() => {
     const fetchBusStatus = async () => {
       try {
         const response = await axiosInstance.get(
-          `/api-location/get-bus-status/${mockBusDetails.busNumber}`
+          `/api-location/get-bus-status/${busNumber}`
         );
 
-        if (response.status === 200 && response.data?.status !== undefined) {
+        if (response.status === 200) {
           const status = response.data.status;
+          setRouteLocation({
+            start : response.data.startLocation,
+            end : response.data.endLocation
+          })
           setBusStatus(status);
           if (status) startTracking();
         }
@@ -47,7 +53,20 @@ const Dashboard = () => {
       }
     };
 
+    const fetchBusConductorDetails = async () => {
+      try {
+        const response = await axios.get(`${baseUrl.adminBackend}api-user/user-by-busnumber/${busNumber}`);
+        
+        if (response.status === 200) {
+          setConductorName(response.data.user.username)
+        }
+      } catch (error) {
+        console.error("Error fetching bus status:", error);
+      }
+    };
+
     fetchBusStatus();
+    fetchBusConductorDetails();
   }, []);
 
   const startTracking = async () => {
@@ -57,7 +76,7 @@ const Dashboard = () => {
           const { latitude, longitude, accuracy } = position.coords;
           try {
             await axiosInstance.put("/api-location/update-location", {
-              busNumber: mockBusDetails.busNumber,
+              busNumber: busNumber,
               latitude,
               longitude,
               accuracy,
@@ -85,7 +104,7 @@ const Dashboard = () => {
       const response = await axiosInstance.put(
         "/api-location/update-bus-status",
         {
-          busNumber: mockBusDetails.busNumber,
+          busNumber: busNumber,
           setStatus: status,
         }
       );
@@ -110,9 +129,8 @@ const Dashboard = () => {
         <div className="flex items-center justify-between mb-4">
           <div>
             <h1 className="text-2xl font-bold text-gray-800">
-              {mockBusDetails.busNumber}
+              {busNumber}
             </h1>
-            <p className="text-gray-500">{mockBusDetails.route}</p>
           </div>
           <div
             className={`px-3 py-1 rounded-full ${
@@ -128,22 +146,20 @@ const Dashboard = () => {
         <div className="space-y-3">
           <div className="flex justify-between items-center">
             <span className="text-gray-500">Conductor:</span>
-            <span className="font-medium">{mockBusDetails.conductor}</span>
+            <span className="font-medium">{conductorName}</span>
           </div>
 
           <div className="flex justify-between items-center">
-            <span className="text-gray-500">Current Stop:</span>
+            <span className="text-gray-500">From :</span>
             <span className="font-medium">
-              {mockBusDetails.stops[currentStopIndex]}
+              {routeLocation.start}
             </span>
           </div>
 
           <div className="flex justify-between items-center">
-            <span className="text-gray-500">Next Stop:</span>
+            <span className="text-gray-500">To :</span>
             <span className="font-medium">
-              {busStatus
-                ? mockBusDetails.stops[currentStopIndex + 1] || "End of Route"
-                : mockBusDetails.stops[0]}
+              {routeLocation.end}
             </span>
           </div>
 
