@@ -2,8 +2,12 @@ import { useState, ChangeEvent } from "react";
 import PrimaryBtn from "../../components/btn/primaryBtn/PrimaryBtn";
 import TextBox from "../../components/textBox/TextBox";
 import Headline from "../../components/headline/Headline";
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const ChangePassword = () => {
+    const { busNumber, conductorName } = useParams<{ busNumber: string, conductorName: string }>() 
+    const navigation  = useNavigate()
     const [error, setError] = useState<{ currentPassword?: string; newPassword?: string; confirmPassword?: string }>({})
     const [credentials, setCredentials] = useState<{ currentPassword: string; newPassword: string, confirmPassword: string }>({
         currentPassword: "",
@@ -44,7 +48,8 @@ const ChangePassword = () => {
         } else {
             setError({});
             console.log("Password successfully changed:", credentials.newPassword);
-            //backend connection
+            console.log(busNumber)
+            console.log(conductorName)
         }
 
     }
@@ -138,6 +143,17 @@ const ChangePassword = () => {
                                     console.log(credentials)
                                 }}
                                 title={"Cancel"}
+                                classes={
+                                    "bg-gradient-to-r from-white to-white hover:from-slate-100 hover:to-slate-200 border-solid border-1 border-slate-900 text-black w-full"
+                                }
+                            />
+                        </div>
+
+                        <div className="mt-4">
+                            <PrimaryBtn
+                                type={"button"}
+                                onClick={() => {navigation(-1)}}
+                                title={"Go Back"}
                                 classes={
                                     "bg-gradient-to-r from-white to-white hover:from-slate-100 hover:to-slate-200 border-solid border-1 border-slate-900 text-black w-full"
                                 }

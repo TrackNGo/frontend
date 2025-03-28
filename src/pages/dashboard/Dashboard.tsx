@@ -2,22 +2,15 @@ import axios from "axios";
 import { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import baseUrl from "../../common/baseBackendUrl";
+import { useAuth } from "../../context/AuthContext";
 
 const axiosInstance = axios.create({
   baseURL: baseUrl.customerBackend,
   headers: { "X-Custom-Header": "foobar" },
 });
 
-// Mock bus details data (would normally come from database)
-const mockBusDetails = {
-  busNumber: "CAV-1177",
-  route: "101 - Downtown Express",
-  stops: ["Central Station", "Market Square", "City Hall", "Riverfront Park"],
-  conductor: "John Doe",
-  status: "active", // Would be updated based on real data
-};
-
 const Dashboard = () => {
+  const { logout } = useAuth()
   const { busNumber } = useParams<{ busNumber: string }>()
   
   const navigate = useNavigate();
@@ -31,6 +24,7 @@ const Dashboard = () => {
     start:'',
     end:''
   })
+  const [allAlert, setAllAlert] = useState([]);
 
   useEffect(() => {
     const fetchBusStatus = async () => {
@@ -58,7 +52,19 @@ const Dashboard = () => {
         const response = await axios.get(`${baseUrl.adminBackend}api-user/user-by-busnumber/${busNumber}`);
         
         if (response.status === 200) {
-          setConductorName(response.data.user.username)
+          setAllAlert(response.data.user.username)
+        }
+      } catch (error) {
+        console.error("Error fetching bus status:", error);
+      }
+    };
+
+    const showTodayAlert = async () => {
+      try {
+        const response = await axios.get(`${baseUrl.customerBackend}api-emergency/${busNumber}`);
+        
+        if (response.status === 200) {
+          console.log(response.data.data)
         }
       } catch (error) {
         console.error("Error fetching bus status:", error);
@@ -67,6 +73,9 @@ const Dashboard = () => {
 
     fetchBusStatus();
     fetchBusConductorDetails();
+    const intervalId = setInterval(showTodayAlert, 5000);
+    return () => clearInterval(intervalId);
+    showTodayAlert();
   }, []);
 
   const startTracking = async () => {
@@ -202,7 +211,7 @@ const Dashboard = () => {
         <button
           className="w-full p-4 bg-yellow-500 hover:bg-yellow-600 text-white rounded-xl 
             font-medium transition-all active:scale-95 flex items-center justify-center gap-2"
-          onClick={() => navigate("/emergency")}
+          onClick={() => navigate(`/emergency/${busNumber}/${conductorName}`)}
         >
           <svg
             className="w-5 h-5"
@@ -218,6 +227,22 @@ const Dashboard = () => {
             />
           </svg>
           Emergency Alert
+        </button>
+
+        <button
+          className="w-full p-4 bg-black hover:bg-yellow-600 text-white rounded-xl 
+            font-medium transition-all active:scale-95 flex items-center justify-center gap-2"
+          onClick={() => navigate(`/changepassword/${busNumber}/${conductorName}`)}
+        >
+          Change Password
+        </button>
+
+        <button
+          className="w-full p-4 bg-black hover:bg-yellow-600 text-white rounded-xl 
+            font-medium transition-all active:scale-95 flex items-center justify-center gap-2"
+          onClick={() => {logout()}}
+        >
+          Logout
         </button>
       </div>
 
