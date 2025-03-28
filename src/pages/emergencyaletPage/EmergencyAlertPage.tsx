@@ -1,22 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import baseUrl from "../../common/baseBackendUrl";
+import { useParams } from "react-router-dom";
 
 const EmergencyAlertPage = () => {
+  const { busNumber, conductorName } = useParams<{ busNumber: string, conductorName: string }>() 
   const navigate = useNavigate();
   const axiosInstance = axios.create({
     baseURL: baseUrl.customerBackend,
     timeout: 10000,
     headers: { "X-Custom-Header": "foobar" },
   });
-
-  const mockBusDetails = {
-    busNumber: "CAV-1177",
-    route: "101 - Downtown Express",
-    stops: ["Central Station", "Market Square", "City Hall", "Riverfront Park"],
-    conductor: "John Doe",
-    status: "active", // Would be updated based on real data
-  };
 
   const emergencyTypes = [
     { id: 1, name: "Mechanical Failure", icon: "🚗💥" },
@@ -37,16 +31,15 @@ const EmergencyAlertPage = () => {
       const { coords } = position;
       
       const response = await axiosInstance.post("/api-emergency", {
-        type: emergencyType,
-        busNumber: mockBusDetails.busNumber,
+        busNumber: busNumber,
+        emergencyType: emergencyType,
         latitude: coords.latitude,
-        longitude: coords.longitude,
-        timestamp: new Date().toISOString(),
+        longitude: coords.longitude
       });
   
       if (response.data.success) {
         alert("Emergency reported successfully!");
-        navigate("/dashboard");
+        navigate(-1);
       }
     } catch (error) {
       console.error("Error reporting emergency:", error);

@@ -5,12 +5,14 @@ import FilterButtons from "../btn/filterBtnList/FilterButtons"
 import PrimaryBtn from "../btn/primaryBtn/PrimaryBtn"
 import BusList from "../busList/BusList"
 import Headline from "../headline/Headline"
+import { useNavigate } from "react-router-dom"
 
 interface Url{
     url:string
 }
 
 const BusTrack = (url:Url) => {
+    const navigation = useNavigate();
     const [filterStatus, setFilterStatus] = useState<"all" | "await" | "onroad">("all")
     const { data: buses, loading, error } = useFetch<BusDetailsType>(url.url)
 
@@ -51,7 +53,7 @@ const BusTrack = (url:Url) => {
                 <PrimaryBtn
                     title={"go home"}
                     type={"button"}
-                    onClick={() => { }}
+                    onClick={() => { navigation("/home") }}
                     classes={"bg-gradient-to-r from-black to-black hover:from-slate-800 hover:to-slate-700 border-solid border-1 border-slate-900 text-white"}
                 />
             </div>

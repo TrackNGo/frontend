@@ -2,9 +2,11 @@ import { Link } from "react-router-dom"
 import NavBar from "../navbar/NavBar"
 import { useState } from "react"
 import trackngologo from '../../assets/img/trackngo_logo.png'
+import { useAuth } from "../../context/AuthContext"
 
 const Header = () => {
     const [navOpen, setNavOpen] = useState<boolean>(false)
+    const { isAuthenticated } = useAuth()
 
     const toggleNav = () => setNavOpen(!navOpen)
     return (
@@ -14,19 +16,23 @@ const Header = () => {
                     <Link className="p-0" to={"/"}>
                         <img className="p-0" src={trackngologo} width="150px" height="100px" alt="trackngo" />
                     </Link>
-
-                    <div className="relative md:justify-self-center">
-                        <button onClick={toggleNav} className="menu-btn md:hidden">
-                            <div className="material-symbols-rounded">
-                                {navOpen ? 'close' : 'menu'}
-                            </div>
-                        </button>
-                        <NavBar navOpen={navOpen} />
-                    </div>
-
-                    <Link to="/login" className="btn1 btn1-secondary max-md:hidden md:justify-self-end">
-                        Login
-                    </Link>
+                    {
+                        !isAuthenticated && (
+                            <>
+                                <div className="relative md:justify-self-center">
+                                    <button onClick={toggleNav} className="menu-btn md:hidden">
+                                        <div className="material-symbols-rounded">
+                                            {navOpen ? 'close' : 'menu'}
+                                        </div>
+                                    </button>
+                                    <NavBar navOpen={navOpen} />
+                                </div>
+                                <Link to="/login" className="btn1 btn1-secondary max-md:hidden md:justify-self-end">
+                                    Login
+                                </Link>
+                            </>
+                        )
+                    }
                 </div>
             </header>
         </div>
