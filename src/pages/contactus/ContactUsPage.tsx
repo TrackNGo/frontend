@@ -77,7 +77,7 @@ const ContactUsPage = () => {
     setSubmissionStatus(null);
 
     try {
-      const response = await axios.post(`${API_BASE_URL}/api-contact/${endpoint}`, formData);
+      const response = await axios.post(`${API_BASE_URL}api-contact/${endpoint}`, formData);
       setSubmissionStatus({
         success: true,
         message: response.data.message || "Submission successful!",
