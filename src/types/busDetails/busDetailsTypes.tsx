@@ -1,4 +1,5 @@
 interface BusDetailsType{
+    alert:never[]
     busNumber:string,
     startLocation:string,
     endLocation:string,

@@ -12,7 +12,7 @@ const axiosInstance = axios.create({
 const Dashboard = () => {
   const { logout } = useAuth()
   const { busNumber } = useParams<{ busNumber: string }>()
-  
+
   const navigate = useNavigate();
   const [busStatus, setBusStatus] = useState<boolean>(false);
   const [lastUpdated, setLastUpdated] = useState<string>(
@@ -21,10 +21,11 @@ const Dashboard = () => {
   const watchIdRef = useRef<number | null>(null);
   const [conductorName, setConductorName] = useState<string>()
   const [routeLocation, setRouteLocation] = useState({
-    start:'',
-    end:''
+    start: '',
+    end: ''
   })
   const [allAlert, setAllAlert] = useState([]);
+  const [buttonStatus, setButtonStatus] = useState('Remove')
 
   useEffect(() => {
     const fetchBusStatus = async () => {
@@ -36,8 +37,8 @@ const Dashboard = () => {
         if (response.status === 200) {
           const status = response.data.status;
           setRouteLocation({
-            start : response.data.startLocation,
-            end : response.data.endLocation
+            start: response.data.startLocation,
+            end: response.data.endLocation
           })
           setBusStatus(status);
           if (status) startTracking();
@@ -50,9 +51,9 @@ const Dashboard = () => {
     const fetchBusConductorDetails = async () => {
       try {
         const response = await axios.get(`${baseUrl.adminBackend}api-user/user-by-busnumber/${busNumber}`);
-        
+
         if (response.status === 200) {
-          setAllAlert(response.data.user.username)
+          setConductorName(response.data.user.username)
         }
       } catch (error) {
         console.error("Error fetching bus status:", error);
@@ -62,9 +63,9 @@ const Dashboard = () => {
     const showTodayAlert = async () => {
       try {
         const response = await axios.get(`${baseUrl.customerBackend}api-emergency/${busNumber}`);
-        
+
         if (response.status === 200) {
-          console.log(response.data.data)
+          setAllAlert(response.data.emergencies)
         }
       } catch (error) {
         console.error("Error fetching bus status:", error);
@@ -131,6 +132,15 @@ const Dashboard = () => {
     }
   };
 
+  const removeAlert = async (id:any) => {
+    setButtonStatus('Pending...')
+    const response = await axios.put(`${baseUrl.customerBackend}api-emergency/${id}`);
+    if(response.status === 200) {
+      console.log(response)
+    }
+    
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 p-4">
       {/* Bus Information Card */}
@@ -142,11 +152,10 @@ const Dashboard = () => {
             </h1>
           </div>
           <div
-            className={`px-3 py-1 rounded-full ${
-              busStatus
-                ? "bg-green-100 text-green-600"
-                : "bg-gray-100 text-gray-500"
-            }`}
+            className={`px-3 py-1 rounded-full ${busStatus
+              ? "bg-green-100 text-green-600"
+              : "bg-gray-100 text-gray-500"
+              }`}
           >
             {busStatus ? "Active" : "Inactive"}
           </div>
@@ -184,11 +193,10 @@ const Dashboard = () => {
         <div className="grid grid-cols-2 gap-4">
           <button
             onClick={() => handleBusStatusChange(true)}
-            className={`p-4 rounded-xl text-white font-medium transition-all ${
-              busStatus
-                ? "bg-gray-300 cursor-not-allowed"
-                : "bg-green-500 hover:bg-green-600 active:scale-95"
-            }`}
+            className={`p-4 rounded-xl text-white font-medium transition-all ${busStatus
+              ? "bg-gray-300 cursor-not-allowed"
+              : "bg-green-500 hover:bg-green-600 active:scale-95"
+              }`}
             disabled={busStatus}
           >
             Start Route
@@ -196,11 +204,10 @@ const Dashboard = () => {
 
           <button
             onClick={() => handleBusStatusChange(false)}
-            className={`p-4 rounded-xl text-white font-medium transition-all ${
-              !busStatus
-                ? "bg-gray-300 cursor-not-allowed"
-                : "bg-red-500 hover:bg-red-600 active:scale-95"
-            }`}
+            className={`p-4 rounded-xl text-white font-medium transition-all ${!busStatus
+              ? "bg-gray-300 cursor-not-allowed"
+              : "bg-red-500 hover:bg-red-600 active:scale-95"
+              }`}
             disabled={!busStatus}
           >
             End Route
@@ -240,18 +247,35 @@ const Dashboard = () => {
         <button
           className="w-full p-4 bg-black hover:bg-yellow-600 text-white rounded-xl 
             font-medium transition-all active:scale-95 flex items-center justify-center gap-2"
-          onClick={() => {logout()}}
+          onClick={() => { logout() }}
         >
           Logout
         </button>
+        {
+          allAlert.length > 0 && allAlert.map((ele: any) => (
+            <div
+              key={ele._id}
+              className="w-full p-4 bg-red-500 hover:bg-yellow-600 text-white rounded-xl font-medium transition-all active:scale-95 flex items-center justify-between gap-2">
+              {ele.emergencyType}<br/>
+              {ele.createdAt.split("T")[0]}<br/>
+              {new Date(ele.timestamp).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: true })}
+              <button
+                className="p-4 bg-black hover:bg-yellow-600 text-white rounded-xl font-medium transition-all active:scale-95 flex items-center justify-center gap-2"
+                onClick={() => { removeAlert(ele._id)}}
+              >
+                {buttonStatus}
+              </button>
+            </div>
+          ))
+        }
       </div>
+
 
       {/* Status Indicator */}
       <div className="fixed bottom-4 right-4 bg-white p-3 rounded-full shadow-lg">
         <div
-          className={`w-3 h-3 rounded-full ${
-            busStatus ? "bg-green-500" : "bg-gray-400"
-          } animate-pulse`}
+          className={`w-3 h-3 rounded-full ${busStatus ? "bg-green-500" : "bg-gray-400"
+            } animate-pulse`}
         />
       </div>
     </div>
