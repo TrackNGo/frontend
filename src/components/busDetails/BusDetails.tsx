@@ -18,7 +18,23 @@ const BusDetails = (bus: busDetailsType) => {
         </div>
         <div className="text-sm text-gray-500">
           Route No: {bus.routeNumber} <br />
-          Max Fare: Rs {bus.fareEstimate}
+          Max Fare: Rs {bus.fareEstimate}<br />
+          <span className='text-red-500 opacity-100'>Emergency Alert : </span>
+          {
+            bus.alert.length > 0 ? (
+              bus.alert.map((ele: any) => (
+                <div key={ele._id} className='flex items-center justify-center text-red-500 opacity-100'>
+                  {`${ele.emergencyType} - ${ele.createdAt.split("T")[0]}`}<br />
+                  {`${ele.status}`}<br />
+                  {new Date(ele.timestamp).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: true })}
+                </div>
+              ))
+            ) : (
+              <div className='flex items-center justify-center text-red-500 opacity-100'>
+                No alert...
+              </div>
+            )
+          }
         </div>
       </div>
 
