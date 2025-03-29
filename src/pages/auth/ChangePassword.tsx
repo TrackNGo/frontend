@@ -4,6 +4,8 @@ import TextBox from "../../components/textBox/TextBox";
 import Headline from "../../components/headline/Headline";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import axios from "axios";
+import baseUrl from "../../common/baseBackendUrl";
 
 const ChangePassword = () => {
     const { busNumber, conductorName } = useParams<{ busNumber: string, conductorName: string }>() 
@@ -47,9 +49,24 @@ const ChangePassword = () => {
             setError(newError);
         } else {
             setError({});
-            console.log("Password successfully changed:", credentials.newPassword);
-            console.log(busNumber)
-            console.log(conductorName)
+            const res = await axios.put(`${baseUrl.adminBackend}api-user/change-password`,
+                {
+                  busNumber: busNumber,
+                  conductorName: conductorName,
+                  password : credentials.confirmPassword
+                }
+              );
+        
+              if (!res.data.error) {
+                  console.log(res.data)
+              }
+              else {
+                setError((pre) => (
+                    {...pre,
+                        confirmPassword : res.data.error 
+                    }
+                ))
+              }
         }
 
     }
@@ -123,7 +140,7 @@ const ChangePassword = () => {
                             />
                         </div>
 
-                        <div className="mt-4">
+                        {/* <div className="mt-4">
                             <PrimaryBtn
                                 type={"button"}
                                 onClick={() => {
@@ -134,13 +151,17 @@ const ChangePassword = () => {
                                     "bg-gradient-to-r from-white to-white hover:from-slate-100 hover:to-slate-200 border-solid border-1 border-slate-900 text-black w-full"
                                 }
                             />
-                        </div>
+                        </div> */}
 
                         <div className="mt-4">
                             <PrimaryBtn
                                 type={"button"}
                                 onClick={() => {
-                                    console.log(credentials)
+                                    setCredentials({
+                                        currentPassword:'',
+                                        newPassword:'',
+                                        confirmPassword:''
+                                    })
                                 }}
                                 title={"Cancel"}
                                 classes={
