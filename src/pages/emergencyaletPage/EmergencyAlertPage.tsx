@@ -17,8 +17,8 @@ const EmergencyAlertPage = () => {
     { id: 2, name: "Medical Emergency", icon: "🚑" },
     { id: 3, name: "Accident", icon: "⚠️" },
     { id: 4, name: "Route Blocked", icon: "🚧" },
-    { id: 5, name: "Security Issue", icon: "👮♂️" },
-    { id: 6, name: "Other Emergency", icon: "🆘" },
+    { id: 5, name: "Security Issue", icon: "👮♂️" }
+    // { id: 6, name: "Other Emergency", icon: "🆘" },
   ];
 
   const handleEmergencySubmit = async (emergencyType: string) => {
