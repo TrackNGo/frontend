@@ -62,7 +62,7 @@ const Login = () => {
       console.log("Logging in with data:", data)
 
       if (data) {
-        const response = await axios.post(`${baseUrl.adminBackend}api-user/login`, data);
+        const response = await axios.post(`${baseUrl.adminBackend}api-user/login-conductor`, data);
         if(response.data) {
           login(response.data.token)
           navigate(`/dashboard/${response.data.user.busNumber}`)

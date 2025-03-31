@@ -6,8 +6,10 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import baseUrl from "../../common/baseBackendUrl";
+import { useAuth } from "../../context/AuthContext";
 
 const ChangePassword = () => {
+    const {logout} = useAuth()
     const { busNumber, conductorName } = useParams<{ busNumber: string, conductorName: string }>() 
     const navigation  = useNavigate()
     const [error, setError] = useState<{ currentPassword?: string; newPassword?: string; confirmPassword?: string }>({})
@@ -59,6 +61,7 @@ const ChangePassword = () => {
         
               if (!res.data.error) {
                   console.log(res.data)
+                  logout();
               }
               else {
                 setError((pre) => (

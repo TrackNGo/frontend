@@ -20,7 +20,8 @@ const Navbar = ({ navOpen }: NavbarProps) => {
             { label: 'Lost And Found', link: '/lnshome', className: 'nav-link' },
             { label: 'News', link: '/news', className: 'nav-link' },
             {label:'Report Form', link:'/reportform', className:'nav-link'},
-            {label:'Contact us', link:'/contactus', className:'nav-link'}
+            {label:'Contact us', link:'/contactus', className:'nav-link'},
+            {label:'Login', link:'/login', className:'nav-link'}
         ],
         []
     )

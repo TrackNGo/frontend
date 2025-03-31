@@ -25,7 +25,6 @@ const BusDetails = (bus: busDetailsType) => {
               bus.alert.map((ele: any) => (
                 <div key={ele._id} className='flex items-center justify-center text-red-500 opacity-100'>
                   {`${ele.emergencyType} - ${ele.createdAt.split("T")[0]}`}<br />
-                  {`${ele.status}`}<br />
                   {new Date(ele.timestamp).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: true })}
                 </div>
               ))

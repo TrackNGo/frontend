@@ -27,9 +27,6 @@ const Header = () => {
                                     </button>
                                     <NavBar navOpen={navOpen} />
                                 </div>
-                                <Link to="/login" className="btn1 btn1-secondary max-md:hidden md:justify-self-end">
-                                    Login
-                                </Link>
                             </>
                         )
                     }
