@@ -52,8 +52,6 @@ function App() {
             <Route path="/bustracking/routes/search/:start/:end" element={<BusTrackingBySearch />} />
             <Route path='/bustracking/details/:busNumber' element={<BusTrackingDetails />} />
 
-            <Route path='/testing' element={<Testing />} />
-
             <Route path='/LnSHome' element={<LnSHome />} />
             <Route path='/FoundItemReport' element={<FoundItemReport />} />
             <Route path='/LostItemReport' element={<LostItemReport />} />
