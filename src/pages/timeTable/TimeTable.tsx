@@ -6,8 +6,8 @@ import SelectBox from "../../components/selectBox/SelectBox"
 import { useNavigate } from "react-router-dom"
 
 const options = [
-    "colombo",
-    "jaffna",
+    "Colombo",
+    "Jaffna",
     "kalutara",
     "Polonnoruwa",
     "Kurunagala"
