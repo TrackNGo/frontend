@@ -13,14 +13,14 @@ const Navbar = ({ navOpen }: NavbarProps) => {
     const navItems = useMemo(
         () => [
             { label: 'Home', link: '/', className: 'nav-link' },
-            { label: 'Bus Time Table', link: '/timetable', className: 'nav-link' },
-            { label: 'On Bus Route', link: '/busroute', className: 'nav-link' },
+            { label: 'Time Table', link: '/timetable', className: 'nav-link' },
+            { label: 'On Route', link: '/busroute', className: 'nav-link' },
             { label: 'Fare Estimate', link: '/fareestimate', className: 'nav-link' },
             { label: 'Bus Tracking', link: '/bustracking', className: 'nav-link' },
-            { label: 'Lost And Found', link: '/lnshome', className: 'nav-link' },
+            { label: 'Lost/Found', link: '/lnshome', className: 'nav-link' },
             { label: 'News', link: '/news', className: 'nav-link' },
-            { label: 'Report Form', link: '/reportform', className: 'nav-link' },
-            { label: 'Contact us', link: '/contactus', className: 'nav-link' },
+            { label: 'Report ', link: '/reportform', className: 'nav-link' },
+            { label: 'Contact', link: '/contactus', className: 'nav-link' },
             { label: 'Login', link: '/login', className: 'nav-link' }
         ],
         []
@@ -53,7 +53,7 @@ const Navbar = ({ navOpen }: NavbarProps) => {
     }, [location.pathname]) // Trigger on path change
 
     return (
-        <nav className={'navbar ' + (navOpen ? 'active' : '')}>
+        <nav className={'navbar h-12 text-xs' + (navOpen ? 'active' : '')}>
             {navItems.map(({ label, link, className }, key) => (
                 <Link
                     to={link}
