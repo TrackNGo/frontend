@@ -38,7 +38,7 @@ const Login = () => {
     setError((prev) => ({ ...prev, accType: "" }))
   }
 
-  const clearForm=()=>{
+  const clearForm = () => {
     setCredentials({
       credentialsUsername: "",
       password: "",
@@ -46,10 +46,10 @@ const Login = () => {
     })
   }
 
-  async function submit(event: any) {
+  const handleSubmit = async (event: any) => {
     event.preventDefault()
     const newError: { credentialsUsername?: string; password?: string; accType?: string } = {}
-  
+
     if (!credentials.credentialsUsername) {
       newError.credentialsUsername = "Username Required!"
     }
@@ -59,37 +59,37 @@ const Login = () => {
     if (!credentials.accType) {
       newError.accType = "Account Type Required!"
     }
-  
+
     if (Object.keys(newError).length > 0) {
       setError(newError)
       toast.error("Please fill in all required fields!") // 🚨 Error Toast
       return
     }
-  
+
     setError({})
     const data = {
       loginIdentifier: credentials.credentialsUsername,
       password: credentials.password,
       accType: credentials.accType
     }
-  
+
     try {
       const response = await axios.post(`${baseUrl.adminBackend}api-user/login-conductor`, data)
-  
+
       if (response.data) {
-        toast.success("Login Successful!") 
+        toast.success("Login Successful!")
         login(response.data.token)
         navigate(`/dashboard/${response.data.user.busNumber}`)
-      }else {
-        toast.error("Login Failed!") 
+      } else {
+        toast.error("Login Failed!")
         clearForm()
       }
     } catch (err: any) {
       if (err.response) {
-        toast.error(err.response.data.message || "Invalid login details!") 
+        toast.error(err.response.data.message || "Invalid login details!")
         setError({ credentialsUsername: "Invalid login details" })
       } else {
-        toast.error("Something went wrong. Please try again later.") 
+        toast.error("Something went wrong. Please try again later.")
       }
     }
   }
@@ -150,7 +150,7 @@ const Login = () => {
             <div className="mt-6">
               <PrimaryBtn
                 type={"button"}
-                onClick={submit}
+                onClick={handleSubmit}
                 title={"Login"}
                 classes={
                   "bg-gradient-to-r from-black to-black hover:from-slate-800 hover:to-slate-700 border border-solid border-slate-900 text-white w-full"
