@@ -8,6 +8,7 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../../context/AuthContext"
 import { toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 const Login = () => {
   const { login } = useAuth()
@@ -35,6 +36,14 @@ const Login = () => {
       accType: value
     }))
     setError((prev) => ({ ...prev, accType: "" }))
+  }
+
+  const clearForm=()=>{
+    setCredentials({
+      credentialsUsername: "",
+      password: "",
+      accType: "General",
+    })
   }
 
   async function submit(event: any) {
@@ -68,16 +77,19 @@ const Login = () => {
       const response = await axios.post(`${baseUrl.adminBackend}api-user/login-conductor`, data)
   
       if (response.data) {
-        toast.success("Login Successful!") // ✅ Success Toast
+        toast.success("Login Successful!") 
         login(response.data.token)
         navigate(`/dashboard/${response.data.user.busNumber}`)
+      }else {
+        toast.error("Login Failed!") 
+        clearForm()
       }
     } catch (err: any) {
       if (err.response) {
-        toast.error(err.response.data.message || "Invalid login details!") // 🚨 Error Toast
+        toast.error(err.response.data.message || "Invalid login details!") 
         setError({ credentialsUsername: "Invalid login details" })
       } else {
-        toast.error("Something went wrong. Please try again later.") // 🚨 Error Toast
+        toast.error("Something went wrong. Please try again later.") 
       }
     }
   }
