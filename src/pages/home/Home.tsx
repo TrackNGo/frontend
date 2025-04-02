@@ -1,44 +1,47 @@
-import { useState } from "react"
-import PrimaryBtn from "../../components/btn/primaryBtn/PrimaryBtn"
-import BtnSet from "../../components/btnSet/BtnSet"
-import Headline from "../../components/headline/Headline"
-import SelectBox from "../../components/selectBox/SelectBox"
-import { useNavigate } from "react-router-dom"
+import { useState } from "react";
+import PrimaryBtn from "../../components/btn/primaryBtn/PrimaryBtn";
+import BtnSet from "../../components/btnSet/BtnSet";
+import Headline from "../../components/headline/Headline";
+import SelectBox from "../../components/selectBox/SelectBox";
+import { useNavigate } from "react-router-dom";
 
 const options = [
-    "colombo",
-    "jaffna",
-    "kalutara",
+    "Colombo",
+    "Jaffna",
+    "Kalutara",
     "Polonnoruwa",
     "Kurunagala"
-]
+];
 
 const Home = () => {
     const [locations, setLocations] = useState<{ startLocation: string | null, endLocation: string | null }>({
         startLocation: null,
         endLocation: null
-    })
+    });
 
-    const navigate=useNavigate()
+    const navigate = useNavigate();
 
     const btnSet = [
         {
             title: 'find on route number',
             onClick: () => navigate('/busroute'),
         },
-        {
-            title: 'view schedule',
-            onClick: () => navigate('/schedule'),
-        },
+        // {
+        //     title: 'view schedule',
+        //     onClick: () => navigate('/schedule'),
+        // },
         {
             title: 'estimate fare',
             onClick: () => navigate('/fareestimate'),
         }
-    ]
+    ];
 
     const handleLocationChange = (key: 'startLocation' | 'endLocation', value: string) => {
-        setLocations(prev => ({ ...prev, [key]: value }))
-    }
+        setLocations(prev => ({ ...prev, [key]: value }));
+    };
+
+    // Filter options for endLocation to exclude the selected startLocation
+    const filteredEndLocationOptions = options.filter(option => option !== locations.startLocation);
 
     return (
         <div className="px-2">
@@ -59,7 +62,7 @@ const Home = () => {
                         title={"end location"}
                         name={"endLocation"}
                         placeholder="Select Ending Location"
-                        options={options}
+                        options={filteredEndLocationOptions}
                         onChange={(value) => handleLocationChange('endLocation', value)}
                     />
                 </div>
@@ -74,7 +77,7 @@ const Home = () => {
                 <BtnSet btnSet={btnSet} />
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Home
+export default Home;
