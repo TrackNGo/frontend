@@ -7,6 +7,8 @@ import baseUrl from "../../common/baseBackendUrl"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../../context/AuthContext"
+import { toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 const Login = () => {
   const { login } = useAuth()
@@ -36,7 +38,15 @@ const Login = () => {
     setError((prev) => ({ ...prev, accType: "" }))
   }
 
-  async function submit(event: any) {
+  const clearForm = () => {
+    setCredentials({
+      credentialsUsername: "",
+      password: "",
+      accType: "General",
+    })
+  }
+
+  const handleSubmit = async (event: any) => {
     event.preventDefault()
     const newError: { credentialsUsername?: string; password?: string; accType?: string } = {}
 
@@ -52,23 +62,35 @@ const Login = () => {
 
     if (Object.keys(newError).length > 0) {
       setError(newError)
-    } else {
-      setError({})
-      const data = {
-        loginIdentifier: credentials.credentialsUsername,
-        password: credentials.password,
-        accType: credentials.accType
-      }
-      console.log("Logging in with data:", data)
+      toast.error("Please fill in all required fields!") // 🚨 Error Toast
+      return
+    }
 
-      if (data) {
-        const response = await axios.post(`${baseUrl.adminBackend}api-user/login-conductor`, data);
-        if(response.data) {
-          login(response.data.token)
-          navigate(`/dashboard/${response.data.user.busNumber}`)
-        }
+    setError({})
+    const data = {
+      loginIdentifier: credentials.credentialsUsername,
+      password: credentials.password,
+      accType: credentials.accType
+    }
+
+    try {
+      const response = await axios.post(`${baseUrl.adminBackend}api-user/login-conductor`, data)
+
+      if (response.data) {
+        toast.success("Login Successful!")
+        login(response.data.token)
+        navigate(`/dashboard/${response.data.user.busNumber}`)
+      } else {
+        toast.error("Login Failed!")
+        clearForm()
       }
-      // backend connection
+    } catch (err: any) {
+      if (err.response) {
+        toast.error(err.response.data.message || "Invalid login details!")
+        setError({ credentialsUsername: "Invalid login details" })
+      } else {
+        toast.error("Something went wrong. Please try again later.")
+      }
     }
   }
 
@@ -128,7 +150,7 @@ const Login = () => {
             <div className="mt-6">
               <PrimaryBtn
                 type={"button"}
-                onClick={submit}
+                onClick={handleSubmit}
                 title={"Login"}
                 classes={
                   "bg-gradient-to-r from-black to-black hover:from-slate-800 hover:to-slate-700 border border-solid border-slate-900 text-white w-full"
