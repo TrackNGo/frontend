@@ -39,8 +39,11 @@ const FareEstimate = () => {
         setLocations(prev => ({ ...prev, [key]: value }))
     }
 
+    // Filter options for endLocation to exclude the selected startLocation
+    const filteredEndLocationOptions = options.filter(option => option !== locations.startLocation)
+
     function submissionHandel() {
-        if(locations.startLocation && locations.endLocation) {
+        if (locations.startLocation && locations.endLocation) {
             navigate(`/fareestimate/views/${locations.startLocation}/${locations.endLocation}`)
         }
     }
@@ -64,7 +67,7 @@ const FareEstimate = () => {
                         title={"end location"}
                         name={"endLocation"}
                         placeholder="Select Ending Location"
-                        options={options}
+                        options={filteredEndLocationOptions}
                         onChange={(value) => handleLocationChange('endLocation', value)}
                     />
                 </div>
