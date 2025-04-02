@@ -7,6 +7,7 @@ import baseUrl from "../../common/baseBackendUrl"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../../context/AuthContext"
+import { toast } from "react-toastify"
 
 const Login = () => {
   const { login } = useAuth()
@@ -39,7 +40,7 @@ const Login = () => {
   async function submit(event: any) {
     event.preventDefault()
     const newError: { credentialsUsername?: string; password?: string; accType?: string } = {}
-
+  
     if (!credentials.credentialsUsername) {
       newError.credentialsUsername = "Username Required!"
     }
@@ -49,26 +50,35 @@ const Login = () => {
     if (!credentials.accType) {
       newError.accType = "Account Type Required!"
     }
-
+  
     if (Object.keys(newError).length > 0) {
       setError(newError)
-    } else {
-      setError({})
-      const data = {
-        loginIdentifier: credentials.credentialsUsername,
-        password: credentials.password,
-        accType: credentials.accType
+      toast.error("Please fill in all required fields!") // 🚨 Error Toast
+      return
+    }
+  
+    setError({})
+    const data = {
+      loginIdentifier: credentials.credentialsUsername,
+      password: credentials.password,
+      accType: credentials.accType
+    }
+  
+    try {
+      const response = await axios.post(`${baseUrl.adminBackend}api-user/login-conductor`, data)
+  
+      if (response.data) {
+        toast.success("Login Successful!") // ✅ Success Toast
+        login(response.data.token)
+        navigate(`/dashboard/${response.data.user.busNumber}`)
       }
-      console.log("Logging in with data:", data)
-
-      if (data) {
-        const response = await axios.post(`${baseUrl.adminBackend}api-user/login-conductor`, data);
-        if(response.data) {
-          login(response.data.token)
-          navigate(`/dashboard/${response.data.user.busNumber}`)
-        }
+    } catch (err: any) {
+      if (err.response) {
+        toast.error(err.response.data.message || "Invalid login details!") // 🚨 Error Toast
+        setError({ credentialsUsername: "Invalid login details" })
+      } else {
+        toast.error("Something went wrong. Please try again later.") // 🚨 Error Toast
       }
-      // backend connection
     }
   }
 
