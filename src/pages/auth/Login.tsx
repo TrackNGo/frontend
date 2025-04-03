@@ -7,6 +7,8 @@ import baseUrl from "../../common/baseBackendUrl"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../../context/AuthContext"
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Login = () => {
   const { login } = useAuth()
@@ -36,40 +38,51 @@ const Login = () => {
     setError((prev) => ({ ...prev, accType: "" }))
   }
 
+  const clearForm = () => {
+    setCredentials({
+      credentialsUsername: "",
+      password: "",
+      accType: "General",
+    })
+  }
+
   async function submit(event: any) {
-    event.preventDefault()
-    const newError: { credentialsUsername?: string; password?: string; accType?: string } = {}
+    event.preventDefault();
+    const newError: { credentialsUsername?: string; password?: string; accType?: string } = {};
 
     if (!credentials.credentialsUsername) {
-      newError.credentialsUsername = "Username Required!"
+      newError.credentialsUsername = "Username Required!";
     }
     if (!credentials.password) {
-      newError.password = "Password Required!"
+      newError.password = "Password Required!";
     }
     if (!credentials.accType) {
-      newError.accType = "Account Type Required!"
+      newError.accType = "Account Type Required!";
     }
 
     if (Object.keys(newError).length > 0) {
-      setError(newError)
+      setError(newError);
+      toast.warning("Please fill all required fields!");
     } else {
-      setError({})
+      setError({});
       const data = {
         loginIdentifier: credentials.credentialsUsername,
         password: credentials.password,
         accType: credentials.accType
-      }
-      console.log("Logging in with data:", data)
+      };
 
-      if (data) {
+      try {
         const response = await axios.post(`${baseUrl.adminBackend}api-user/login-conductor`, data);
-        if(response.data) {
-          login(response.data.token)
-          navigate(`/dashboard/${response.data.user.busNumber}`)
+        if (response.data) {
+          login(response.data.token);
+          toast.success("Login successful!");
+          navigate(`/dashboard/${response.data.user.busNumber}`);
         }
+      } catch (error:any) {
+        toast.error("Login failed! Please check your credentials.");
       }
-      // backend connection
     }
+    clearForm();
   }
 
   return (
@@ -139,16 +152,15 @@ const Login = () => {
             <div className="mt-4">
               <PrimaryBtn
                 type={"button"}
-                onClick={() => console.log(credentials)}
+                onClick={() => toast.info("Redirecting to forgot password...")}
                 title={"Forgot Password"}
-                classes={
-                  "bg-gradient-to-r from-white to-white hover:from-slate-100 hover:to-slate-200 border border-solid border-black text-black w-full"
-                }
+                classes={"bg-gradient-to-r from-white to-white hover:from-slate-100 hover:to-slate-200 border border-solid border-black text-black w-full"}
               />
             </div>
           </form>
         </div>
       </div>
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
     </div>
   )
 }
