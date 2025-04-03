@@ -17,7 +17,7 @@ const Header = () => {
                         <img className="p-0" src={trackngologo} width="150px" height="100px" alt="trackngo" />
                     </Link>
                     {
-                        isAuthenticated && (
+                        !isAuthenticated && (
                             <>
                                 <div className="relative md:justify-self-center">
                                     <button onClick={toggleNav} className="menu-btn md:hidden">
