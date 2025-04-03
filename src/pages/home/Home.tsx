@@ -7,10 +7,9 @@ import { useNavigate } from "react-router-dom";
 
 const options = [
     "Colombo",
-    "Jaffna",
-    "Kalutara",
     "Polonnoruwa",
-    "Kurunagala"
+    "Kurunagala",
+    "Vavuniya"
 ];
 
 const Home = () => {
